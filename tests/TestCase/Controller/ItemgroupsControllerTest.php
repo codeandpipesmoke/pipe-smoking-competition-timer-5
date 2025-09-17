@@ -1,0 +1,83 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Test\TestCase\Controller;
+
+use App\Controller\ItemgroupsController;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
+
+/**
+ * App\Controller\ItemgroupsController Test Case
+ *
+ * @link \App\Controller\ItemgroupsController
+ */
+class ItemgroupsControllerTest extends TestCase
+{
+    use IntegrationTestTrait;
+
+    /**
+     * Fixtures
+     *
+     * @var list<string>
+     */
+    protected array $fixtures = [
+        'app.Itemgroups',
+        'app.Items',
+    ];
+
+    /**
+     * Test index method
+     *
+     * @return void
+     * @link \App\Controller\ItemgroupsController::index()
+     */
+    public function testIndex(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test view method
+     *
+     * @return void
+     * @link \App\Controller\ItemgroupsController::view()
+     */
+    public function testView(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test add method
+     *
+     * @return void
+     * @link \App\Controller\ItemgroupsController::add()
+     */
+    public function testAdd(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test edit method
+     *
+     * @return void
+     * @link \App\Controller\ItemgroupsController::edit()
+     */
+    public function testEdit(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test delete method
+     *
+     * @return void
+     * @link \App\Controller\ItemgroupsController::delete()
+     */
+    public function testDelete(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+}

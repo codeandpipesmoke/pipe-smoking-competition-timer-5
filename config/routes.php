@@ -55,7 +55,8 @@ return function (RouteBuilder $routes): void {
          * its action called 'display', and we pass a param to select the view file
          * to use (in this case, templates/Pages/home.php)...
          */
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        //$builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        $builder->connect('/', ['controller' => 'Items', 'action' => 'index']);
 
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
@@ -93,4 +94,12 @@ return function (RouteBuilder $routes): void {
      * });
      * ```
      */
+    $routes->prefix('Admin', function (RouteBuilder $builder) {
+        $builder->scope('/', function (RouteBuilder $builder) {
+            //$builder->setExtensions(['json', 'xml', 'xlsx']);
+            $builder->connect('/', ['controller' => 'Countries', 'action' => 'index']);
+            $builder->fallbacks(DashedRoute::class);
+        });
+    });
+	 
 };
