@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Sze 18. 10:06
+-- Létrehozás ideje: 2025. Sze 18. 10:21
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -358,12 +358,21 @@ CREATE TABLE `langs` (
 
 INSERT INTO `langs` (`id`, `pos`, `name`, `lang`, `visible`) VALUES
 (1, 1, 'Magyar', 'hu', 1),
-(2, 500, 'English UK', 'en_UK', 1),
-(3, 500, 'Italian', 'it', 1),
+(2, 500, 'English', 'en', 1),
+(3, 500, 'Italiano', 'it', 1),
 (4, 500, 'Deutsch', 'de', 1),
-(5, 600, 'Croatian', 'hr', 1),
-(6, 500, 'Slovak', 'SK', 1),
-(7, 500, 'English US', 'en_US', 1);
+(5, 500, 'Hrvatski', 'hr', 1),
+(6, 500, 'Slovák', 'sk', 1),
+(8, 500, 'Српски', 'sr', 1),
+(9, 500, 'Русский', 'ru', 1),
+(10, 500, 'Yкраїнська', 'ua', 1),
+(11, 500, 'Čeština', 'cz', 1),
+(12, 500, 'Română', 'ro', 1),
+(13, 500, 'Slovenščina', 'sl', 1),
+(14, 500, 'Polski', 'pl', 1),
+(15, 500, 'Nederlands', 'nl', 1),
+(16, 500, 'Français', 'fr', 1),
+(18, 500, 'Español', 'es', 1);
 
 -- --------------------------------------------------------
 
@@ -549,7 +558,7 @@ ALTER TABLE `i18n`
 -- AUTO_INCREMENT a táblához `langs`
 --
 ALTER TABLE `langs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT a táblához `setups`
