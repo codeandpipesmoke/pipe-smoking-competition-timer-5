@@ -1,0 +1,83 @@
+		Klubok
+
+CREATE TABLE `clubs` (
+  `id`
+  `country_id` 				Ország
+  `lang_id` 				Nyelv
+  `chairman_id` 			Elnök
+  `name` 					Név
+  `description` 			Leírás
+  `email`
+  `web` 
+)
+
+		Versenyek
+		
+CREATE TABLE `competitions` (
+  `id`
+  `name`					Verseny neve
+  `deascription`			Leírása
+  `date_begin`				Kezdete dátum + idő
+  `date_end`				Vége dátum + idő
+)
+
+		Versenyző
+
+CREATE TABLE `competitors` (
+  `id`
+  `user_id` 				Tag
+  `country_id`				Ország
+  `table_id` 				Asztal
+  `club_id` 				Klub
+  `dinner_count` 			Hány ebédet kér
+  `number_of_companions` 	Kísérők száma
+)
+
+		Országok
+
+CREATE TABLE `countries` (
+  `id`
+  `continent`				Kontinens
+  `name`					Név
+  `iso`						ISO rövid név, pl: 'hu', 'en'
+) 
+
+
+		Nyelvek
+
+CREATE TABLE `langs` (
+  `id`
+  `name`					Név, 		pl: 'Magyar'
+  `english_name`			Angol név, 	pl: 'Hungarian'
+  `lang`					Rövid név, 	pl: 'hu'
+)
+
+
+		Asztalok
+
+CREATE TABLE `tables` (
+  `id`
+  `competition_id`			Verseny
+  `tablejudge_id`			Asztalbíró
+  `name` 
+  `description` 
+  `chairs` 
+)
+
+		Tagok
+
+CREATE TABLE `users` (
+  `id`
+  `country_id`				Ország
+  `lang_id`					Nyelv
+  `club_id`					Klub
+  `email`
+  `password`
+  `first_name`
+  `last_name`
+  `description`
+  `active`					[x]
+  `role`					Pl: admin, chairman, member
+  `enabled`					[x]
+  `last_login`				dátum + idő
+) 

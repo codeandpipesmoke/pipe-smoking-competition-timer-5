@@ -44,6 +44,14 @@ return [
 						'action' 	=> 'index',
 					],
 
+					[
+						'type' 		=> 'menu',
+						'icon' 		=> 'fa fa-fw fa-bars',
+						'title'		=> __('Languages'),
+						'controller'=> 'Langs',
+						'action' 	=> 'index',
+					],
+
 
 
 					/*

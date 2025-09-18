@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Sze 18. 11:49
+-- Létrehozás ideje: 2025. Sze 18. 14:38
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -398,22 +398,22 @@ CREATE TABLE `langs` (
 --
 
 INSERT INTO `langs` (`id`, `name`, `english_name`, `lang`, `user_count`, `club_count`, `visible`, `pos`) VALUES
-(1, 'Magyar', 'Hungary', 'hu', 0, 0, 1, 1),
+(1, 'Magyar', 'Hungarian', 'hu', 0, 0, 1, 1),
 (2, 'English', 'English', 'en', 0, 0, 1, 500),
-(3, 'Italiano', 'Italy', 'it', 0, 0, 1, 500),
-(4, 'Deutsch', 'Germany', 'de', 0, 0, 1, 500),
+(3, 'Italiano', 'Italian', 'it', 0, 0, 1, 500),
+(4, 'Deutsch', 'German', 'de', 0, 0, 1, 500),
 (5, 'Hrvatski', 'Croatian', 'hr', 0, 0, 1, 500),
-(6, 'Slovák', 'Sloven', 'sk', 0, 0, 1, 500),
-(8, 'Српски', 'Serb', 'sr', 0, 0, 1, 500),
-(9, 'Русский', 'Russish', 'ru', 0, 0, 1, 500),
-(10, 'Yкраїнська', 'Ukraina', 'ua', 0, 0, 1, 500),
+(6, 'Slovák', 'Slovak', 'sk', 0, 0, 1, 500),
+(8, 'Српски', 'Serbian', 'sr', 0, 0, 1, 500),
+(9, 'Русский', 'Russian', 'ru', 0, 0, 1, 500),
+(10, 'Yкраїнська', 'Ukrainian', 'ua', 0, 0, 1, 500),
 (11, 'Čeština', 'Czech', 'cz', 0, 0, 1, 500),
-(12, 'Română', 'Roman', 'ro', 0, 0, 1, 500),
-(13, 'Slovenščina', 'Sloven', 'sl', 0, 0, 1, 500),
-(14, 'Polski', 'Polski', 'pl', 0, 0, 1, 500),
-(15, 'Nederlands', 'Netherlands', 'nl', 0, 0, 1, 500),
-(16, 'Français', 'France', 'fr', 0, 0, 1, 500),
-(18, 'Español', '', 'es', 0, 0, 1, 500);
+(12, 'Română', 'Romanian', 'ro', 0, 0, 1, 500),
+(13, 'Slovenščina', 'Slovenian', 'sl', 0, 0, 1, 500),
+(14, 'Polski', 'Polish', 'pl', 0, 0, 1, 500),
+(15, 'Nederlands', 'Dutch', 'nl', 0, 0, 1, 500),
+(16, 'Français', 'French', 'fr', 0, 0, 1, 500),
+(18, 'Español', 'Spanish', 'es', 0, 0, 1, 500);
 
 -- --------------------------------------------------------
 
