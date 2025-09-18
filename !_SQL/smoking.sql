@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Sze 18. 10:21
+-- Létrehozás ideje: 2025. Sze 18. 11:49
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -33,7 +33,7 @@ CREATE TABLE `clubs` (
   `lang_id` int(10) UNSIGNED NOT NULL,
   `chairman_id` int(10) UNSIGNED NOT NULL COMMENT 'Elnök',
   `name` varchar(200) NOT NULL,
-  `description` text NOT NULL,
+  `description` text DEFAULT NULL,
   `email` varchar(200) NOT NULL,
   `web` varchar(250) NOT NULL,
   `visible` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
@@ -43,6 +43,44 @@ CREATE TABLE `clubs` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci COMMENT='Clubs table';
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `competitions`
+--
+
+CREATE TABLE `competitions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `deascription` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `date_begin` datetime NOT NULL,
+  `date_end` datetime NOT NULL,
+  `table_count` int(10) UNSIGNED NOT NULL,
+  `competitor_count` int(10) UNSIGNED NOT NULL,
+  `visible` tinyint(1) UNSIGNED NOT NULL,
+  `pos` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` smallint(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci COMMENT='Competitions table';
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `competitors`
+--
+
+CREATE TABLE `competitors` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `country_id` int(10) UNSIGNED NOT NULL,
+  `table_id` int(10) UNSIGNED NOT NULL,
+  `club_id` int(10) UNSIGNED NOT NULL,
+  `dinner_count` tinyint(3) UNSIGNED NOT NULL,
+  `number_of_companions` tinyint(3) UNSIGNED NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci COMMENT='Competitors table';
 
 -- --------------------------------------------------------
 
@@ -346,33 +384,36 @@ CREATE TABLE `i18n` (
 
 CREATE TABLE `langs` (
   `id` int(11) NOT NULL,
-  `pos` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `lang` varchar(6) NOT NULL,
-  `visible` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Languages table';
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `english_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `lang` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `user_count` int(10) UNSIGNED NOT NULL,
+  `club_count` int(10) UNSIGNED NOT NULL,
+  `visible` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
+  `pos` int(11) NOT NULL DEFAULT 1000
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci COMMENT='Languages table';
 
 --
 -- A tábla adatainak kiíratása `langs`
 --
 
-INSERT INTO `langs` (`id`, `pos`, `name`, `lang`, `visible`) VALUES
-(1, 1, 'Magyar', 'hu', 1),
-(2, 500, 'English', 'en', 1),
-(3, 500, 'Italiano', 'it', 1),
-(4, 500, 'Deutsch', 'de', 1),
-(5, 500, 'Hrvatski', 'hr', 1),
-(6, 500, 'Slovák', 'sk', 1),
-(8, 500, 'Српски', 'sr', 1),
-(9, 500, 'Русский', 'ru', 1),
-(10, 500, 'Yкраїнська', 'ua', 1),
-(11, 500, 'Čeština', 'cz', 1),
-(12, 500, 'Română', 'ro', 1),
-(13, 500, 'Slovenščina', 'sl', 1),
-(14, 500, 'Polski', 'pl', 1),
-(15, 500, 'Nederlands', 'nl', 1),
-(16, 500, 'Français', 'fr', 1),
-(18, 500, 'Español', 'es', 1);
+INSERT INTO `langs` (`id`, `name`, `english_name`, `lang`, `user_count`, `club_count`, `visible`, `pos`) VALUES
+(1, 'Magyar', 'Hungary', 'hu', 0, 0, 1, 1),
+(2, 'English', 'English', 'en', 0, 0, 1, 500),
+(3, 'Italiano', 'Italy', 'it', 0, 0, 1, 500),
+(4, 'Deutsch', 'Germany', 'de', 0, 0, 1, 500),
+(5, 'Hrvatski', 'Croatian', 'hr', 0, 0, 1, 500),
+(6, 'Slovák', 'Sloven', 'sk', 0, 0, 1, 500),
+(8, 'Српски', 'Serb', 'sr', 0, 0, 1, 500),
+(9, 'Русский', 'Russish', 'ru', 0, 0, 1, 500),
+(10, 'Yкраїнська', 'Ukraina', 'ua', 0, 0, 1, 500),
+(11, 'Čeština', 'Czech', 'cz', 0, 0, 1, 500),
+(12, 'Română', 'Roman', 'ro', 0, 0, 1, 500),
+(13, 'Slovenščina', 'Sloven', 'sl', 0, 0, 1, 500),
+(14, 'Polski', 'Polski', 'pl', 0, 0, 1, 500),
+(15, 'Nederlands', 'Netherlands', 'nl', 0, 0, 1, 500),
+(16, 'Français', 'France', 'fr', 0, 0, 1, 500),
+(18, 'Español', '', 'es', 0, 0, 1, 500);
 
 -- --------------------------------------------------------
 
@@ -400,11 +441,14 @@ CREATE TABLE `setups` (
 
 CREATE TABLE `tables` (
   `id` int(10) UNSIGNED NOT NULL,
-  `tableleader_id` int(10) UNSIGNED NOT NULL,
+  `competition_id` int(10) UNSIGNED NOT NULL,
+  `tablejudge_id` int(10) UNSIGNED NOT NULL COMMENT 'Asztalbíró',
   `name` varchar(200) NOT NULL,
-  `chairs` int(10) UNSIGNED NOT NULL,
-  `visible` tinyint(1) UNSIGNED NOT NULL,
-  `pos` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `chairs` int(10) UNSIGNED NOT NULL DEFAULT 5,
+  `visible` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
+  `pos` int(11) NOT NULL DEFAULT 1000,
+  `competitor_count` int(10) UNSIGNED NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci COMMENT='Tables table';
@@ -437,24 +481,24 @@ CREATE TABLE `users` (
   `is_superuser` tinyint(1) NOT NULL DEFAULT 0,
   `role` varchar(255) DEFAULT 'user',
   `enabled` tinyint(1) NOT NULL DEFAULT 1,
-  `visible` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
-  `pos` int(11) NOT NULL DEFAULT 1000,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
   `additional_data` text DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
   `lockout_time` datetime DEFAULT NULL,
+  `visible` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
+  `pos` int(11) NOT NULL DEFAULT 1000,
   `competitor_count` int(10) UNSIGNED NOT NULL,
-  `table_count` int(10) UNSIGNED NOT NULL
+  `table_count` int(10) UNSIGNED NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `users`
 --
 
-INSERT INTO `users` (`id`, `country_id`, `lang_id`, `club_id`, `username`, `email`, `password`, `first_name`, `last_name`, `description`, `token`, `token_expires`, `api_token`, `activation_date`, `secret`, `secret_verified`, `tos_date`, `active`, `is_superuser`, `role`, `enabled`, `visible`, `pos`, `created`, `modified`, `additional_data`, `last_login`, `lockout_time`, `competitor_count`, `table_count`) VALUES
-('57eae983-e4a6-44ee-a382-b44f9fb70a07', 0, 0, 0, NULL, 'ibafapipaklub@gmail.com', '$2y$10$sBnJ86nvBqn8GYE79hl2eenu9dmxZwTIV7Odk7d.G/Au1OUb2vJAO', 'Csaba', 'Borbély', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'admin', 1, 1, 1000, '2025-03-03 08:44:31', '2025-03-03 08:44:31', NULL, '2025-03-05 09:38:16', NULL, 0, 0),
-('eab26308-3ba1-4fe6-b91a-25d53153288e', 0, 0, 0, 'superadmin', 'zsfoto@gmail.com', '$2y$10$R0mimoA6WzghMUJGVUcN9eD/kpdkyqBMMq4xgogyovdmSeyE.wFDG', 'Jeff', 'Shoemaker', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 'admin', 1, 1, 1000, '2025-02-28 12:56:56', '2025-02-28 12:56:56', NULL, '2025-03-03 14:50:06', NULL, 0, 0);
+INSERT INTO `users` (`id`, `country_id`, `lang_id`, `club_id`, `username`, `email`, `password`, `first_name`, `last_name`, `description`, `token`, `token_expires`, `api_token`, `activation_date`, `secret`, `secret_verified`, `tos_date`, `active`, `is_superuser`, `role`, `enabled`, `additional_data`, `last_login`, `lockout_time`, `visible`, `pos`, `competitor_count`, `table_count`, `created`, `modified`) VALUES
+('57eae983-e4a6-44ee-a382-b44f9fb70a07', 0, 0, 0, NULL, 'ibafapipaklub@gmail.com', '$2y$10$sBnJ86nvBqn8GYE79hl2eenu9dmxZwTIV7Odk7d.G/Au1OUb2vJAO', 'Csaba', 'Borbély', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'admin', 1, NULL, '2025-03-05 09:38:16', NULL, 1, 1000, 0, 0, '2025-03-03 08:44:31', '2025-03-03 08:44:31'),
+('eab26308-3ba1-4fe6-b91a-25d53153288e', 0, 0, 0, 'superadmin', 'zsfoto@gmail.com', '$2y$10$R0mimoA6WzghMUJGVUcN9eD/kpdkyqBMMq4xgogyovdmSeyE.wFDG', 'Jeff', 'Shoemaker', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 'admin', 1, NULL, '2025-03-03 14:50:06', NULL, 1, 1000, 0, 0, '2025-02-28 12:56:56', '2025-02-28 12:56:56');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -472,6 +516,23 @@ ALTER TABLE `clubs`
   ADD KEY `email` (`email`),
   ADD KEY `visible` (`visible`),
   ADD KEY `pos` (`pos`);
+
+--
+-- A tábla indexei `competitions`
+--
+ALTER TABLE `competitions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `name` (`name`);
+
+--
+-- A tábla indexei `competitors`
+--
+ALTER TABLE `competitors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `country_id` (`country_id`),
+  ADD KEY `table_id` (`table_id`),
+  ADD KEY `club_id` (`club_id`);
 
 --
 -- A tábla indexei `countries`
@@ -516,7 +577,7 @@ ALTER TABLE `setups`
 --
 ALTER TABLE `tables`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `tableleader_id` (`tableleader_id`),
+  ADD KEY `tableleader_id` (`tablejudge_id`),
   ADD KEY `name` (`name`),
   ADD KEY `visible` (`visible`),
   ADD KEY `pos` (`pos`);
@@ -540,6 +601,18 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT a táblához `clubs`
 --
 ALTER TABLE `clubs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `competitions`
+--
+ALTER TABLE `competitions`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `competitors`
+--
+ALTER TABLE `competitors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
