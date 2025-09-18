@@ -1,0 +1,28 @@
+Meglévő program táblái:
+
+1. tábla - A verseny induló csapatok listája - benne van, hogy az adott versenyen a csapat milyen eredményt ért el (legjobb 3.), valamint a csapattagog eredményei is.
+db neve: tblDruzstva
+
+2. tábla - Klubok listája - elérhetőségek megadásának lehetőségeivel
+db neve: tblKluby
+
+3. tábla - Versenyzők adatai és az elért idők
+db neve: tblOsoby
+
+4. tábla - ebben ID-k vannak, amiben meghivatkozza a versenyzőt, klubot, csapatot, elért időt
+db neve: tblPrihlaseni
+
+5. tábla - az oszgágok listája
+db neve: tblStaty
+
+6. tábla - beállítások
+db neve: tblSetting
+
+7. tábal - ebben nem találtam adatot
+db neve: tblLock
+
+8. tábla - A versenyekhez kapcsolódó adatok, beállítások és a kapcsolatai a többi táblához.
+db neve: tblSutaze
+
+9. Tábla - ebben sem találtam adatot
+db neve: tblStoly
