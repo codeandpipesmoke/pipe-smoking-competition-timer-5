@@ -69,15 +69,25 @@ MaxPrihlasenyCislo - Max. bejelentkezési szám ;
 MaxSutazneCislo - Maximális versenyszám ; 
 
 Druzstva - Csapatok ; 
+
 Usporiadatel - Szervező ; 
 RiaditelSutaze - Szervező Igazgató ; 
 HlavnyRozhodca - Főbíró ; 
 Osoba3 - Időmérés felelős ; 
+
+Szervező
+Szervező Igazgató
+Főbíró
+Időmérés felelős
+
+
 StartPlnenie - Tömés indítása; 
 PlnenieAktivne - Aktív tömés ; 
 StartSutaz - Gyújtás kezdete ; 
 SutazAktivna - Aktív verseny ; 
 KoniecSutaz - Verseny vége ; 
+
+
 Fajka - Pipa ; 
 Tabak - Dohány ; 
 Status - Állapot ; 
