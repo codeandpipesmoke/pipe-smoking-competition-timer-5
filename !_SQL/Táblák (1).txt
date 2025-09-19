@@ -1,0 +1,27 @@
+1. tábla - A verseny induló csapatok listája - benne van, hogy az adott versenyen a csapat milyen eredményt ért el (legjobb 3.), valamint a csapattagog eredményei is.
+db neve: tblDruzstva
+Mezők: SutazID - VersenyID ; PoradoveCislo - Sorszám ; Nazov - Név ; JeKvalifikovane - Részt vett ; KonecnePoradie - Végső rangsor ; SutaziaciC1 - Versenyzők C1 ; SutaziaciC2 - Versenyzők C2 ; SutaziaciC3 - Versenyzők C3
+2. tábla - Klubok listája - elérhetőségek megadásának lehetőségeivel
+db neve: tblKluby
+Mezők: ID ; Nazov - Név ; www ; email1 ; email2
+3. tábla - Versenyzők adatai és az elért idők
+db neve: tblOsoby
+Mezők: ID ; Priezvisko - Vezetéknév ; Meno - Keresztnév ; KlubID ; StatID - Ország ID; email1 , email2 ; Telefon ; PohlavieID - Neme ; Aktivny - Aktív ; 
+4. tábla - ebben ID-k vannak, amiben meghivatkozza a versenyzőt, klubot, csapatot, elért időt
+db neve: tblPrihlaseni
+Mezők: ID ; SutazID - VersenyID ; PoradoveCislo - Sorszám ; OsobyID - SzemélyID ;  KlubID ; StatID - Ország ID; SutazneCislo - Versenyen belüli sorszám ; StolCislo - Aztaszám ; DruzstvoID - Csapatazonosító ; DruzstvoJeKvalifikovane - A csapat kvalifikált ; DruzstvoJeHodnotene - A csapat kvalifikált ; VyslednyCas - Időeredménye ; DruzstvoTop3 - Top3 Csapat ; Diskvalifikacia - Kizárva ; DovodDiskvalifikacie - A kizárás oka ; KonecnePoradie - Végső helyezés ; Skoncil - indult ; KonecnePoradieZeny - Nők végső rangsora ; Sutaz - Verseny ; Gala - Gálavacsora ; Expo ; PresidentsDinner - Elnöki Vacsora ; ZaplSuma - Töltési mennyiség ; PlatbaOK - Fizetés rendben ; Pozn1 - Jegyzet1 ; Pozn2 - Jegyzet2 ; Pritomny - Jelenlegi ; Email ; EmailPoslany - Email Elküldve ; 
+5. tábla - az oszgágok listája
+db neve: tblStaty
+Mezők: ID ; SkratenyNazovEN - Az ország neve ; Skratka - Rövitítés
+6. tábla - beállítások
+db neve: tblSetting
+Mezők: ID ; PoslednaSutaz - utolsó Verseny ; SposobTlace - Nyomtatási módszer ; PouzitPreklad - Fordítás használata ; smtpserver ; sendusername ; sendpassword ; smtpserverport ; smtpauthenticate ; smtpusessl ; From ; ReplyTo ; smtpCC ; smtpBCC ; AutoCheckUpdate ; VerziaDB - DB verzió ; DatabazaID - Adatbázis Azonosító ; TrebaOdoslat - Küldés Szükséges ; VlastnySMTP - Egyéni SMTP ; PoslednySkoncil_txt ; Utolsó befejezett szöveg
+7. tábal - ebben nem találtam adatot
+db neve: tblLock
+Mezők: Identifikácia - Azonosító ; SutazID - VersenyID ; MaxPrihlasenyCislo - Max. bejelentkezési szám ; MaxSutazneCislo - Maximális versenyszám ; MaxCisloDruzstva - Max. csapatlétszám ; MaxCisloStola - Max. asztalszám
+8. tábla - A versenyekhez kapcsolódó adatok, beállítások és a kapcsolatai a többi táblához.
+db neve: tblSutaze
+Mezők: ID ; Privlastok - Megnevezés ; Nazov - Név ; Miesto - Település ; Datum ; MaxPrihlasenyCislo - Max. bejelentkezési szám ; MaxSutazneCislo - Maximális versenyszám ; Druzstva - Csapatok ; Usporiadatel - Szervező ; RiaditelSutaze - Szervező Igazgató ; HlavnyRozhodca - Főbíró ; Osoba3 - Időmérés felelős ; StartPlnenie - Tömés indítása; PlnenieAktivne - Aktív tömés ; StartSutaz - Gyújtás kezdete ; SutazAktivna - Aktív verseny ; KoniecSutaz - Verseny vége ; Fajka - Pipa ; Tabak - Dohány ; Status - Állapot ; RegistrovatAutomaticky - Automatikus Regisztráció ; EvidovatStoly - Regisztertáblák ; RegistraciaUzavreta - Regisztráció Lezárva ; SutazUkoncena - befejezett verseny ; DiplomText1 - Oklevél szöveg 1 ; DiplomMeno1 - Oklevél Aláíró 1 ; DiplomFunkcia1 - Oklevelet kiállító 1 ; DiplomMeno2 - Oklevél Aláíró 2 ; DiplomFunkcia2 - Oklevelet kiállító 2 ; DiplomMeno3 - Oklevél Aláíró 3 ; DiplomFunkcia3 - Oklevelet kiállító 3 ; DiplomMeno4 - Oklevél Aláíró 4 ; DiplomFunkcia4 - Oklevelet kiállító 4 ; DiplomText2 - Oklevél szöveg 2
+9. Tábla - ebben sem találtam adatot
+db neve: tblStoly
+Mezők: ID ; SutazID - VersenyID ; Cislo - Szám ; PocetMiest - Helyek száma ; RozhodcaFix - Bírói Javítás

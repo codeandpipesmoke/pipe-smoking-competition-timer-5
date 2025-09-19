@@ -493,14 +493,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `users`
---
-
-INSERT INTO `users` (`id`, `country_id`, `lang_id`, `club_id`, `username`, `email`, `password`, `first_name`, `last_name`, `description`, `token`, `token_expires`, `api_token`, `activation_date`, `secret`, `secret_verified`, `tos_date`, `active`, `is_superuser`, `role`, `enabled`, `additional_data`, `last_login`, `lockout_time`, `visible`, `pos`, `competitor_count`, `table_count`, `created`, `modified`) VALUES
-('57eae983-e4a6-44ee-a382-b44f9fb70a07', 0, 0, 0, NULL, 'ibafapipaklub@gmail.com', '$2y$10$sBnJ86nvBqn8GYE79hl2eenu9dmxZwTIV7Odk7d.G/Au1OUb2vJAO', 'Csaba', 'Borbély', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'admin', 1, NULL, '2025-03-05 09:38:16', NULL, 1, 1000, 0, 0, '2025-03-03 08:44:31', '2025-03-03 08:44:31'),
-('eab26308-3ba1-4fe6-b91a-25d53153288e', 0, 0, 0, 'superadmin', 'zsfoto@gmail.com', '$2y$10$R0mimoA6WzghMUJGVUcN9eD/kpdkyqBMMq4xgogyovdmSeyE.wFDG', 'Jeff', 'Shoemaker', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 'admin', 1, NULL, '2025-03-03 14:50:06', NULL, 1, 1000, 0, 0, '2025-02-28 12:56:56', '2025-02-28 12:56:56');
-
---
 -- Indexek a kiírt táblákhoz
 --
 
