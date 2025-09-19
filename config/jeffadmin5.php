@@ -20,6 +20,16 @@ return [
 						'show_button_delete'		=> true,
 						'action_db_click'			=> 'edit',	// none, edit or view
 					],
+					'add' => [
+						'show_id' 					=> false,
+						'show_pos' 					=> false,
+						'show_visible' 				=> false,
+					],
+					'edit' => [
+						'show_id' 					=> false,
+						'show_pos' 					=> false,
+						'show_visible' 				=> false,
+					],
 					'view' => [
 						'show_related_tables'		=> true,
 						'show_id' 					=> true,

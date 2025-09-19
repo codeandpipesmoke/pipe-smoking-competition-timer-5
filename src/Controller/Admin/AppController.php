@@ -30,6 +30,8 @@ use JeffAdmin5\Controller\AppController as JeffAdmin5;
  */
 class AppController extends JeffAdmin5
 {
+	public $role = [];
+
     /**
      * Initialization hook method.
      *
@@ -44,6 +46,16 @@ class AppController extends JeffAdmin5
         parent::initialize();
 
         $this->loadComponent('Flash');
+
+		$this->role = [
+			'user' 		 => __('User'), 
+			'chairman' 	 => __('Chairman'), 
+			'tablejudge' => __('Tablejudge'), 
+			'timekeeper' => __('Timekeeper'), 
+			'admin' 	 => __('Adminisztrátor'), 
+			//'superadmin' => __('Super Adminisztrátor'),
+		];		
+		$this->set('role', $this->role);
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.

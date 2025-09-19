@@ -27,7 +27,6 @@ class LangsControllerTest extends TestCase
      */
     protected array $fixtures = [
         'app.Langs',
-        'app.Clubs',
         'app.Users',
     ];
 

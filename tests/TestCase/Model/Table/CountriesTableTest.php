@@ -30,6 +30,8 @@ class CountriesTableTest extends TestCase
     protected array $fixtures = [
         'app.Countries',
         'app.Clubs',
+        'app.Competingclubs',
+        'app.Users',
     ];
 
     /**

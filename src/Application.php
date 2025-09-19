@@ -66,6 +66,9 @@ class Application extends BaseApplication
 		});
 
 		$this->addPlugin('JeffAdmin5');
+
+        $this->addPlugin(\CakeDC\Users\Plugin::class);
+        Configure::write('Users.config', ['users']);
 			
 		//return false;
     }

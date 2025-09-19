@@ -16,6 +16,8 @@ use Cake\Http\Exception\NotFoundException;
  * Countries Model
  *
  * @property \App\Model\Table\ClubsTable&\Cake\ORM\Association\HasMany $Clubs
+ * @property \App\Model\Table\CompetingclubsTable&\Cake\ORM\Association\HasMany $Competingclubs
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  *
  * @method \App\Model\Entity\Country newEmptyEntity()
  * @method \App\Model\Entity\Country newEntity(array $data, array $options = [])
@@ -46,8 +48,15 @@ class CountriesTable extends Table
         $this->setTable('countries');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+		$this->addBehavior('JeffAdmin5.Datepicker');
 
         $this->hasMany('Clubs', [
+            'foreignKey' => 'country_id',
+        ]);
+        $this->hasMany('Competingclubs', [
+            'foreignKey' => 'country_id',
+        ]);
+        $this->hasMany('MyUsers', [
             'foreignKey' => 'country_id',
         ]);
     }
@@ -61,6 +70,11 @@ class CountriesTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
+            ->scalar('continent')
+            ->maxLength('continent', 50)
+            ->allowEmptyString('continent');
+
+        $validator
             ->scalar('name')
             ->maxLength('name', 50)
             ->requirePresence('name', 'create')
@@ -73,17 +87,28 @@ class CountriesTable extends Table
             ->notEmptyString('iso');
 
         $validator
-            ->scalar('continent')
-            ->maxLength('continent', 50)
-            ->allowEmptyString('continent');
-
-        $validator
             ->boolean('visible')
             ->notEmptyString('visible');
 
         $validator
             ->integer('pos')
             ->notEmptyString('pos');
+
+        $validator
+            ->dateTime('last_used')
+            ->allowEmptyDateTime('last_used');
+
+        $validator
+            ->integer('user_count')
+            ->notEmptyString('user_count');
+
+        $validator
+            ->nonNegativeInteger('club_count')
+            ->notEmptyString('club_count');
+
+        $validator
+            ->nonNegativeInteger('competition_count')
+            ->notEmptyString('competition_count');
 
         return $validator;
     }

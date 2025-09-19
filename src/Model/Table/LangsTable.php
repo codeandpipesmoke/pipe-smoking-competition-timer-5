@@ -15,7 +15,6 @@ use Cake\Http\Exception\NotFoundException;
 /**
  * Langs Model
  *
- * @property \App\Model\Table\ClubsTable&\Cake\ORM\Association\HasMany $Clubs
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  *
  * @method \App\Model\Entity\Lang newEmptyEntity()
@@ -48,9 +47,6 @@ class LangsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Clubs', [
-            'foreignKey' => 'lang_id',
-        ]);
         $this->hasMany('Users', [
             'foreignKey' => 'lang_id',
         ]);
@@ -85,13 +81,7 @@ class LangsTable extends Table
 
         $validator
             ->nonNegativeInteger('user_count')
-            ->requirePresence('user_count', 'create')
             ->notEmptyString('user_count');
-
-        $validator
-            ->nonNegativeInteger('club_count')
-            ->requirePresence('club_count', 'create')
-            ->notEmptyString('club_count');
 
         $validator
             ->boolean('visible')

@@ -13,13 +13,19 @@ use Cake\Http\Exception\NotFoundException;
  * Country Entity
  *
  * @property int $id
+ * @property string|null $continent
  * @property string $name
  * @property string $iso
- * @property string|null $continent
  * @property bool $visible
  * @property int $pos
+ * @property \Cake\I18n\DateTime|null $last_used
+ * @property int $user_count
+ * @property int $club_count
+ * @property int $competition_count
  *
  * @property \App\Model\Entity\Club[] $clubs
+ * @property \App\Model\Entity\Competingclub[] $competingclubs
+ * @property \App\Model\Entity\User[] $users
  */
 class Country extends Entity
 {
@@ -33,11 +39,17 @@ class Country extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
+        'continent' => true,
         'name' => true,
         'iso' => true,
-        'continent' => true,
         'visible' => true,
         'pos' => true,
+        'last_used' => true,
+        'user_count' => true,
+        'club_count' => true,
+        'competition_count' => true,
         'clubs' => true,
+        'competingclubs' => true,
+        'users' => true,
     ];
 }

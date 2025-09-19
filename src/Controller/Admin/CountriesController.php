@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+
 use App\Controller\Admin\AppController;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+
 
 /**
  * Countries Controller
@@ -15,7 +17,7 @@ use Cake\Http\Exception\NotFoundException;
 class CountriesController extends AppController
 {
 	//public $defaultOrder 	 = ['Pagecategories.name' => 'asc', 'Pages.pos' => 'asc'];	// For example
-	public $defaultOrder 	 = ['visible' => 'desc', 'pos' => 'asc', 'continent' => 'asc', 'name' => 'asc'];
+	public $defaultOrder 	 = ['pos' => 'asc', 'visible' => 'desc'];
 
     /**
      * Initialize controller
@@ -45,8 +47,8 @@ class CountriesController extends AppController
 		$queryParams = $this->request->getQuery();
 		$conditions 	 = [];		// Default conditions
 		$page 		 	 = '1';
-		$sort 		 	 = null;	//'id';
-		$direction 	 	 = null;	//'asc';
+		$sort 		 	 = 'id';
+		$direction 	 	 = 'asc';
 		$showSearchBar	 = false;
 		$searchInSession = '';
 		$search 	 	 = '';		
@@ -102,7 +104,6 @@ class CountriesController extends AppController
 		
 		if($sort !== null && $direction !== null){
 			$this->paginate['Countries']['order'] 	= [$sort => $direction];
-			//$this->paginate['Countries']['order'] 	= $order;
 		}else{
 			$this->paginate['Countries']['order'] 	= $this->defaultOrder;
 		}
@@ -192,7 +193,7 @@ class CountriesController extends AppController
 		//));
 
 		try {
-			$country = $this->Countries->get((int) $id, contain: ['Clubs']);
+			$country = $this->Countries->get((int) $id, contain: ['Clubs', 'Competingclubs', 'MyUsers']);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);

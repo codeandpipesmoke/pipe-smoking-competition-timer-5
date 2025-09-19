@@ -69,7 +69,7 @@ $config = array_merge($global_config, $local_config);
 											<th class="boolean visible"><?= $this->Paginator->sort('visible') ?></th>
 <?php } ?>
 <?php if($config['show_counters']){ ?>
-											<th class="number counter user_count"><?= $this->Paginator->sort('user_count') ?></th>											<th class="number counter club_count"><?= $this->Paginator->sort('club_count') ?></th><?php } ?>
+											<th class="number counter user_count"><?= $this->Paginator->sort('user_count') ?></th><?php } ?>
 <?php if($config['show_button_view'] || $config['show_button_edit'] || $config['show_button_delete'] ){ ?>
 											<th class="actions"><?= __('Actions') ?></th>
 <?php } ?>
@@ -97,7 +97,7 @@ $config = array_merge($global_config, $local_config);
 											<td class="boolean visible" value="<?= $lang->visible ?>"><?= h($lang->visible) ?></td>
 <?php } ?>
 <?php if($config['show_counters']){ ?>
-											<td class="number counter user-count" value="<?= $lang->user_count ?>"><?= h($lang->user_count) ?></td>											<td class="number counter club-count" value="<?= $lang->club_count ?>"><?= h($lang->club_count) ?></td><?php } ?>
+											<td class="number counter user-count" value="<?= $lang->user_count ?>"><?= h($lang->user_count) ?></td><?php } ?>
 <?php if($config['show_button_view'] || $config['show_button_edit'] || $config['show_button_delete'] ){ ?>
 
 											<td class="actions">

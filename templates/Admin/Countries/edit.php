@@ -59,6 +59,15 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 										
 										<div class="tab-pane fade show active" id="tabPanelMain" role="tabpanel" aria-labelledby="tabMain" tabindex="0">
 
+											<!-- 2. STRING: continent: string  -->
+											<div class="mb-3 form-group row text required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="continent"><?= __('Continent') ?>:</label>
+												<div class="col-md-9">
+													<?= $this->Form->control('continent', ['label' => __('Continent'), 'placeholder' => __('Continent'), 'class' => 'form-control', 'empty' => true]); ?>
+
+												</div>
+											</div>
+
 											<!-- 2. STRING: name: string  required -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name"><?= __('Name') ?>:</label>
@@ -77,15 +86,6 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 												</div>
 											</div>
 
-											<!-- 2. STRING: continent: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="continent"><?= __('Continent') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('continent', ['label' => __('Continent'), 'placeholder' => __('Continent'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
 											<!-- 7. BOOLEAN: visible: boolean  required -->
 											<div class="mb-3 form-group row checkbox">
 												<div class="col-sm-2 col-form-label required"></div>
@@ -95,6 +95,7 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 												</div>
 											</div>
 
+<?php /*
 											<!-- 3. INTEGER: pos: integer  required -->
 											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="pos"><?= __('Pos') ?>:</label>
@@ -103,6 +104,23 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 
 												</div>
 											</div>
+
+											<!-- 4. DATETIME: last_used: datetime  -->
+											<div class="mb-3 row required">
+												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="last-used"><?= __('Last Used') ?>:</label>
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 col-xxl-4">
+													<div class="form-group datetime">
+														<div class="input-group last-used" id="last-used" data-target-input="nearest">
+															<?= $this->Form->control('last_used', ['type' => 'text', 'placeholder' => __('Last Used'), 'class' => 'form-control', 'empty' => true]); ?>
+
+															<div class="input-group-append" data-target="#last-used" data-toggle="last-used">
+																<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+*/ ?>
 
 										</div><!-- /.tabPanelMain -->
 										
@@ -140,8 +158,8 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 <?php
 	$this->Html->css(
 		[
-			//"jeffAdmin5./assets/plugins/tempus-dominus-6.0.0/dist/css/tempus-dominus.min",
-			//"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
+			"jeffAdmin5./assets/plugins/tempus-dominus-6.0.0/dist/css/tempus-dominus.min",
+			"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/css/bootstrap-select.min",
 			"jeffAdmin5./assets/plugins/icheck-1.0.3/skins/all",
 
@@ -153,8 +171,8 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 
 	$this->Html->script(
 		[
-			//"jeffAdmin5./assets/js/popper",
-			//"jeffAdmin5./assets/plugins/tempus-dominus-6.0.0/dist/js/tempus-dominus.min",	// Must be loaded the popper.js !!
+			"jeffAdmin5./assets/js/popper",
+			"jeffAdmin5./assets/plugins/tempus-dominus-6.0.0/dist/js/tempus-dominus.min",	// Must be loaded the popper.js !!
 			"jeffAdmin5./assets/plugins/bootstrap-input-spinner-bs-5/src/bootstrap-input-spinner",
 			//"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
 			//"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/lang/summernote-hu-HU",
@@ -177,7 +195,8 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 
 <?php $this->Html->scriptStart(['block' => 'javaScriptBottom']); ?>
 
-	jeffAdminInitInputSpinner()
+	//jeffAdminInitInputSpinner()
+	//jeffAdminInitDateTimePicker('last-used'<?= $country->last_used !== null ? ", '" . $country->last_used->format('Y-m-d H:i:s') . "'" : "" ?>)
 	jeffAdminInitICheck('icheckbox_flat-blue');
 
 	$(document).ready( function(){

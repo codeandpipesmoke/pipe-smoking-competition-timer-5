@@ -17,11 +17,9 @@ use Cake\Http\Exception\NotFoundException;
  * @property string $english_name
  * @property string $lang
  * @property int $user_count
- * @property int $club_count
  * @property bool $visible
  * @property int $pos
  *
- * @property \App\Model\Entity\Club[] $clubs
  * @property \App\Model\Entity\User[] $users
  */
 class Lang extends Entity
@@ -40,10 +38,8 @@ class Lang extends Entity
         'english_name' => true,
         'lang' => true,
         'user_count' => true,
-        'club_count' => true,
         'visible' => true,
         'pos' => true,
-        'clubs' => true,
         'users' => true,
     ];
 }

@@ -8,6 +8,24 @@ return [
 			],
 			'sidebarMenu' => [
 				'Admin' => [
+
+					[
+						'type' 		=> 'menu',
+						'icon' 		=> 'fa fa-fw fa-bars',
+						'title'		=> __('MyUsers'),
+						'controller'=> 'MyUsers',
+						'action' 	=> 'index',
+					],
+
+
+					[
+						'type' 		=> 'menu',
+						'icon' 		=> 'fa fa-fw fa-bars',
+						'title'		=> __('Competing clubs'),
+						'controller'=> 'Competingclubs',
+						'action' 	=> 'index',
+					],
+
 					[
 						'type' 		=> 'menu',
 						'icon' 		=> 'fa fa-fw fa-bars',
@@ -18,15 +36,8 @@ return [
 					[
 						'type' 		=> 'menu',
 						'icon' 		=> 'fa fa-fw fa-bars',
-						'title'		=> __('Clubs'),
-						'controller'=> 'Clubs',
-						'action' 	=> 'index',
-					],
-					[
-						'type' 		=> 'menu',
-						'icon' 		=> 'fa fa-fw fa-bars',
-						'title'		=> __('Teams'),
-						'controller'=> 'Teams',
+						'title'		=> __('Competitors'),
+						'controller'=> 'Competitors',
 						'action' 	=> 'index',
 					],
 					[
@@ -34,6 +45,39 @@ return [
 						'icon' 		=> 'fa fa-fw fa-bars',
 						'title'		=> __('Tables'),
 						'controller'=> 'Tables',
+						'action' 	=> 'index',
+					],
+
+
+/*
+					// View még vissza van
+
+					[
+						'type' 		=> 'menu',
+						'icon' 		=> 'fa fa-fw fa-bars',
+						'title'		=> __('Clubs'),
+						'controller'=> 'Clubs',
+						'action' 	=> 'index',
+					],
+*/
+
+
+
+
+					[
+						'type' 		=> 'menu',
+						'icon' 		=> 'fa fa-fw fa-bars',
+						'title'		=> __('Clubs'),
+						'controller'=> 'Clubs',
+						'action' 	=> 'index',
+					],
+
+
+					[
+						'type' 		=> 'menu',
+						'icon' 		=> 'fa fa-fw fa-bars',
+						'title'		=> __('Langs'),
+						'controller'=> 'Langs',
 						'action' 	=> 'index',
 					],
 					[
@@ -44,13 +88,27 @@ return [
 						'action' 	=> 'index',
 					],
 
+
+
+
+
+
 					[
 						'type' 		=> 'menu',
 						'icon' 		=> 'fa fa-fw fa-bars',
-						'title'		=> __('Languages'),
-						'controller'=> 'Langs',
+						'title'		=> __('Templates'),
+						'controller'=> 'Templates',
 						'action' 	=> 'index',
 					],
+					[
+						'type' 		=> 'menu',
+						'icon' 		=> 'fa fa-fw fa-bars',
+						'title'		=> __('Diplomas'),
+						'controller'=> 'Diplomas',
+						'action' 	=> 'index',
+					],
+
+
 
 
 

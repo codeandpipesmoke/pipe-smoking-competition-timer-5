@@ -193,7 +193,7 @@ class LangsController extends AppController
 		//));
 
 		try {
-			$lang = $this->Langs->get((int) $id, contain: ['Clubs', 'Users']);
+			$lang = $this->Langs->get((int) $id, contain: ['Users']);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);

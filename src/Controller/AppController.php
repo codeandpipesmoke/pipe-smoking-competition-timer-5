@@ -48,5 +48,31 @@ class AppController extends Controller
          * see https://book.cakephp.org/5/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
+		//$role = $this->Authentication->getIdentity()->get('role');
+		//debug($role);
+
+		$plugin 	= $this->request->getParam('plugin');
+		$controller = $this->request->getParam('controller');
+		$action 	= $this->request->getParam('action');
+		
+        //$this->Abouts = $this->fetchTable('Abouts');
+        //$this->about = $this->Abouts->get(1);
+        //$this->set('about', $this->about);
+
+		//debug($plugin);
+		//debug($controller);
+		//dd($action);
+
+		$actions = ['login', 'register', 'changePassword', 'requestResetPassword', 'verify'];
+
+		if ($plugin === 'CakeDC/Users' && $controller === 'Users' && in_array($action, $actions)) {
+			//$this->viewBuilder()->setLayout('jeffAdmin5.login');
+			$this->viewBuilder()->setLayout('default');
+		}
+		if ($plugin === 'CakeDC/Users' && $controller === 'Users' && !in_array($action, $actions)) {
+			//$this->viewBuilder()->setLayout('jeffAdmin5.default');
+			$this->viewBuilder()->setLayout('default');
+		}
+
     }
 }

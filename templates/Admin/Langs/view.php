@@ -54,9 +54,6 @@ $config = array_merge($global_config, $local_config);
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><?= __('Related tables') ?></a>
 											<ul class="dropdown-menu">
-<?php if (!empty($lang->clubs)) : ?>
-												<li><?= $this->Html->link(__('Clubs') . '...', ['controller' => 'Clubs', 'action' => 'index', 'parent', 'lang', $lang->id], ['class' => 'dropdown-item']) ?></li>
-<?php endif ?>
 <?php if (!empty($lang->users)) : ?>
 												<li><?= $this->Html->link(__('Users') . '...', ['controller' => 'Users', 'action' => 'index', 'parent', 'lang', $lang->id], ['class' => 'dropdown-item']) ?></li>
 <?php endif ?>
@@ -107,15 +104,6 @@ $config = array_merge($global_config, $local_config);
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('User Count') ?>:</label>
 												<div class="col-sm-10 p-1">
 													<?= $this->Number->format($lang->user_count) ?><!-- 3.b -->
-												</div>
-											</div>
-<?php } ?>
-
-<?php if($config['show_counters']){ ?>
-											<div class="row"><!-- counter helper -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Club Count') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= $this->Number->format($lang->club_count) ?><!-- 3.b -->
 												</div>
 											</div>
 <?php } ?>
@@ -173,14 +161,6 @@ $config = array_merge($global_config, $local_config);
 									<nav>
 										<div class="nav nav-tabs mt-1" id="nav-tab" role="tablist">
 <?php $acticeClass = " active"; ?>
-<?php if (!empty($lang->clubs)): ?>
-
-											<button class="nav-link<?= $acticeClass ?>" id="nav-clubs-tab" data-bs-toggle="tab" data-bs-target="#nav-clubs" type="button" role="tab" aria-controls="nav-clubs" aria-selected="true">
-												<?= __('Clubs') ?>
-											</button>
-<?php 	$acticeClass = ""; ?>
-<?php endif ?>
-<?php $acticeClass = " active"; ?>
 <?php if (!empty($lang->users)): ?>
 
 											<button class="nav-link<?= $acticeClass ?>" id="nav-users-tab" data-bs-toggle="tab" data-bs-target="#nav-users" type="button" role="tab" aria-controls="nav-users" aria-selected="true">
@@ -198,91 +178,6 @@ $config = array_merge($global_config, $local_config);
 
 								<div class="tab-content" id="nav-tabContent">
 
-<?php $acticeClass = " show active"; ?>
-<?php if (!empty($lang->clubs)): ?>
-
-									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-clubs" role="tabpanel" aria-labelledby="nav-clubs-tab" tabindex="0">
-
-										<table class="table table-responsive-xl table-hover table-striped" style="">
-											<thead class="thead-info">
-												<tr>
-<?php if($config['index_show_id']){ ?>
-													<th class="number id"><?= __('Id') ?></th>
-<?php } ?>
-													<th class="please-change-type country-id"><?= __('Country Id') ?></th>
-													<th class="please-change-type lang-id"><?= __('Lang Id') ?></th>
-													<th class="please-change-type chairman-id"><?= __('Chairman Id') ?></th>
-													<th class="string name"><?= __('Name') ?></th>
-													<th class="please-change-type description"><?= __('Description') ?></th>
-													<th class="please-change-type email"><?= __('Email') ?></th>
-													<th class="please-change-type web"><?= __('Web') ?></th>
-<?php if($config['index_show_visible']){ ?>
-													<th class="boolean visible"><?= __('Visible') ?></th>
-<?php } ?>
-<?php if($config['index_show_pos']){ ?>
-													<th class="number pos"><?= __('Pos') ?></th>
-<?php } ?>
-<?php if($config['index_show_counters']){ ?>
-													<th class="number user-count"><?= __('User Count') ?></th>
-<?php } ?>
-<?php if($config['index_show_counters']){ ?>
-													<th class="number competition-count"><?= __('Competition Count') ?></th>
-<?php } ?>
-<?php if($config['index_show_created']){ ?>
-													<th class="datetime created"><?= __('Created') ?></th>
-<?php } ?>
-<?php if($config['index_show_modified']){ ?>
-													<th class="datetime modified"><?= __('Modified') ?></th>
-<?php } ?>
-													<th class="actions"><?= __('Actions') ?></th>
-												</tr>
-											</thead>
-											<tbody>
-												<?php foreach ($lang->clubs as $clubs) : ?>
-
-												<tr>
-<?php if($config['index_show_id']){ ?>
-													<td class="number id" value="<?= $clubs->id ?>"><?= h($clubs->id) ?></td>
-<?php } ?>
-													<td class="please-change-type country-id" value="<?= $clubs->country_id ?>"><?= h($clubs->country_id) ?></td>
-													<td class="please-change-type lang-id" value="<?= $clubs->lang_id ?>"><?= h($clubs->lang_id) ?></td>
-													<td class="please-change-type chairman-id" value="<?= $clubs->chairman_id ?>"><?= h($clubs->chairman_id) ?></td>
-													<td class="string name" value="<?= $clubs->name ?>"><?= h($clubs->name) ?></td>
-													<td class="please-change-type description" value="<?= $clubs->description ?>"><?= h($clubs->description) ?></td>
-													<td class="please-change-type email" value="<?= $clubs->email ?>"><?= h($clubs->email) ?></td>
-													<td class="please-change-type web" value="<?= $clubs->web ?>"><?= h($clubs->web) ?></td>
-<?php if($config['index_show_visible']){ ?>
-													<td class="boolean visible" value="<?= $clubs->visible ?>"><?= h($clubs->visible) ?></td>
-<?php } ?>
-<?php if($config['index_show_pos']){ ?>
-													<td class="number pos" value="<?= $clubs->pos ?>"><?= h($clubs->pos) ?></td>
-<?php } ?>
-<?php if($config['index_show_counters']){ ?>
-													<td class="number user-count" value="<?= $clubs->user_count ?>"><?= h($clubs->user_count) ?></td>
-<?php } ?>
-<?php if($config['index_show_counters']){ ?>
-													<td class="number competition-count" value="<?= $clubs->competition_count ?>"><?= h($clubs->competition_count) ?></td>
-<?php } ?>
-<?php if($config['index_show_created']){ ?>
-													<td class="datetime created" value="<?= $clubs->created ?>"><?= h($clubs->created) ?></td>
-<?php } ?>
-<?php if($config['index_show_modified']){ ?>
-													<td class="datetime modified" value="<?= $clubs->modified ?>"><?= h($clubs->modified) ?></td>
-<?php } ?>
-													<td class="actions">
-														<?= $this->Html->link('<i class="fa fa-eye"></i>', ['controller' => 'Clubs', 'action' => 'view', $clubs->id], ["escape" => false, "role" => "button",  "class" => "btn btn-warning btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('View this item'), "data-original-title" => ""]) ?><!-- view button -->
-														<?= $this->Html->link('<i class="fa fa-edit"></i>', ['controller' => 'Clubs', 'action' => 'edit', $clubs->id], ["escape" => false, "role" => "button", "class" => "btn btn-primary btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('Edit this item'), "data-original-title" => ""]) ?><!-- edit button -->
-														<?= $this->Form->postLink('<i class="fa fa-times"></i>', ['controller' => 'Clubs', 'action' => 'delete', $clubs->id], ["escape" => false, "role" => "button", "class" => "btn btn-danger btn-sm", "data-toggle" =>"tooltip", "data-placement" => "top", "title" => __('Delete this item'), "data-original-title" => "", "confirm" => __("Are you sure you want to delete # {0}?", $clubs->id)]) ?><!-- delete button -->
-													</td>
-												</tr>
-												<?php endforeach ?>
-
-											</tbody>
-										</table>
-
-									</div><!-- /tab pane -->
-<?php 	$acticeClass = ""; ?>
-<?php endif ?>
 <?php $acticeClass = " show active"; ?>
 <?php if (!empty($lang->users)): ?>
 

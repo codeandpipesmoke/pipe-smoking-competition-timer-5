@@ -13,7 +13,7 @@ if($session->check('Layout.Countries.LastId')){
 $global_config = (array) Configure::read('Theme.' . $prefix . '.config.template.index');
 $local_config = [
 	'show_id' 			=> true,
-	'show_pos' 			=> true,
+	'show_pos' 			=> false,
 	'show_counters'		=> false,
 	'action_db_click'	=> 'edit',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
@@ -62,12 +62,15 @@ $config = array_merge($global_config, $local_config);
 											<th class="string continent"><?= $this->Paginator->sort('continent') ?></th><!-- H.1. -->
 											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
 											<th class="string iso"><?= $this->Paginator->sort('iso') ?></th><!-- H.1. -->
+											<th class="datetime last-used"><?= $this->Paginator->sort('last_used') ?></th><!-- H.1. -->
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
 <?php } ?>
 <?php if($config['show_visible']){ ?>
 											<th class="boolean visible"><?= $this->Paginator->sort('visible') ?></th>
 <?php } ?>
+<?php if($config['show_counters']){ ?>
+											<th class="number counter user_count"><?= $this->Paginator->sort('user_count') ?></th>											<th class="number counter club_count"><?= $this->Paginator->sort('club_count') ?></th>											<th class="number counter competition_count"><?= $this->Paginator->sort('competition_count') ?></th><?php } ?>
 <?php if($config['show_button_view'] || $config['show_button_edit'] || $config['show_button_delete'] ){ ?>
 											<th class="actions"><?= __('Actions') ?></th>
 <?php } ?>
@@ -88,12 +91,15 @@ $config = array_merge($global_config, $local_config);
 											<td class="string continent" value="<?= $country->continent ?>"><?= h($country->continent) ?></td>
 											<td class="string name" value="<?= $country->name ?>"><?= h($country->name) ?></td>
 											<td class="string iso" value="<?= $country->iso ?>"><?= h($country->iso) ?></td>
+											<td class="datetime last-used" value="<?= $country->last_used ?>"><?= h($country->last_used) ?></td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $country->pos ?>"><?= h($country->pos) ?></td>
 <?php } ?>
 <?php if($config['show_visible']){ ?>
 											<td class="boolean visible" value="<?= $country->visible ?>"><?= h($country->visible) ?></td>
 <?php } ?>
+<?php if($config['show_counters']){ ?>
+											<td class="number counter user-count" value="<?= $country->user_count ?>"><?= h($country->user_count) ?></td>											<td class="number counter club-count" value="<?= $country->club_count ?>"><?= h($country->club_count) ?></td>											<td class="number counter competition-count" value="<?= $country->competition_count ?>"><?= h($country->competition_count) ?></td><?php } ?>
 <?php if($config['show_button_view'] || $config['show_button_edit'] || $config['show_button_delete'] ){ ?>
 
 											<td class="actions">

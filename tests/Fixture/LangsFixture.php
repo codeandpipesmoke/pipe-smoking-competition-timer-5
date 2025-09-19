@@ -28,7 +28,6 @@ class LangsFixture extends TestFixture
                 'english_name' => 'Lorem ipsum dolor sit amet',
                 'lang' => 'Lore',
                 'user_count' => 1,
-                'club_count' => 1,
                 'visible' => 1,
                 'pos' => 1,
             ],
