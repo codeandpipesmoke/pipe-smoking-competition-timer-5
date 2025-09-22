@@ -44,15 +44,18 @@ class MyUsersTable extends UsersTable
     public function initialize(array $config): void
     {
         parent::initialize($config);
-
-        //$this->setAlias('MyUsers');
-
+        $this->setAlias('MyUsers');
         $this->setTable('users');
 		$this->setDisplayField(['last_name', 'first_name']);
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
 		
 		$this->addBehavior('JeffAdmin5.Datepicker');
+        $this->addBehavior('CounterCache', [
+            'Countries' => ['user_count'],
+            'Clubs' 	=> ['user_count'],
+            'Langs' 	=> ['user_count'],
+        ]);
 
         $this->addBehavior('CakeDC/Users.Register');
         $this->addBehavior('CakeDC/Users.Password');

@@ -72,9 +72,10 @@ $config = array_merge($global_config, $local_config);
 												<?= $this->Paginator->sort('first_name') ?> <?= $this->Paginator->sort('last_name') ?><br>
 												<?= $this->Paginator->sort('email') ?>
 											</th><!-- H.1. -->
-											<th class="string role"><?= $this->Paginator->sort('role') ?></th><!-- H.1. -->
+											<th class="string role text-center"><?= $this->Paginator->sort('role') ?></th><!-- H.1. -->
+											<th class="boolean chairman"><?= $this->Paginator->sort('chairman') ?></th><!-- H.1. -->
 											<th class="string country"><?= $this->Paginator->sort('club_id') ?></th><!-- H.1. -->
-											<th class="string country"><?= $this->Paginator->sort('lang_id') ?></th><!-- H.1. -->
+											<th class="string lang"><?= $this->Paginator->sort('lang_id') ?></th><!-- H.1. -->
 <?php /*
 											<th class="datetime activation-date"><?= $this->Paginator->sort('activation_date') ?></th><!-- H.1. -->
 											<th class="boolean secret-verified"><?= $this->Paginator->sort('secret_verified') ?></th><!-- H.1. -->
@@ -123,12 +124,17 @@ $config = array_merge($global_config, $local_config);
 */ ?>
 											<td class="string link country-id" value="<?= $user->country_id ?>"><?= $user->hasValue('country') ? $this->Html->link($user->country->name, ['controller' => 'Countries', 'action' => 'view', $user->country->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string name" value="<?= $user->first_name ?> <?= $user->last_name ?>">
+<?php if($user->nameorder == 'first-last'){ ?>
 												<strong><?= h($user->first_name) ?> <?= h($user->last_name) ?></strong><br>
+<?php }else{ ?>
+												<strong><?= h($user->last_name) ?> <?= h($user->first_name) ?></strong><br>
+<?php } ?>
 												<?= h($user->email) ?>
 											</td>
 											<td class="string role text-center" style="width: 120px;" value="<?= $user->role ?>">
 												<?= h($role[$user->role]) ?>
 											</td>
+											<td class="boolean active" value="<?= $user->chairman ?>"><?= h($user->chairman) ?></td>
 											<td class="string link club-id" value="<?= $user->club_id ?>"><?= $user->hasValue('club') ? $this->Html->link($user->club->name, ['controller' => 'Clubs', 'action' => 'view', $user->club->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string link lang-id" value="<?= $user->lang_id ?>"><?= $user->hasValue('lang') ? $this->Html->link($user->lang->name, ['controller' => 'Langs', 'action' => 'view', $user->lang->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 

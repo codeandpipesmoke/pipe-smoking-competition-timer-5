@@ -47,6 +47,8 @@ class MyUser extends User
      * @var array<string, bool>
      */
     protected array $_accessible = [
+		'*' => true
+/*
         'lang_id' => true,
         'country_id' => true,
         'club_id' => true,
@@ -65,11 +67,13 @@ class MyUser extends User
         'active' => true,
         'is_superuser' => true,
         'role' => true,
+        'chairman' => true,
         'created' => true,
         'modified' => true,
         'additional_data' => true,
         'last_login' => true,
         'social_accounts' => true,
+*/
     ];
 
     /**

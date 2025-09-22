@@ -1,34 +1,36 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<\App\Model\Entity\Club> $clubs
+ * @var iterable<\Cake\Datasource\EntityInterface> $chairmans
  */
 use Cake\Core\Configure;
 
-$layoutClubsLastId = -1;
-if($session->check('Layout.Clubs.LastId')){
-	$layoutClubsLastId = $session->read('Layout.Clubs.LastId');
+$layoutChairmansLastId = -1;
+if($session->check('Layout.Chairmans.LastId')){
+	$layoutChairmansLastId = $session->read('Layout.Chairmans.LastId');
 }
 
 $global_config = (array) Configure::read('Theme.' . $prefix . '.config.template.index');
 $local_config = [
-	'show_id' 			=> true,
-	'show_pos' 			=> false,
+	'show_id' 			=> false,
 	'show_visible'		=> false,
-	'show_counters'		=> true,
-	'action_db_click'	=> 'edit',	// none, edit or view
+	'show_pos' 			=> false,
+	'show_counters'		=> false,
+	'show_button_delete'=> false,
+	'show_button_edit'	=> false,
+	'action_db_click'	=> 'view',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
 $config = array_merge($global_config, $local_config);
 ?>
-				<div class="clubs index row">
+				<div class="chairmans index row">
 						
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 						<div class="card">
 							<div class="card-header">
 							
 								<div class="float-start">
-									<h3><i id="card-icon" class="fa fa-table fa-spin"></i> <?= __('Table') ?>: <?= __('Clubs') ?></h3>
+									<h3><i id="card-icon" class="fa fa-table fa-spin"></i> <?= __('Table') ?>: <?= __('Chairmans') ?></h3>
 									<div><?php
 										if($config['action_db_click'] == 'edit'){
 											echo __('Double clik to edit row');
@@ -60,11 +62,15 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<th class="number id"><?= $this->Paginator->sort('id') ?></th>
 <?php } ?>
-											<th class="string country-id"><?= $this->Paginator->sort('country_id') ?></th><!-- H.0. -->
-											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
-											<th class="string chairman-id"><?= $this->Paginator->sort('chairman_id') ?></th><!-- H.0. -->
+											<th class="string last-name"><?= $this->Paginator->sort('last_name') ?></th><!-- H.1. -->
+											<th class="string first-name"><?= $this->Paginator->sort('first_name') ?></th><!-- H.1. -->
+											<th class="integer country-id"><?= $this->Paginator->sort('country_id') ?></th><!-- H.3. -->
+											<th class="integer lang-id"><?= $this->Paginator->sort('lang_id') ?></th><!-- H.3. -->
+											<th class="integer club-id"><?= $this->Paginator->sort('club_id') ?></th><!-- H.3. -->
 											<th class="string email"><?= $this->Paginator->sort('email') ?></th><!-- H.1. -->
-											<th class="string web"><?= $this->Paginator->sort('web') ?></th><!-- H.1. -->
+											<th class="boolean active"><?= $this->Paginator->sort('active') ?></th><!-- H.1. -->
+											<th class="string role"><?= $this->Paginator->sort('role') ?></th><!-- H.1. -->
+											<th class="datetime last-login"><?= $this->Paginator->sort('last_login') ?></th><!-- H.1. -->
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
 <?php } ?>
@@ -72,8 +78,7 @@ $config = array_merge($global_config, $local_config);
 											<th class="boolean visible"><?= $this->Paginator->sort('visible') ?></th>
 <?php } ?>
 <?php if($config['show_counters']){ ?>
-											<th class="number counter user_count"><?= $this->Paginator->sort('user_count') ?></th>											<th class="number counter competingclub_count"><?= $this->Paginator->sort('competingclub_count') ?></th>
-<?php } ?>
+											<th class="number counter competitor_count"><?= $this->Paginator->sort('competitor_count') ?></th>											<th class="number counter table_count"><?= $this->Paginator->sort('table_count') ?></th><?php } ?>
 <?php if($config['show_created'] || $config['show_modified']){ ?>
 
 											<th class="datetime created modified">
@@ -96,56 +101,44 @@ $config = array_merge($global_config, $local_config);
 										</tr>
 									</thead>
 									<tbody>
-										<?php foreach ($clubs as $club): //dd($club); ?>
+										<?php foreach ($chairmans as $chairman): //dd($chairman); ?>
 <?php
 	//$classLastVisited = ' class="last-visited"';	// later...
 	//$classLastVisited = '';
 ?>
 
-										<tr row-id="<?= $club->id ?>"<?php if($club->id == $layoutClubsLastId){ echo 'class="table-tr-last-id"'; } ?> prefix="<?= $prefix ?>" controller="<?= $controller ?>" action="<?= $action ?>" aria-expanded="true">
-											<td class="row-id-anchor" value="<?= $club->id ?>"><a name="<?= $club->id ?>" class="anchor"></a></td>
+										<tr row-id="<?= $chairman->id ?>"<?php if($chairman->id == $layoutChairmansLastId){ echo 'class="table-tr-last-id"'; } ?> prefix="<?= $prefix ?>" controller="<?= $controller ?>" action="<?= $action ?>" aria-expanded="true">
+											<td class="row-id-anchor" value="<?= $chairman->id ?>"><a name="<?= $chairman->id ?>" class="anchor"></a></td>
 <?php if($config['show_id']){ ?>
-											<td class="number id" value="<?= $club->id ?>"><?= h($club->id) ?><a name="<?= $club->id ?>"></a></td>
+											<td class="number id" value="<?= $chairman->id ?>"><?= h($chairman->id) ?><a name="<?= $chairman->id ?>"></a></td>
 <?php } ?>
-											<td class="string link country-id" value="<?= $club->country_id ?>"><?= $club->hasValue('country') ? $this->Html->link($club->country->name, ['controller' => 'Countries', 'action' => 'view', $club->country->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
-											<td class="string name" value="<?= $club->name ?>"><?= h($club->name) ?></td>
-<?php 
-	$name = '';
-	if (isset($club->chairman->id)){
-		$name = trim($club->chairman->first_name . ' ' . $club->chairman->last_name);
-	}
-?>
-											<td class="string link chairman-id" value="<?= $club->chairman_id ?>"><?= $club->hasValue('chairman') ? $this->Html->link($name, ['controller' => 'MyUsers', 'action' => 'view', $club->chairman->id]) : '' ?>
-<?php if($name != ''){ ?>
-												<span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
-<?php } ?>
-
-											<td class="string email" value="<?= $club->email ?>">
-												<?= h($club->email) ?>
-											</td>
-											<td class="string web" value="<?= $club->web ?>">
-												<?= h($club->web) ?>
-											</td>
+											<td class="string last-name" value="<?= $chairman->last_name ?>"><?= h($chairman->last_name) ?></td>
+											<td class="string first-name" value="<?= $chairman->first_name ?>"><?= h($chairman->first_name) ?></td>
+											<td class="string country-id" value="<?= $chairman->country_id ?>"><?= h($chairman->country->name) ?></td>
+											<td class="string lang-id" value="<?= $chairman->lang_id ?>"><?= h($chairman->lang->name) ?></td>
+											<td class="string club-id" value="<?= $chairman->club_id ?>"><?= h($chairman->club->name) ?></td>
+											<td class="string email" value="<?= $chairman->email ?>"><?= h($chairman->email) ?></td>
+											<td class="boolean active" value="<?= $chairman->active ?>"><?= h($chairman->active) ?></td>
+											<td class="string role" value="<?= $chairman->role ?>"><?= h($role[$chairman->role]) ?></td>
+											<td class="datetime last-login" value="<?= $chairman->last_login ?>"><?= h($chairman->last_login) ?></td>
 <?php if($config['show_pos']){ ?>
-											<td class="number pos" value="<?= $club->pos ?>"><?= h($club->pos) ?></td>
+											<td class="number pos" value="<?= $chairman->pos ?>"><?= h($chairman->pos) ?></td>
 <?php } ?>
 <?php if($config['show_visible']){ ?>
-											<td class="boolean visible" value="<?= $club->visible ?>"><?= h($club->visible) ?></td>
+											<td class="boolean visible" value="<?= $chairman->visible ?>"><?= h($chairman->visible) ?></td>
 <?php } ?>
 <?php if($config['show_counters']){ ?>
-											<td class="number counter user-count" value="<?= $club->user_count ?>"><?= h($club->user_count) ?></td>
-											<td class="number counter competingclub-count" value="<?= $club->competingclub_count ?>"><?= h($club->competingclub_count) ?></td>
-<?php } ?>
+											<td class="number counter competitor-count" value="<?= $chairman->competitor_count ?>"><?= h($chairman->competitor_count) ?></td>											<td class="number counter table-count" value="<?= $chairman->table_count ?>"><?= h($chairman->table_count) ?></td><?php } ?>
 <?php if($config['show_created'] || $config['show_modified']){ ?>
 											<td class="datetime">
 <?php if($config['show_created']){ ?>
-												<span class="fw-bold"><?= h($club->created) ?></span>
+												<span class="fw-bold"><?= h($chairman->created) ?></span>
 <?php } ?>
 <?php if($config['show_created'] && $config['show_modified']){ ?>
 												<br>
 <?php } ?>
 <?php if($config['show_modified']){ ?>
-												<span class="fw-normal"><?= h($club->modified) ?></span>
+												<span class="fw-normal"><?= h($chairman->modified) ?></span>
 <?php } ?>
 											</td>
 <?php } ?>
@@ -153,16 +146,16 @@ $config = array_merge($global_config, $local_config);
 
 											<td class="actions">
 <?php if($config['show_button_view']){ ?>
-												<?= $this->Html->link('<i class="fa fa-eye"></i>', ['action' => 'view', $club->id], ['escape' => false, 'role' => 'button', 'class' => 'btn btn-warning btn-sm', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => __('View this item'), 'data-original-title' => __('View this item')]) ?>
+												<?= $this->Html->link('<i class="fa fa-eye"></i>', ['action' => 'view', $chairman->id], ['escape' => false, 'role' => 'button', 'class' => 'btn btn-warning btn-sm', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => __('View this item'), 'data-original-title' => __('View this item')]) ?>
 <?php } ?>
 
 <?php if($config['show_button_edit']){ ?>
-												<?= $this->Html->link('<i class="fa fa-edit"></i>', ['action' => 'edit', $club->id], ['escape' => false, 'role' => 'button', 'class' => 'btn btn-primary btn-sm', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => __('Edit this item'), 'data-original-title' => __('Edit this item')]) ?>
+												<?= $this->Html->link('<i class="fa fa-edit"></i>', ['action' => 'edit', $chairman->id], ['escape' => false, 'role' => 'button', 'class' => 'btn btn-primary btn-sm', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => __('Edit this item'), 'data-original-title' => __('Edit this item')]) ?>
 <?php } ?>
 
 <?php if($config['show_button_delete']){ ?>
-												<?= $this->Form->postLink('', ['action' => 'delete', $club->id], ['class'=>'hide-postlink index-delete-button-class']) ?>
-												<a href="javascript:;" class="btn btn-sm btn-danger postlink-delete" data-bs-tooltip="tooltip" data-bs-placement="top" title="<?= __("Delete this record!") ?>" text="<?= h($club->name) ?>" subText="<?= __("You will not be able to revert this!") ?>" confirmButtonText="<?= __("Yes, delete it!") ?>" cancelButtonText="<?= __("Cancel") ?>"><i class="fa fa-minus"></i></a>
+												<?= $this->Form->postLink('', ['action' => 'delete', $chairman->id], ['class'=>'hide-postlink index-delete-button-class']) ?>
+												<a href="javascript:;" class="btn btn-sm btn-danger postlink-delete" data-bs-tooltip="tooltip" data-bs-placement="top" title="<?= __("Delete this record!") ?>" text="<?= h($chairman->name) ?>" subText="<?= __("You will not be able to revert this!") ?>" confirmButtonText="<?= __("Yes, delete it!") ?>" cancelButtonText="<?= __("Cancel") ?>"><i class="fa fa-minus"></i></a>
 
 <?php } ?>
 

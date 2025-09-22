@@ -63,7 +63,7 @@ class ClubsTable extends Table
         ]);
         $this->belongsTo('Chairmans', [
             'foreignKey' => 'chairman_id',
-            'joinType' => 'INNER',
+            'joinType' => 'LEFT',
         ]);
         $this->hasMany('Competingclubs', [
             'foreignKey' => 'club_id',
@@ -85,7 +85,7 @@ class ClubsTable extends Table
         $validator
             ->scalar('chairman_id')
             ->maxLength('chairman_id', 36)
-            ->notEmptyString('chairman_id');
+            ->allowEmptyString('chairman_id');
 
         $validator
             ->scalar('name')

@@ -95,7 +95,6 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 												</div>
 											</div>
 
-<?php /*
 											<!-- 3. INTEGER: pos: integer  required -->
 											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="pos"><?= __('Pos') ?>:</label>
@@ -105,6 +104,7 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 												</div>
 											</div>
 
+<?php /*
 											<!-- 4. DATETIME: last_used: datetime  -->
 											<div class="mb-3 row required">
 												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="last-used"><?= __('Last Used') ?>:</label>
@@ -195,7 +195,7 @@ $this->assign('title', __('Edit') . ' ' . __('Country'));
 
 <?php $this->Html->scriptStart(['block' => 'javaScriptBottom']); ?>
 
-	//jeffAdminInitInputSpinner()
+	jeffAdminInitInputSpinner()
 	//jeffAdminInitDateTimePicker('last-used'<?= $country->last_used !== null ? ", '" . $country->last_used->format('Y-m-d H:i:s') . "'" : "" ?>)
 	jeffAdminInitICheck('icheckbox_flat-blue');
 

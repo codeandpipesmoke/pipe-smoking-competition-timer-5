@@ -4,7 +4,7 @@ return [
 		'admin' => [
 			'config' => [
 				'controller' => [
-					'paginate_limit' 			=> 20,
+					'paginate_limit' 			=> 100,
 				
 				],
 				'template' => [

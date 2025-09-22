@@ -14,10 +14,13 @@ $local_config = [
 	// #################################### More config params in: \JeffAdmin5\config\config.php ####################################
 	//'show_related_tables'	=> false,
 	//'show_id' 			=> false,	// for view form
-	//'show_pos' 	 		=> false,	// for view form
+	//'show_pos'  			=> false,	// for view form
 	//'show_counters' 		=> false,	// for view form
-	//'index_show_id' 		=> false,	// for related tables
-	//'index_show_visible' 	=> false,	// for related tables
+	'index_show_id' 		=> false,	// for related tables
+	'index_show_pos' 		=> false,	// for related tables
+	'index_show_visible' 	=> false,	// for related tables
+	'index_show_created' 	=> false,	// for related tables
+	'index_show_modified' 	=> false,	// for related tables
 	//'index_show_counters'	=> false,	// for related tables
 ];
 $config = array_merge($global_config, $local_config);
@@ -56,13 +59,13 @@ $config = array_merge($global_config, $local_config);
 											<ul class="dropdown-menu">
 <?php if (!empty($country->clubs)) : ?>
 												<li><?= $this->Html->link(__('Clubs') . '...', ['controller' => 'Clubs', 'action' => 'index', 'parent', 'country', $country->id], ['class' => 'dropdown-item']) ?></li>
-<?php endif ?>
+<?php endif; ?>
 <?php if (!empty($country->competingclubs)) : ?>
 												<li><?= $this->Html->link(__('Competingclubs') . '...', ['controller' => 'Competingclubs', 'action' => 'index', 'parent', 'country', $country->id], ['class' => 'dropdown-item']) ?></li>
-<?php endif ?>
-<?php if (!empty($country->users)) : ?>
+<?php endif; ?>
+<?php if (!empty($country->my_users)) : ?>
 												<li><?= $this->Html->link(__('Users') . '...', ['controller' => 'Users', 'action' => 'index', 'parent', 'country', $country->id], ['class' => 'dropdown-item']) ?></li>
-<?php endif ?>
+<?php endif; ?>
 											</ul>
 										</li>
 
@@ -191,30 +194,47 @@ $config = array_merge($global_config, $local_config);
 								<div class="form-tab float-end">
 									<nav>
 										<div class="nav nav-tabs mt-1" id="nav-tab" role="tablist">
-<?php $acticeClass = " active"; ?>
+<?php $acticeClass = ""; ?>
+<?php $activeFounded = false; ?>
 <?php if (!empty($country->clubs)): ?>
+<?php
+		if(!$activeFounded){
+			$acticeClass = " active";
+			$activeFounded = true;
+		}
+?>
 
 											<button class="nav-link<?= $acticeClass ?>" id="nav-clubs-tab" data-bs-toggle="tab" data-bs-target="#nav-clubs" type="button" role="tab" aria-controls="nav-clubs" aria-selected="true">
 												<?= __('Clubs') ?>
 											</button>
-<?php 	$acticeClass = ""; ?>
-<?php endif ?>
-<?php $acticeClass = " active"; ?>
+<?php endif; ?>
+
+<?php $acticeClass = ""; ?>
 <?php if (!empty($country->competingclubs)): ?>
+<?php
+		if(!$activeFounded){
+			$acticeClass = " active";
+			$activeFounded = true;
+		}
+?>
 
 											<button class="nav-link<?= $acticeClass ?>" id="nav-competingclubs-tab" data-bs-toggle="tab" data-bs-target="#nav-competingclubs" type="button" role="tab" aria-controls="nav-competingclubs" aria-selected="true">
 												<?= __('Competingclubs') ?>
 											</button>
 <?php 	$acticeClass = ""; ?>
-<?php endif ?>
-<?php $acticeClass = " active"; ?>
-<?php if (!empty($country->users)): ?>
+<?php endif; ?>
+<?php if (!empty($country->my_users)): ?>
+<?php
+		if(!$activeFounded){
+			$acticeClass = " active";
+			$activeFounded = true;
+		}
+?>
 
 											<button class="nav-link<?= $acticeClass ?>" id="nav-users-tab" data-bs-toggle="tab" data-bs-target="#nav-users" type="button" role="tab" aria-controls="nav-users" aria-selected="true">
 												<?= __('Users') ?>
 											</button>
-<?php 	$acticeClass = ""; ?>
-<?php endif ?>
+<?php endif; ?>
 										</div>
 									</nav>
 								</div>
@@ -225,8 +245,15 @@ $config = array_merge($global_config, $local_config);
 
 								<div class="tab-content" id="nav-tabContent">
 
-<?php $acticeClass = " show active"; ?>
+<?php $activeFounded = false; ?>
+<?php $acticeClass = ""; ?>
 <?php if (!empty($country->clubs)): ?>
+<?php
+		if(!$activeFounded){
+			$acticeClass = " show active";
+			$activeFounded = true;
+		}
+?>
 
 									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-clubs" role="tabpanel" aria-labelledby="nav-clubs-tab" tabindex="0">
 
@@ -236,12 +263,9 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['index_show_id']){ ?>
 													<th class="number id"><?= __('Id') ?></th>
 <?php } ?>
-													<th class="please-change-type country-id"><?= __('Country Id') ?></th>
-													<th class="please-change-type chairman-id"><?= __('Chairman Id') ?></th>
 													<th class="string name"><?= __('Name') ?></th>
-													<th class="please-change-type description"><?= __('Description') ?></th>
-													<th class="please-change-type email"><?= __('Email') ?></th>
-													<th class="please-change-type web"><?= __('Web') ?></th>
+													<th class="email"><?= __('Email') ?></th>
+													<th class="web"><?= __('Web') ?></th>
 <?php if($config['index_show_visible']){ ?>
 													<th class="boolean visible"><?= __('Visible') ?></th>
 <?php } ?>
@@ -270,12 +294,13 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['index_show_id']){ ?>
 													<td class="number id" value="<?= $clubs->id ?>"><?= h($clubs->id) ?></td>
 <?php } ?>
-													<td class="please-change-type country-id" value="<?= $clubs->country_id ?>"><?= h($clubs->country_id) ?></td>
-													<td class="please-change-type chairman-id" value="<?= $clubs->chairman_id ?>"><?= h($clubs->chairman_id) ?></td>
-													<td class="string name" value="<?= $clubs->name ?>"><?= h($clubs->name) ?></td>
-													<td class="please-change-type description" value="<?= $clubs->description ?>"><?= h($clubs->description) ?></td>
-													<td class="please-change-type email" value="<?= $clubs->email ?>"><?= h($clubs->email) ?></td>
-													<td class="please-change-type web" value="<?= $clubs->web ?>"><?= h($clubs->web) ?></td>
+													
+													<td class="string name" value="<?= $clubs->name ?>">
+														<?= $this->Html->link(h($clubs->name), ['controller' => 'Clubs', 'action' => 'view', $clubs->id], ["escape" => false, "role" => "button",  "class" => "link", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('View this item'), "data-original-title" => ""]) ?>
+														<span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span>
+													</td>
+													<td class="email" value="<?= $clubs->email ?>"><?= h($clubs->email) ?></td>
+													<td class="web" value="<?= $clubs->web ?>"><?= h($clubs->web) ?></td>
 <?php if($config['index_show_visible']){ ?>
 													<td class="boolean visible" value="<?= $clubs->visible ?>"><?= h($clubs->visible) ?></td>
 <?php } ?>
@@ -283,10 +308,10 @@ $config = array_merge($global_config, $local_config);
 													<td class="number pos" value="<?= $clubs->pos ?>"><?= h($clubs->pos) ?></td>
 <?php } ?>
 <?php if($config['index_show_counters']){ ?>
-													<td class="number user-count" value="<?= $clubs->user_count ?>"><?= h($clubs->user_count) ?></td>
+													<td class="number user-count counter" value="<?= $clubs->user_count ?>"><?= h($clubs->user_count) ?></td>
 <?php } ?>
 <?php if($config['index_show_counters']){ ?>
-													<td class="number competingclub-count" value="<?= $clubs->competingclub_count ?>"><?= h($clubs->competingclub_count) ?></td>
+													<td class="number competingclub-count counter" value="<?= $clubs->competingclub_count ?>"><?= h($clubs->competingclub_count) ?></td>
 <?php } ?>
 <?php if($config['index_show_created']){ ?>
 													<td class="datetime created" value="<?= $clubs->created ?>"><?= h($clubs->created) ?></td>
@@ -306,10 +331,16 @@ $config = array_merge($global_config, $local_config);
 										</table>
 
 									</div><!-- /tab pane -->
-<?php 	$acticeClass = ""; ?>
-<?php endif ?>
-<?php $acticeClass = " show active"; ?>
+<?php endif; ?>
+
+<?php $acticeClass = ""; ?>
 <?php if (!empty($country->competingclubs)): ?>
+<?php
+		if(!$activeFounded){
+			$acticeClass = " show active";
+			$activeFounded = true;
+		}
+?>
 
 									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-competingclubs" role="tabpanel" aria-labelledby="nav-competingclubs-tab" tabindex="0">
 
@@ -319,15 +350,15 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['index_show_id']){ ?>
 													<th class="number id"><?= __('Id') ?></th>
 <?php } ?>
-													<th class="please-change-type country-id"><?= __('Country Id') ?></th>
-													<th class="please-change-type competition-id"><?= __('Competition Id') ?></th>
-													<th class="please-change-type club-id"><?= __('Club Id') ?></th>
+													<th class="country-id"><?= __('Country Id') ?></th>
+													<th class="competition-id"><?= __('Competition Id') ?></th>
+													<th class="club-id"><?= __('Club Id') ?></th>
 													<th class="string name"><?= __('Name') ?></th>
-													<th class="please-change-type description"><?= __('Description') ?></th>
-													<th class="please-change-type time-achieved"><?= __('Time Achieved') ?></th>
-													<th class="please-change-type score"><?= __('Score') ?></th>
-													<th class="please-change-type excluded"><?= __('Excluded') ?></th>
-													<th class="please-change-type excluded-description"><?= __('Excluded Description') ?></th>
+													<th class="description"><?= __('Description') ?></th>
+													<th class="time-achieved"><?= __('Time Achieved') ?></th>
+													<th class="score"><?= __('Score') ?></th>
+													<th class="excluded"><?= __('Excluded') ?></th>
+													<th class="excluded-description"><?= __('Excluded Description') ?></th>
 <?php if($config['index_show_visible']){ ?>
 													<th class="boolean visible"><?= __('Visible') ?></th>
 <?php } ?>
@@ -353,15 +384,15 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['index_show_id']){ ?>
 													<td class="number id" value="<?= $competingclubs->id ?>"><?= h($competingclubs->id) ?></td>
 <?php } ?>
-													<td class="please-change-type country-id" value="<?= $competingclubs->country_id ?>"><?= h($competingclubs->country_id) ?></td>
-													<td class="please-change-type competition-id" value="<?= $competingclubs->competition_id ?>"><?= h($competingclubs->competition_id) ?></td>
-													<td class="please-change-type club-id" value="<?= $competingclubs->club_id ?>"><?= h($competingclubs->club_id) ?></td>
+													<td class="country-id" value="<?= $competingclubs->country_id ?>"><?= h($competingclubs->country_id) ?></td>
+													<td class="competition-id" value="<?= $competingclubs->competition_id ?>"><?= h($competingclubs->competition_id) ?></td>
+													<td class="club-id" value="<?= $competingclubs->club_id ?>"><?= h($competingclubs->club_id) ?></td>
 													<td class="string name" value="<?= $competingclubs->name ?>"><?= h($competingclubs->name) ?></td>
-													<td class="please-change-type description" value="<?= $competingclubs->description ?>"><?= h($competingclubs->description) ?></td>
-													<td class="please-change-type time-achieved" value="<?= $competingclubs->time_achieved ?>"><?= h($competingclubs->time_achieved) ?></td>
-													<td class="please-change-type score" value="<?= $competingclubs->score ?>"><?= h($competingclubs->score) ?></td>
-													<td class="please-change-type excluded" value="<?= $competingclubs->excluded ?>"><?= h($competingclubs->excluded) ?></td>
-													<td class="please-change-type excluded-description" value="<?= $competingclubs->excluded_description ?>"><?= h($competingclubs->excluded_description) ?></td>
+													<td class="description" value="<?= $competingclubs->description ?>"><?= h($competingclubs->description) ?></td>
+													<td class="time-achieved" value="<?= $competingclubs->time_achieved ?>"><?= h($competingclubs->time_achieved) ?></td>
+													<td class="score" value="<?= $competingclubs->score ?>"><?= h($competingclubs->score) ?></td>
+													<td class="excluded" value="<?= $competingclubs->excluded ?>"><?= h($competingclubs->excluded) ?></td>
+													<td class="excluded-description" value="<?= $competingclubs->excluded_description ?>"><?= h($competingclubs->excluded_description) ?></td>
 <?php if($config['index_show_visible']){ ?>
 													<td class="boolean visible" value="<?= $competingclubs->visible ?>"><?= h($competingclubs->visible) ?></td>
 <?php } ?>
@@ -369,7 +400,7 @@ $config = array_merge($global_config, $local_config);
 													<td class="number pos" value="<?= $competingclubs->pos ?>"><?= h($competingclubs->pos) ?></td>
 <?php } ?>
 <?php if($config['index_show_counters']){ ?>
-													<td class="number competitor-count" value="<?= $competingclubs->competitor_count ?>"><?= h($competingclubs->competitor_count) ?></td>
+													<td class="number competitor-count counter" value="<?= $competingclubs->competitor_count ?>"><?= h($competingclubs->competitor_count) ?></td>
 <?php } ?>
 <?php if($config['index_show_created']){ ?>
 													<td class="datetime created" value="<?= $competingclubs->created ?>"><?= h($competingclubs->created) ?></td>
@@ -389,10 +420,16 @@ $config = array_merge($global_config, $local_config);
 										</table>
 
 									</div><!-- /tab pane -->
-<?php 	$acticeClass = ""; ?>
-<?php endif ?>
-<?php $acticeClass = " show active"; ?>
-<?php if (!empty($country->users)): ?>
+<?php endif; ?>
+
+<?php $acticeClass = ""; ?>
+<?php if (!empty($country->my_users)): ?>
+<?php
+		if(!$activeFounded){
+			$acticeClass = " show active";
+			$activeFounded = true;
+		}
+?>
 
 									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab" tabindex="0">
 
@@ -402,29 +439,13 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['index_show_id']){ ?>
 													<th class="number id"><?= __('Id') ?></th>
 <?php } ?>
-													<th class="please-change-type country-id"><?= __('Country Id') ?></th>
-													<th class="please-change-type lang-id"><?= __('Lang Id') ?></th>
-													<th class="please-change-type club-id"><?= __('Club Id') ?></th>
-													<th class="please-change-type username"><?= __('Username') ?></th>
-													<th class="please-change-type email"><?= __('Email') ?></th>
-													<th class="please-change-type password"><?= __('Password') ?></th>
-													<th class="please-change-type first-name"><?= __('First Name') ?></th>
-													<th class="please-change-type last-name"><?= __('Last Name') ?></th>
-													<th class="please-change-type description"><?= __('Description') ?></th>
-													<th class="please-change-type token"><?= __('Token') ?></th>
-													<th class="please-change-type token-expires"><?= __('Token Expires') ?></th>
-													<th class="please-change-type api-token"><?= __('Api Token') ?></th>
-													<th class="please-change-type activation-date"><?= __('Activation Date') ?></th>
-													<th class="please-change-type secret"><?= __('Secret') ?></th>
-													<th class="please-change-type secret-verified"><?= __('Secret Verified') ?></th>
-													<th class="please-change-type tos-date"><?= __('Tos Date') ?></th>
-													<th class="please-change-type active"><?= __('Active') ?></th>
-													<th class="please-change-type is-superuser"><?= __('Is Superuser') ?></th>
-													<th class="please-change-type role"><?= __('Role') ?></th>
-													<th class="please-change-type enabled"><?= __('Enabled') ?></th>
-													<th class="please-change-type additional-data"><?= __('Additional Data') ?></th>
-													<th class="please-change-type last-login"><?= __('Last Login') ?></th>
-													<th class="please-change-type lockout-time"><?= __('Lockout Time') ?></th>
+													<th class="first-name">
+														<?= __('First Name') ?>&nbsp;<?= __('Last Name') ?>
+													</th>
+													<th class="lang-id"><?= __('Lang Id') ?></th>
+													<th class="club-id"><?= __('Club Id') ?></th>
+													<th class="email"><?= __('Email') ?></th>
+													<th class="role"><?= __('Role') ?></th>
 <?php if($config['index_show_visible']){ ?>
 													<th class="boolean visible"><?= __('Visible') ?></th>
 <?php } ?>
@@ -447,35 +468,27 @@ $config = array_merge($global_config, $local_config);
 												</tr>
 											</thead>
 											<tbody>
-												<?php foreach ($country->users as $users) : ?>
+												<?php foreach ($country->my_users as $users) : ?>
 
 												<tr>
 <?php if($config['index_show_id']){ ?>
 													<td class="number id" value="<?= $users->id ?>"><?= h($users->id) ?></td>
 <?php } ?>
-													<td class="please-change-type country-id" value="<?= $users->country_id ?>"><?= h($users->country_id) ?></td>
-													<td class="please-change-type lang-id" value="<?= $users->lang_id ?>"><?= h($users->lang_id) ?></td>
-													<td class="please-change-type club-id" value="<?= $users->club_id ?>"><?= h($users->club_id) ?></td>
-													<td class="please-change-type username" value="<?= $users->username ?>"><?= h($users->username) ?></td>
-													<td class="please-change-type email" value="<?= $users->email ?>"><?= h($users->email) ?></td>
-													<td class="please-change-type password" value="<?= $users->password ?>"><?= h($users->password) ?></td>
-													<td class="please-change-type first-name" value="<?= $users->first_name ?>"><?= h($users->first_name) ?></td>
-													<td class="please-change-type last-name" value="<?= $users->last_name ?>"><?= h($users->last_name) ?></td>
-													<td class="please-change-type description" value="<?= $users->description ?>"><?= h($users->description) ?></td>
-													<td class="please-change-type token" value="<?= $users->token ?>"><?= h($users->token) ?></td>
-													<td class="please-change-type token-expires" value="<?= $users->token_expires ?>"><?= h($users->token_expires) ?></td>
-													<td class="please-change-type api-token" value="<?= $users->api_token ?>"><?= h($users->api_token) ?></td>
-													<td class="please-change-type activation-date" value="<?= $users->activation_date ?>"><?= h($users->activation_date) ?></td>
-													<td class="please-change-type secret" value="<?= $users->secret ?>"><?= h($users->secret) ?></td>
-													<td class="please-change-type secret-verified" value="<?= $users->secret_verified ?>"><?= h($users->secret_verified) ?></td>
-													<td class="please-change-type tos-date" value="<?= $users->tos_date ?>"><?= h($users->tos_date) ?></td>
-													<td class="please-change-type active" value="<?= $users->active ?>"><?= h($users->active) ?></td>
-													<td class="please-change-type is-superuser" value="<?= $users->is_superuser ?>"><?= h($users->is_superuser) ?></td>
-													<td class="please-change-type role" value="<?= $users->role ?>"><?= h($users->role) ?></td>
-													<td class="please-change-type enabled" value="<?= $users->enabled ?>"><?= h($users->enabled) ?></td>
-													<td class="please-change-type additional-data" value="<?= $users->additional_data ?>"><?= h($users->additional_data) ?></td>
-													<td class="please-change-type last-login" value="<?= $users->last_login ?>"><?= h($users->last_login) ?></td>
-													<td class="please-change-type lockout-time" value="<?= $users->lockout_time ?>"><?= h($users->lockout_time) ?></td>
+													<td class="name">
+<?php if($users->nameorder = 'first-last'){ ?>
+													
+														<?= h($users->first_name) ?>&nbsp;<?= h($users->last_name) ?>
+<?php }else{ ?>
+
+														<?= h($users->last_name) ?>&nbsp;<?= h($users->first_name) ?>
+														
+<?php } ?>
+													</td>
+
+													<td class="lang-id" value="<?= $users->lang_id ?>"><?= h($users->lang_id) ?></td>
+													<td class="club-id" value="<?= $users->club_id ?>"><?= h($users->club_id) ?></td>
+													<td class="email" value="<?= $users->email ?>"><?= h($users->email) ?></td>
+													<td class="role" value="<?= $users->role ?>"><?= h($users->role) ?></td>
 <?php if($config['index_show_visible']){ ?>
 													<td class="boolean visible" value="<?= $users->visible ?>"><?= h($users->visible) ?></td>
 <?php } ?>
@@ -483,10 +496,10 @@ $config = array_merge($global_config, $local_config);
 													<td class="number pos" value="<?= $users->pos ?>"><?= h($users->pos) ?></td>
 <?php } ?>
 <?php if($config['index_show_counters']){ ?>
-													<td class="number competitor-count" value="<?= $users->competitor_count ?>"><?= h($users->competitor_count) ?></td>
+													<td class="number competitor-count counter" value="<?= $users->competitor_count ?>"><?= h($users->competitor_count) ?></td>
 <?php } ?>
 <?php if($config['index_show_counters']){ ?>
-													<td class="number table-count" value="<?= $users->table_count ?>"><?= h($users->table_count) ?></td>
+													<td class="number table-count counter" value="<?= $users->table_count ?>"><?= h($users->table_count) ?></td>
 <?php } ?>
 <?php if($config['index_show_created']){ ?>
 													<td class="datetime created" value="<?= $users->created ?>"><?= h($users->created) ?></td>
@@ -507,7 +520,7 @@ $config = array_merge($global_config, $local_config);
 
 									</div><!-- /tab pane -->
 <?php 	$acticeClass = ""; ?>
-<?php endif ?>
+<?php endif; ?>
 
 								</div><!-- /tab content -->
 

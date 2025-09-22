@@ -92,7 +92,7 @@ return [
 
 
 
-
+/*
 					[
 						'type' 		=> 'menu',
 						'icon' 		=> 'fa fa-fw fa-bars',
@@ -107,7 +107,7 @@ return [
 						'controller'=> 'Diplomas',
 						'action' 	=> 'index',
 					],
-
+*/
 
 
 

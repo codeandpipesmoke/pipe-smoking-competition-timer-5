@@ -68,9 +68,25 @@ class ChairmansTable extends UsersTable
         //    'foreignKey' => 'user_id',
         //]);
 
-        $this->hasMany('Clubs', [
-            'foreignKey' => 'chairman_id',
+        $this->belongsTo('Countries', [
+            'foreignKey' => 'country_id',
+            'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Langs', [
+            'foreignKey' => 'lang_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Clubs', [
+            'foreignKey' => 'club_id',
+            'joinType' => 'INNER',
+        ]);
+        //$this->hasMany('Tables', [
+        //    'foreignKey' => 'chairman_id',
+        //]);
+
+        //$this->hasMany('Clubs', [
+        //    'foreignKey' => 'chairman_id',
+        //]);
 
     }
 

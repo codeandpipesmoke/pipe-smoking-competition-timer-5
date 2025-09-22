@@ -100,6 +100,15 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 												</div>
 											</div>
 
+											<!-- 7. BOOLEAN: active: boolean  required -->
+											<div class="mb-3 form-group row checkbox">
+												<div class="col-sm-2 col-form-label required"></div>
+												<div class="col-sm-10">
+													<?= $this->Form->control('chairman', ['empty' => false]); ?>
+
+												</div>
+											</div>
+
 											<!-- 2. STRING: last_name: string  -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="last-name"><?= __('Last Name') ?>:</label>
@@ -118,9 +127,18 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 												</div>
 											</div>
 
+											<!-- 1. SELECT: role: integer  required -->
+											<div class="mb-3 form-group row select required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="role"><?= __('Name Order') ?>:</label>
+												<div class="col-md-4">
+													<?= $this->Form->control('nameorder', ['options' => ['first-last' => __('First name AND Last name. (Pl: Zsolt Kiss)'), 'last-first' => __('Last name AND First name (Pl: Kiss Zsolt)')], 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+
+												</div>
+											</div>
+
 											<!-- 2. STRING: email: string  -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="email"><?= __('Email') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="email"><?= __('Email') ?>:</label>
 												<div class="col-md-9">
 													<?= $this->Form->control('email', ['label' => __('Email'), 'class' => 'form-control', 'empty' => false]); ?>
 

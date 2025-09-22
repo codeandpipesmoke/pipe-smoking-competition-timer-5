@@ -55,7 +55,7 @@ $config = array_merge($global_config, $local_config);
 											<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><?= __('Related tables') ?></a>
 											<ul class="dropdown-menu">
 <?php if (!empty($lang->users)) : ?>
-												<li><?= $this->Html->link(__('Users') . '...', ['controller' => 'Users', 'action' => 'index', 'parent', 'lang', $lang->id], ['class' => 'dropdown-item']) ?></li>
+												<li><?= $this->Html->link(__('Users') . '...', ['controller' => 'MyUsers', 'action' => 'index', 'parent', 'lang', $lang->id], ['class' => 'dropdown-item']) ?></li>
 <?php endif ?>
 											</ul>
 										</li>
@@ -108,7 +108,6 @@ $config = array_merge($global_config, $local_config);
 											</div>
 <?php } ?>
 
-
 										</div><!-- /.1.TAB -->
 										
 
@@ -157,134 +156,62 @@ $config = array_merge($global_config, $local_config);
 									<?= __('Here you can see the latest records related to the above item.') ?>
 								</div>
 
+<?php $acticeClass = " active"; ?>
+<?php if (!empty($lang->users)): ?>
 								<div class="form-tab float-end">
 									<nav>
 										<div class="nav nav-tabs mt-1" id="nav-tab" role="tablist">
-<?php $acticeClass = " active"; ?>
-<?php if (!empty($lang->users)): ?>
 
 											<button class="nav-link<?= $acticeClass ?>" id="nav-users-tab" data-bs-toggle="tab" data-bs-target="#nav-users" type="button" role="tab" aria-controls="nav-users" aria-selected="true">
 												<?= __('Users') ?>
 											</button>
-<?php 	$acticeClass = ""; ?>
-<?php endif ?>
 										</div>
 									</nav>
 								</div>
+<?php 	$acticeClass = ""; ?>
+<?php endif ?>
 
 							</div><!-- /card header -->
 								
+<?php $acticeClass = " show active"; ?>
+<?php if (!empty($lang->users)): ?>
 							<div class="card-body p-1 pb-0">
 
 								<div class="tab-content" id="nav-tabContent">
 
-<?php $acticeClass = " show active"; ?>
-<?php if (!empty($lang->users)): ?>
 
 									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab" tabindex="0">
 
 										<table class="table table-responsive-xl table-hover table-striped" style="">
 											<thead class="thead-info">
 												<tr>
-<?php if($config['index_show_id']){ ?>
-													<th class="number id"><?= __('Id') ?></th>
-<?php } ?>
-													<th class="please-change-type country-id"><?= __('Country Id') ?></th>
-													<th class="please-change-type lang-id"><?= __('Lang Id') ?></th>
-													<th class="please-change-type club-id"><?= __('Club Id') ?></th>
-													<th class="please-change-type username"><?= __('Username') ?></th>
-													<th class="please-change-type email"><?= __('Email') ?></th>
-													<th class="please-change-type password"><?= __('Password') ?></th>
-													<th class="please-change-type first-name"><?= __('First Name') ?></th>
-													<th class="please-change-type last-name"><?= __('Last Name') ?></th>
-													<th class="please-change-type description"><?= __('Description') ?></th>
-													<th class="please-change-type token"><?= __('Token') ?></th>
-													<th class="please-change-type token-expires"><?= __('Token Expires') ?></th>
-													<th class="please-change-type api-token"><?= __('Api Token') ?></th>
-													<th class="please-change-type activation-date"><?= __('Activation Date') ?></th>
-													<th class="please-change-type secret"><?= __('Secret') ?></th>
-													<th class="please-change-type secret-verified"><?= __('Secret Verified') ?></th>
-													<th class="please-change-type tos-date"><?= __('Tos Date') ?></th>
-													<th class="please-change-type active"><?= __('Active') ?></th>
-													<th class="please-change-type is-superuser"><?= __('Is Superuser') ?></th>
-													<th class="please-change-type role"><?= __('Role') ?></th>
-													<th class="please-change-type enabled"><?= __('Enabled') ?></th>
-													<th class="please-change-type additional-data"><?= __('Additional Data') ?></th>
-													<th class="please-change-type last-login"><?= __('Last Login') ?></th>
-													<th class="please-change-type lockout-time"><?= __('Lockout Time') ?></th>
-<?php if($config['index_show_visible']){ ?>
-													<th class="boolean visible"><?= __('Visible') ?></th>
-<?php } ?>
-<?php if($config['index_show_pos']){ ?>
-													<th class="number pos"><?= __('Pos') ?></th>
-<?php } ?>
-<?php if($config['index_show_counters']){ ?>
-													<th class="number competitor-count"><?= __('Competitor Count') ?></th>
-<?php } ?>
-<?php if($config['index_show_counters']){ ?>
-													<th class="number table-count"><?= __('Table Count') ?></th>
-<?php } ?>
-<?php if($config['index_show_created']){ ?>
-													<th class="datetime created"><?= __('Created') ?></th>
-<?php } ?>
-<?php if($config['index_show_modified']){ ?>
-													<th class="datetime modified"><?= __('Modified') ?></th>
-<?php } ?>
+													<th class="last-name"><?= __('Last Name') ?></th>
+													<th class="first-name"><?= __('First Name') ?></th>
+													<th class="role"><?= __('Role') ?></th>
+													<th class="country-id"><?= __('Country Id') ?></th>
+													<th class="club-id"><?= __('Club Id') ?></th>
+													<th class="email"><?= __('Email') ?></th>
+													<th class="text-center last-login"><?= __('Last Login') ?></th>
 													<th class="actions"><?= __('Actions') ?></th>
 												</tr>
 											</thead>
 											<tbody>
-												<?php foreach ($lang->users as $users) : ?>
+												<?php foreach ($lang->users as $users): //dd($users); ?>
 
 												<tr>
-<?php if($config['index_show_id']){ ?>
-													<td class="number id" value="<?= $users->id ?>"><?= h($users->id) ?></td>
-<?php } ?>
-													<td class="please-change-type country-id" value="<?= $users->country_id ?>"><?= h($users->country_id) ?></td>
-													<td class="please-change-type lang-id" value="<?= $users->lang_id ?>"><?= h($users->lang_id) ?></td>
-													<td class="please-change-type club-id" value="<?= $users->club_id ?>"><?= h($users->club_id) ?></td>
-													<td class="please-change-type username" value="<?= $users->username ?>"><?= h($users->username) ?></td>
-													<td class="please-change-type email" value="<?= $users->email ?>"><?= h($users->email) ?></td>
-													<td class="please-change-type password" value="<?= $users->password ?>"><?= h($users->password) ?></td>
-													<td class="please-change-type first-name" value="<?= $users->first_name ?>"><?= h($users->first_name) ?></td>
-													<td class="please-change-type last-name" value="<?= $users->last_name ?>"><?= h($users->last_name) ?></td>
-													<td class="please-change-type description" value="<?= $users->description ?>"><?= h($users->description) ?></td>
-													<td class="please-change-type token" value="<?= $users->token ?>"><?= h($users->token) ?></td>
-													<td class="please-change-type token-expires" value="<?= $users->token_expires ?>"><?= h($users->token_expires) ?></td>
-													<td class="please-change-type api-token" value="<?= $users->api_token ?>"><?= h($users->api_token) ?></td>
-													<td class="please-change-type activation-date" value="<?= $users->activation_date ?>"><?= h($users->activation_date) ?></td>
-													<td class="please-change-type secret" value="<?= $users->secret ?>"><?= h($users->secret) ?></td>
-													<td class="please-change-type secret-verified" value="<?= $users->secret_verified ?>"><?= h($users->secret_verified) ?></td>
-													<td class="please-change-type tos-date" value="<?= $users->tos_date ?>"><?= h($users->tos_date) ?></td>
-													<td class="please-change-type active" value="<?= $users->active ?>"><?= h($users->active) ?></td>
-													<td class="please-change-type is-superuser" value="<?= $users->is_superuser ?>"><?= h($users->is_superuser) ?></td>
-													<td class="please-change-type role" value="<?= $users->role ?>"><?= h($users->role) ?></td>
-													<td class="please-change-type enabled" value="<?= $users->enabled ?>"><?= h($users->enabled) ?></td>
-													<td class="please-change-type additional-data" value="<?= $users->additional_data ?>"><?= h($users->additional_data) ?></td>
-													<td class="please-change-type last-login" value="<?= $users->last_login ?>"><?= h($users->last_login) ?></td>
-													<td class="please-change-type lockout-time" value="<?= $users->lockout_time ?>"><?= h($users->lockout_time) ?></td>
-<?php if($config['index_show_visible']){ ?>
-													<td class="boolean visible" value="<?= $users->visible ?>"><?= h($users->visible) ?></td>
-<?php } ?>
-<?php if($config['index_show_pos']){ ?>
-													<td class="number pos" value="<?= $users->pos ?>"><?= h($users->pos) ?></td>
-<?php } ?>
-<?php if($config['index_show_counters']){ ?>
-													<td class="number competitor-count" value="<?= $users->competitor_count ?>"><?= h($users->competitor_count) ?></td>
-<?php } ?>
-<?php if($config['index_show_counters']){ ?>
-													<td class="number table-count" value="<?= $users->table_count ?>"><?= h($users->table_count) ?></td>
-<?php } ?>
-<?php if($config['index_show_created']){ ?>
-													<td class="datetime created" value="<?= $users->created ?>"><?= h($users->created) ?></td>
-<?php } ?>
-<?php if($config['index_show_modified']){ ?>
-													<td class="datetime modified" value="<?= $users->modified ?>"><?= h($users->modified) ?></td>
-<?php } ?>
+													<td class="last-name" value="<?= $users->last_name ?>"><?= h($users->last_name) ?></td>
+													<td class="first-name" value="<?= $users->first_name ?>"><?= h($users->first_name) ?></td>
+													<td class="role" value="<?= $users->role ?>"><?= h($role[$users->role]) ?></td>
+													<td class="country-id" value="<?= $users->country_id ?>"><?= h($users->country->name) ?></td>
+													<td class="club-id" value="<?= $users->club_id ?>"><?= h($users->club->name) ?></td>
+													<td class="email" value="<?= $users->email ?>"><?= h($users->email) ?></td>
+													<td class="text-center last-login" value="<?= $users->last_login ?>"><?= h($users->last_login) ?></td>
 													<td class="actions">
-														<?= $this->Html->link('<i class="fa fa-eye"></i>', ['controller' => 'Users', 'action' => 'view', $users->id], ["escape" => false, "role" => "button",  "class" => "btn btn-warning btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('View this item'), "data-original-title" => ""]) ?><!-- view button -->
-														<?= $this->Html->link('<i class="fa fa-edit"></i>', ['controller' => 'Users', 'action' => 'edit', $users->id], ["escape" => false, "role" => "button", "class" => "btn btn-primary btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('Edit this item'), "data-original-title" => ""]) ?><!-- edit button -->
-														<?= $this->Form->postLink('<i class="fa fa-times"></i>', ['controller' => 'Users', 'action' => 'delete', $users->id], ["escape" => false, "role" => "button", "class" => "btn btn-danger btn-sm", "data-toggle" =>"tooltip", "data-placement" => "top", "title" => __('Delete this item'), "data-original-title" => "", "confirm" => __("Are you sure you want to delete # {0}?", $users->id)]) ?><!-- delete button -->
+														<?= $this->Html->link('<i class="fa fa-eye"></i>', ['controller' => 'MyUsers', 'action' => 'view', $users->id], ["escape" => false, "role" => "button",  "class" => "btn btn-warning btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('View this item'), "data-original-title" => ""]) ?><!-- view button -->
+														<?= $this->Html->link('<i class="fa fa-edit"></i>', ['controller' => 'MyUsers', 'action' => 'edit', $users->id], ["escape" => false, "role" => "button", "class" => "btn btn-primary btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('Edit this item'), "data-original-title" => ""]) ?><!-- edit button -->
+<?php /*
+														<?= $this->Form->postLink('<i class="fa fa-times"></i>', ['controller' => 'MyUsers', 'action' => 'delete', $users->id], ["escape" => false, "role" => "button", "class" => "btn btn-danger btn-sm", "data-toggle" =>"tooltip", "data-placement" => "top", "title" => __('Delete this item'), "data-original-title" => "", "confirm" => __("Are you sure you want to delete # {0}?", $users->id)]) ?><!-- delete button -->
+*/ ?>
 													</td>
 												</tr>
 												<?php endforeach ?>
@@ -293,12 +220,12 @@ $config = array_merge($global_config, $local_config);
 										</table>
 
 									</div><!-- /tab pane -->
-<?php 	$acticeClass = ""; ?>
-<?php endif ?>
 
 								</div><!-- /tab content -->
 
 							</div><!-- /card body -->
+<?php 	$acticeClass = ""; ?>
+<?php endif ?>
 
 						    <div class="card-footer">
 								<!-- Bottom text! -->

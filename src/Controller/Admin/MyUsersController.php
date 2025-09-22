@@ -260,7 +260,8 @@ class MyUsersController extends AppController
         $myUser = $this->MyUsers->newEmptyEntity();
         if ($this->request->is('post')) {
             $myUser = $this->MyUsers->patchEntity($myUser, $this->request->getData());
-            if ($this->MyUsers->save($myUser)) {
+			//dd($myUser->getErrors());
+            if (!$myUser->hasErrors() && $this->MyUsers->save($myUser)) {
                 $this->Flash->success(__('The my user has been saved.'), ['plugin' => 'JeffAdmin5']);
 				$this->session->write('Layout.' . $this->controller . '.LastId', $myUser->id);
 
@@ -268,7 +269,7 @@ class MyUsersController extends AppController
             }
             $this->Flash->error(__('The my user could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $countries = $this->MyUsers->Countries->find('list', conditions: ['visible' => true], limit: 1000, order: ['pos' => 'asc', 'name' => 'asc'])->all();
+        $countries = $this->MyUsers->Countries->find('list', conditions: ['visible' => true], limit: 1000, order: ['pos' => 'asc', 'user_count' => 'desc', 'name' => 'asc'])->all();
         $langs = $this->MyUsers->Langs->find('list', conditions: ['visible' => true], limit: 100, order: ['pos' => 'asc', 'name' => 'asc'])->all();
         $clubs = $this->MyUsers->Clubs->find('list', conditions: ['visible' => true], limit: 500, order: ['pos' => 'asc', 'name' => 'asc'])->all();
 
@@ -312,7 +313,7 @@ class MyUsersController extends AppController
             }
             $this->Flash->error(__('The my user could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $countries = $this->MyUsers->Countries->find('list', conditions: ['visible' => true], limit: 1000, order: ['pos' => 'asc', 'name' => 'asc'])->all();
+        $countries = $this->MyUsers->Countries->find('list', conditions: ['visible' => true], limit: 1000, order: ['pos' => 'asc', 'user_count' => 'desc', 'name' => 'asc'])->all();
         $langs = $this->MyUsers->Langs->find('list', conditions: ['visible' => true], limit: 100, order: ['pos' => 'asc', 'name' => 'asc'])->all();
         $clubs = $this->MyUsers->Clubs->find('list', conditions: ['visible' => true], limit: 500, order: ['pos' => 'asc', 'name' => 'asc'])->all();
 

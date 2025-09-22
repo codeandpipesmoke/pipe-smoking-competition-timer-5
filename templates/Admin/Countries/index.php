@@ -13,9 +13,9 @@ if($session->check('Layout.Countries.LastId')){
 $global_config = (array) Configure::read('Theme.' . $prefix . '.config.template.index');
 $local_config = [
 	'show_id' 			=> true,
-	'show_pos' 			=> false,
-	'show_counters'		=> false,
-	'action_db_click'	=> 'edit',	// none, edit or view
+	'show_pos' 			=> true,
+	'show_counters'		=> true,
+	'action_db_click'	=> 'view',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
 $config = array_merge($global_config, $local_config);
@@ -70,7 +70,8 @@ $config = array_merge($global_config, $local_config);
 											<th class="boolean visible"><?= $this->Paginator->sort('visible') ?></th>
 <?php } ?>
 <?php if($config['show_counters']){ ?>
-											<th class="number counter user_count"><?= $this->Paginator->sort('user_count') ?></th>											<th class="number counter club_count"><?= $this->Paginator->sort('club_count') ?></th>											<th class="number counter competition_count"><?= $this->Paginator->sort('competition_count') ?></th><?php } ?>
+											<th class="number counter user_count"><?= $this->Paginator->sort('user_count') ?></th>											<th class="number counter club_count"><?= $this->Paginator->sort('club_count') ?></th>											<th class="number counter competition_count"><?= $this->Paginator->sort('competition_count') ?></th>
+<?php } ?>
 <?php if($config['show_button_view'] || $config['show_button_edit'] || $config['show_button_delete'] ){ ?>
 											<th class="actions"><?= __('Actions') ?></th>
 <?php } ?>

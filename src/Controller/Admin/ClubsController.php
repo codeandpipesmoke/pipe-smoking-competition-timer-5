@@ -19,6 +19,7 @@ class ClubsController extends AppController
 	//public $defaultOrder 	= ['Pagecategories.name' => 'asc', 'Pages.pos' => 'asc'];	// For example
 	public $defaultOrder 	= ['id' => 'asc'];
 	public $Chairmans 	 	= null;
+	public $MyUsers			= null;
 
     /**
      * Initialize controller
@@ -28,8 +29,9 @@ class ClubsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-		$this->Chairmans = $this->fetchTable('Chairmans');
-		
+		$this->Chairmans 	= $this->fetchTable('Chairmans');
+		$this->MyUsers 		= $this->fetchTable('MyUsers');
+
 	}
 
     /**
@@ -248,8 +250,9 @@ class ClubsController extends AppController
             //$this->Flash->error(__('The club could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
             $this->Flash->error(__('The save has been not. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $countries = $this->Clubs->Countries->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-		$chairmans = $this->Chairmans->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'first_name' => 'asc'])->all();
+		$countries = $this->Clubs->Countries->find('list', conditions: ['visible' => true], limit: 1000, order: ['pos' => 'asc', 'club_count' => 'desc', 'name' => 'asc'])->all();
+		//$chairmans = $this->Chairmans->find('list', conditions: ['role' => 'chairman', 'visible' => true], limit: 200, order: ['pos' => 'asc', 'first_name' => 'asc'])->all();
+		$chairmans = $this->MyUsers->find('list', conditions: ['chairman' => true, 'visible' => true], limit: 200, order: ['pos' => 'asc', 'first_name' => 'asc'])->all();
         $this->set(compact('club', 'countries', 'chairmans'));
     }
 
@@ -302,8 +305,9 @@ class ClubsController extends AppController
 			//$this->Flash->error(__('The club could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->error(__('The save has been not. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $countries = $this->Clubs->Countries->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-		$chairmans = $this->Chairmans->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'first_name' => 'asc'])->all();
+		$countries = $this->Clubs->Countries->find('list', conditions: ['visible' => true], limit: 1000, order: ['pos' => 'asc', 'club_count' => 'desc', 'name' => 'asc'])->all();
+		//$chairmans = $this->Chairmans->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'first_name' => 'asc'])->all();
+		$chairmans = $this->MyUsers->find('list', conditions: ['chairman' => true, 'visible' => true], limit: 200, order: ['pos' => 'asc', 'first_name' => 'asc'])->all();
 		$name = $club->name;
         $this->set(compact('club', 'countries', 'chairmans', 'id', 'name'));
     }

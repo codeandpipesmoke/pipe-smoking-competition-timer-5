@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \Cake\Datasource\EntityInterface $myUsers
+ * @var \Cake\Datasource\EntityInterface $chairman
  */
 ?>
 <?php
@@ -9,21 +9,21 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 
 $this->Form->setTemplates(Configure::read('Templates.form'));
-$this->assign('title', __('Edit') . ' ' . __('User'));
+$this->assign('title', __('Add') . ' ' . __('Chairman'));
 ?>
-				<div id="form-row" class="users row">
+				<div id="form-row" class="chairmans row">
 					<div class="col-xs-12 col-xl-10">
 						<div class="card mb-3">
 							<div class="card-header">
 
 								<div class="float-start">
-									<h3><i id="card-icon" class="fa fa-edit fa-spin"></i> <?= __('Edit') ?>: <?= __('User') ?></h3>
+									<h3><i id="card-icon" class="fa fa-plus fa-spin"></i> <?= __('Add') ?>: <?= __('Chairman') ?></h3>
 									<?= __('The data marked with <span class="fw-bold text-danger">*</span> must be provided!') ?>
 								</div>
 
 								<div class="float-end ms-5">
 									<?= $this->Html->link('<span class="btn btn-outline-secondary mt-1 me-1"><i class="fa fa-times"></i></span>',
-										["controller" => "myUsers", "action" => "index", "_full" => true],
+										["controller" => "Chairmans", "action" => "index", "_full" => true],
 										["escape" => false, "role" => "button"]
 									); ?>
 
@@ -33,6 +33,10 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 									<ul class="nav nav-tabs mt-1" id="myTab" role="tablist">
 										<li class="nav-item" role="presentation">
 											<button class="nav-link active" id="tabMain" data-bs-toggle="tab" data-bs-target="#tabPanelMain" type="button" role="tab" aria-controls="tabPanelMain" aria-selected="true"><?= __('Basic data') ?></button>
+										</li>
+
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="tabDescription" data-bs-toggle="tab" data-bs-target="#tabPanelDescription" type="button" role="tab" aria-controls="tabPanelDescription" aria-selected="false"><?= __('Description') ?></button>
 										</li>
 
 <?php /*
@@ -49,7 +53,7 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 
 							</div>
 
-							<?= $this->Form->create($myUser, ['id' => 'main-form']) ?>
+							<?= $this->Form->create($chairman, ['id' => 'main-form']) ?>
 							
 								<?php //= $this->Form->control('_csrfToken', ['name' => '_csrfToken', 'type' => 'hidden', 'value' => $this->request->getAttribute('csrfToken')] ) ?>
 
@@ -58,80 +62,39 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 									<div class="tab-content" id="tabContent">
 										
 										<div class="tab-pane fade show active" id="tabPanelMain" role="tabpanel" aria-labelledby="tabMain" tabindex="0">
-<?php /*
-											<!-- 2. STRING: username: string  required -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="username"><?= __('Username') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('username', ['label' => __('Username'), 'class' => 'form-control', 'empty' => false]); ?>
 
-												</div>
-											</div>
-*/ ?>
-											<!-- 1. SELECT: country_id: integer  required -->
-											<div class="mb-3 form-group row select required">
+											<!-- 3. INTEGER: country_id: integer  required -->
+											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="country-id"><?= __('Country Id') ?>:</label>
-												<div class="col-md-4">
-													<?= $this->Form->control('country_id', ['options' => $countries, 'placeholder' => __('Country Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
-
-												</div>
-												<label class="col-form-label col-md-1 pt-1 text-start text-md-end required" for="country-id"><?= __('Lang Id') ?>:</label>
-												<div class="col-md-2">
-													<?= $this->Form->control('lang_id', ['options' => $langs, 'placeholder' => __('Lang Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+													<?= $this->Form->control('country_id', ['class' => 'form-control', 'placeholder' => __('Country Id'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
-											<!-- 1. SELECT: role: integer  required -->
-											<div class="mb-3 form-group row select required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="role"><?= __('Role') ?>:</label>
-												<div class="col-md-4">
-													<?= $this->Form->control('role', ['options' => $role, 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+											<!-- 3. INTEGER: lang_id: integer  required -->
+											<div class="mb-3 form-group row number required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="lang-id"><?= __('Lang Id') ?>:</label>
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+													<?= $this->Form->control('lang_id', ['class' => 'form-control', 'placeholder' => __('Lang Id'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
-											<!-- 1. SELECT: country_id: integer  required -->
-											<div class="mb-3 form-group row select required">
+											<!-- 3. INTEGER: club_id: integer  required -->
+											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="club-id"><?= __('Club Id') ?>:</label>
-												<div class="col-md-4">
-													<?= $this->Form->control('club_id', ['options' => $clubs, 'placeholder' => __('Club Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+													<?= $this->Form->control('club_id', ['class' => 'form-control', 'placeholder' => __('Club Id'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
-											<!-- 7. BOOLEAN: active: boolean  required -->
-											<div class="mb-3 form-group row checkbox">
-												<div class="col-sm-2 col-form-label required"></div>
-												<div class="col-sm-10">
-													<?= $this->Form->control('chairman', ['empty' => false]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: first_name: string  -->
+											<!-- 2. STRING: username: string  -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="first-name"><?= __('First Name') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="username"><?= __('Username') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('first_name', ['label' => __('First Name'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: last_name: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="last-name"><?= __('Last Name') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('last_name', ['label' => __('Last Name'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 1. SELECT: role: integer  required -->
-											<div class="mb-3 form-group row select required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="role"><?= __('Name Order') ?>:</label>
-												<div class="col-md-4">
-													<?= $this->Form->control('nameorder', ['options' => ['first-last' => __('First name AND Last name. (Pl: Zsolt Kiss)'), 'last-first' => __('Last name AND First name (Pl: Kiss Zsolt)')], 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+													<?= $this->Form->control('username', ['label' => __('Username'), 'placeholder' => __('Username'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -140,28 +103,43 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="email"><?= __('Email') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('email', ['label' => __('Email'), 'class' => 'form-control', 'empty' => true, 'readonly' => true, 'disabled' => true]); ?>
+													<?= $this->Form->control('email', ['label' => __('Email'), 'placeholder' => __('Email'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
 
-<?php /*
 											<!-- 2. STRING: password: string  required -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="password"><?= __('Password') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('password', ['label' => __('Password'), 'class' => 'form-control', 'empty' => false]); ?>
+													<?= $this->Form->control('password', ['label' => __('Password'), 'placeholder' => __('Password'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
-*/ ?>
 
-<?php /*
+											<!-- 2. STRING: first_name: string  -->
+											<div class="mb-3 form-group row text required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="first-name"><?= __('First Name') ?>:</label>
+												<div class="col-md-9">
+													<?= $this->Form->control('first_name', ['label' => __('First Name'), 'placeholder' => __('First Name'), 'class' => 'form-control', 'empty' => true]); ?>
+
+												</div>
+											</div>
+
+											<!-- 2. STRING: last_name: string  -->
+											<div class="mb-3 form-group row text required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="last-name"><?= __('Last Name') ?>:</label>
+												<div class="col-md-9">
+													<?= $this->Form->control('last_name', ['label' => __('Last Name'), 'placeholder' => __('Last Name'), 'class' => 'form-control', 'empty' => true]); ?>
+
+												</div>
+											</div>
+
 											<!-- 2. STRING: token: string  -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="token"><?= __('Token') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('token', ['label' => __('Token'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('token', ['label' => __('Token'), 'placeholder' => __('Token'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -172,7 +150,7 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 col-xxl-4">
 													<div class="form-group datetime">
 														<div class="input-group token-expires" id="token-expires" data-target-input="nearest">
-															<?= $this->Form->control('token_expires', ['type' => 'text', 'class' => 'form-control', 'empty' => true]); ?>
+															<?= $this->Form->control('token_expires', ['type' => 'text', 'placeholder' => __('Token Expires'), 'class' => 'form-control', 'empty' => true]); ?>
 
 															<div class="input-group-append" data-target="#token-expires" data-toggle="token-expires">
 																<div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -186,7 +164,7 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="api-token"><?= __('Api Token') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('api_token', ['label' => __('Api Token'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('api_token', ['label' => __('Api Token'), 'placeholder' => __('Api Token'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -197,7 +175,7 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 col-xxl-4">
 													<div class="form-group datetime">
 														<div class="input-group activation-date" id="activation-date" data-target-input="nearest">
-															<?= $this->Form->control('activation_date', ['type' => 'text', 'class' => 'form-control', 'empty' => true]); ?>
+															<?= $this->Form->control('activation_date', ['type' => 'text', 'placeholder' => __('Activation Date'), 'class' => 'form-control', 'empty' => true]); ?>
 
 															<div class="input-group-append" data-target="#activation-date" data-toggle="activation-date">
 																<div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -211,7 +189,7 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="secret"><?= __('Secret') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('secret', ['label' => __('Secret'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('secret', ['label' => __('Secret'), 'placeholder' => __('Secret'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -231,7 +209,7 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 col-xxl-4">
 													<div class="form-group datetime">
 														<div class="input-group tos-date" id="tos-date" data-target-input="nearest">
-															<?= $this->Form->control('tos_date', ['type' => 'text', 'class' => 'form-control', 'empty' => true]); ?>
+															<?= $this->Form->control('tos_date', ['type' => 'text', 'placeholder' => __('Tos Date'), 'class' => 'form-control', 'empty' => true]); ?>
 
 															<div class="input-group-append" data-target="#tos-date" data-toggle="tos-date">
 																<div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -240,7 +218,6 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 													</div>
 												</div>
 											</div>
-*/ ?>
 
 											<!-- 7. BOOLEAN: active: boolean  required -->
 											<div class="mb-3 form-group row checkbox">
@@ -251,7 +228,6 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 												</div>
 											</div>
 
-<?php /*
 											<!-- 7. BOOLEAN: is_superuser: boolean  required -->
 											<div class="mb-3 form-group row checkbox">
 												<div class="col-sm-2 col-form-label required"></div>
@@ -265,7 +241,16 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="role"><?= __('Role') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('role', ['label' => __('Role'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('role', ['label' => __('Role'), 'placeholder' => __('Role'), 'class' => 'form-control', 'empty' => true]); ?>
+
+												</div>
+											</div>
+
+											<!-- 7. BOOLEAN: enabled: boolean  required -->
+											<div class="mb-3 form-group row checkbox">
+												<div class="col-sm-2 col-form-label required"></div>
+												<div class="col-sm-10">
+													<?= $this->Form->control('enabled', ['empty' => false]); ?>
 
 												</div>
 											</div>
@@ -278,7 +263,7 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 col-xxl-4">
 													<div class="form-group datetime">
 														<div class="input-group last-login" id="last-login" data-target-input="nearest">
-															<?= $this->Form->control('last_login', ['type' => 'text', 'class' => 'form-control', 'empty' => true]); ?>
+															<?= $this->Form->control('last_login', ['type' => 'text', 'placeholder' => __('Last Login'), 'class' => 'form-control', 'empty' => true]); ?>
 
 															<div class="input-group-append" data-target="#last-login" data-toggle="last-login">
 																<div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -287,11 +272,55 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 													</div>
 												</div>
 											</div>
-*/ ?>
+
+											<!-- 4. DATETIME: lockout_time: datetime  -->
+											<div class="mb-3 row required">
+												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="lockout-time"><?= __('Lockout Time') ?>:</label>
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 col-xxl-4">
+													<div class="form-group datetime">
+														<div class="input-group lockout-time" id="lockout-time" data-target-input="nearest">
+															<?= $this->Form->control('lockout_time', ['type' => 'text', 'placeholder' => __('Lockout Time'), 'class' => 'form-control', 'empty' => true]); ?>
+
+															<div class="input-group-append" data-target="#lockout-time" data-toggle="lockout-time">
+																<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<!-- 7. BOOLEAN: visible: boolean  required -->
+											<div class="mb-3 form-group row checkbox">
+												<div class="col-sm-2 col-form-label required"></div>
+												<div class="col-sm-10">
+													<?= $this->Form->control('visible', ['empty' => false]); ?>
+
+												</div>
+											</div>
+
+											<!-- 3. INTEGER: pos: integer  required -->
+											<div class="mb-3 form-group row number required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="pos"><?= __('Pos') ?>:</label>
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+													<?= $this->Form->control('pos', ['class' => 'form-control', 'placeholder' => __('Pos'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
+
+												</div>
+											</div>
 
 										</div><!-- /.tabPanelMain -->
 										
 										
+										<!-- TabPanel: tabPanelDescription -->
+										<!-- 10. TEXT: description: text  required -->
+										<div class="tab-pane fade" id="tabPanelDescription" role="tabpanel" aria-labelledby="tabDescription" tabindex="0">
+											<div class="row mb-3">
+												<div class="col-sm-12">
+													<?= $this->Form->control('description', ['id' => 'description', 'label' => false, 'class' => 'summernote', 'empty' => false]); ?>
+
+												</div>
+											</div>
+										</div><!-- /.TabPanel: tabPanelDescription -->
+
 <?php /*											
 										<div class="tab-pane fade" id="tabPanelMore" role="tabpanel" aria-labelledby="tabMore" tabindex="0">
 											<h3>More content come here...</h3>
@@ -304,10 +333,10 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 								</div>
 
 								<div class="card-footer text-center">
-									<?= $this->Form->button('<span class="btn-label"><i class="fa fa-save"></i></span>' . __('Save'), ["escapeTitle" => false, "type" => "submit", "class" => "btn btn-success me-4"]) ?>
+									<?= $this->Form->button('<span class="btn-label"><i class="fa fa-save"></i></span>' . __('Save'), ["escapeTitle" => false, "type" => "submit", "class" => "btn btn-primary me-4"]) ?>
 									
 									<?= $this->Html->link('<span class="btn-label"><i class="fa fa-arrow-up"></i></span>' . __("Cancel"),
-										["controller" => "myUsers", "action" => "index", "_full" => true],
+										["controller" => "Chairmans", "action" => "index", "_full" => true],
 										["escape" => false, "role" => "button", "class" => "btn btn-outline-secondary"]
 									); ?>
 									
@@ -340,13 +369,15 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 		[
 			"jeffAdmin5./assets/js/popper",
 			"jeffAdmin5./assets/plugins/tempus-dominus-6.0.0/dist/js/tempus-dominus.min",	// Must be loaded the popper.js !!
-			//"jeffAdmin5./assets/plugins/bootstrap-input-spinner-bs-5/src/bootstrap-input-spinner",
-			//"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
-			//"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/lang/summernote-hu-HU",
+			"jeffAdmin5./assets/plugins/bootstrap-input-spinner-bs-5/src/bootstrap-input-spinner",
+			"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
+			"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/lang/summernote-hu-HU",
 			//'jeffAdmin5./assets/plugins/jReadMore-master/dist/read-more.min',
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/js/bootstrap-select.min",
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/js/i18n/defaults-hu_HU.min",
 			"jeffAdmin5./assets/plugins/icheck-1.0.3/icheck.min",
+			
+			//"jeffAdmin5./assets/plugins/jquery-copy-to-clipboard-master/jquery.copy-to-clipboard",
 			
 			//'jeffAdmin5./assets/plugins/select2-4.1.0-rc.0/dist/js/select2.full.min',	// If you want to use Select 2, but it's not finish!!!
 			//'jeffAdmin5./assets/plugins/select2-4.1.0-rc.0/dist/js/i18n/hu',			// If you want to use Select 2, but it's not finish!!!
@@ -360,18 +391,19 @@ $this->assign('title', __('Edit') . ' ' . __('User'));
 
 <?php $this->Html->scriptStart(['block' => 'javaScriptBottom']); ?>
 
-	jeffAdminInitSelectPicker()
-<?php /*
-	//jeffAdminInitDateTimePicker('token_expires'<?= $myUser->token_expires !== null ? ", '" . $myUser->token_expires->format('Y-m-d H:i:s') . "'" : "" ?>)
-	//jeffAdminInitDateTimePicker('activation_date'<?= $myUser->activation_date !== null ? ", '" . $myUser->activation_date->format('Y-m-d H:i:s') . "'" : "" ?>)
-	//jeffAdminInitDateTimePicker('tos_date'<?= $myUser->tos_date !== null ? ", '" . $myUser->tos_date->format('Y-m-d H:i:s') . "'" : "" ?>)
-	//jeffAdminInitDateTimePicker('last_login'<?= $myUser->last_login !== null ? ", '" . $myUser->last_login->format('Y-m-d H:i:s') . "'" : "" ?>)
-*/ ?>
+	jeffAdminInitInputSpinner()
+	jeffAdminInitSummerNote('description', 400, '<?= __("Here you can write the note") ?>...') // Init SummerNote for description.
+	jeffAdminInitDateTimePicker('token-expires')
+	jeffAdminInitDateTimePicker('activation-date')
+	jeffAdminInitDateTimePicker('tos-date')
+	jeffAdminInitDateTimePicker('last-login')
+	jeffAdminInitDateTimePicker('lockout-time')
 	jeffAdminInitICheck('icheckbox_flat-blue');
 
-	$('#button-submit').click( function(){
-		$('#main-form').submit();
+	$(document).ready( function(){
+		$('#button-submit').click( function(){
+			$('#main-form').submit();
+		});			
 	});			
-
 
 <?php $this->Html->scriptEnd(['block' => 'javaScriptBottom']); ?>

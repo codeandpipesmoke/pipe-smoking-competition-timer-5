@@ -86,7 +86,7 @@ $config = array_merge($global_config, $local_config);
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="country-id"><?= __('Chairman') ?>:</label>
 												<div class="col-md-4">
-													<?= $this->Form->control('chairman_id', ['options' => $chairmans, 'placeholder' => __('Chairman'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+													<?= $this->Form->control('chairman_id', ['options' => $chairmans, 'placeholder' => __('Chairman'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => true]);	?>
 
 												</div>
 											</div>

@@ -31,6 +31,7 @@ use JeffAdmin5\Controller\AppController as JeffAdmin5;
 class AppController extends JeffAdmin5
 {
 	public $role = [];
+	public $competitor_role = [];
 
     /**
      * Initialization hook method.
@@ -49,13 +50,19 @@ class AppController extends JeffAdmin5
 
 		$this->role = [
 			'user' 		 => __('User'), 
-			'chairman' 	 => __('Chairman'), 
+			'admin' 	 => __('Adminisztrátor'),
+			//'superadmin' => __('Super Adminisztrátor'),
+		];		
+		$this->set('role', $this->role);
+
+		$this->competitor_role = [
+			'user' 		 => __('User'),
 			'tablejudge' => __('Tablejudge'), 
 			'timekeeper' => __('Timekeeper'), 
 			'admin' 	 => __('Adminisztrátor'), 
 			//'superadmin' => __('Super Adminisztrátor'),
 		];		
-		$this->set('role', $this->role);
+		$this->set('competitor_role', $this->competitor_role);
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.

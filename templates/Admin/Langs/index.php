@@ -14,8 +14,8 @@ $global_config = (array) Configure::read('Theme.' . $prefix . '.config.template.
 $local_config = [
 	'show_id' 			=> true,
 	'show_pos' 			=> false,
-	'show_counters'		=> false,
-	'action_db_click'	=> 'edit',	// none, edit or view
+	'show_counters'		=> true,
+	'action_db_click'	=> 'view',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
 $config = array_merge($global_config, $local_config);
