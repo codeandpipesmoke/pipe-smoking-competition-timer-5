@@ -16,7 +16,7 @@ $local_config = [
 	//'show_id' 			=> false,	// for view form
 	//'show_pos' 	 		=> false,	// for view form
 	//'show_counters' 		=> false,	// for view form
-	//'index_show_id' 		=> false,	// for related tables
+	'index_show_id' 		=> false,	// for related tables
 	//'index_show_visible' 	=> false,	// for related tables
 	//'index_show_counters'	=> false,	// for related tables
 ];
@@ -60,8 +60,8 @@ $config = array_merge($global_config, $local_config);
 <?php if (!empty($club->competingclubs)) : ?>
 												<li><?= $this->Html->link(__('Competingclubs') . '...', ['controller' => 'Competingclubs', 'action' => 'index', 'parent', 'club', $club->id], ['class' => 'dropdown-item']) ?></li>
 <?php endif ?>
-<?php if (!empty($club->users)) : ?>
-												<li><?= $this->Html->link(__('Users') . '...', ['controller' => 'Users', 'action' => 'index', 'parent', 'club', $club->id], ['class' => 'dropdown-item']) ?></li>
+<?php if (!empty($club->my_users)) : ?>
+												<li><?= $this->Html->link(__('Users') . '...', ['controller' => 'MyUsers', 'action' => 'index', 'parent', 'club', $club->id], ['class' => 'dropdown-item']) ?></li>
 <?php endif ?>
 											</ul>
 										</li>
@@ -222,7 +222,7 @@ $config = array_merge($global_config, $local_config);
 <?php 	$acticeClass = ""; ?>
 <?php endif ?>
 <?php $acticeClass = " active"; ?>
-<?php if (!empty($club->users)): ?>
+<?php if (!empty($club->my_users)): ?>
 
 											<button class="nav-link<?= $acticeClass ?>" id="nav-users-tab" data-bs-toggle="tab" data-bs-target="#nav-users" type="button" role="tab" aria-controls="nav-users" aria-selected="true">
 												<?= __('Users') ?>
@@ -323,7 +323,7 @@ $config = array_merge($global_config, $local_config);
 <?php 	$acticeClass = ""; ?>
 <?php endif ?>
 <?php $acticeClass = " show active"; ?>
-<?php if (!empty($club->users)): ?>
+<?php if (!empty($club->my_users)): ?>
 
 									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab" tabindex="0">
 
@@ -333,29 +333,13 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['index_show_id']){ ?>
 													<th class="number id"><?= __('Id') ?></th>
 <?php } ?>
-													<th class="please-change-type country-id"><?= __('Country Id') ?></th>
-													<th class="please-change-type lang-id"><?= __('Lang Id') ?></th>
-													<th class="please-change-type club-id"><?= __('Club Id') ?></th>
-													<th class="please-change-type username"><?= __('Username') ?></th>
-													<th class="please-change-type email"><?= __('Email') ?></th>
-													<th class="please-change-type password"><?= __('Password') ?></th>
-													<th class="please-change-type first-name"><?= __('First Name') ?></th>
-													<th class="please-change-type last-name"><?= __('Last Name') ?></th>
-													<th class="please-change-type description"><?= __('Description') ?></th>
-													<th class="please-change-type token"><?= __('Token') ?></th>
-													<th class="please-change-type token-expires"><?= __('Token Expires') ?></th>
-													<th class="please-change-type api-token"><?= __('Api Token') ?></th>
-													<th class="please-change-type activation-date"><?= __('Activation Date') ?></th>
-													<th class="please-change-type secret"><?= __('Secret') ?></th>
-													<th class="please-change-type secret-verified"><?= __('Secret Verified') ?></th>
-													<th class="please-change-type tos-date"><?= __('Tos Date') ?></th>
-													<th class="please-change-type active"><?= __('Active') ?></th>
-													<th class="please-change-type is-superuser"><?= __('Is Superuser') ?></th>
-													<th class="please-change-type role"><?= __('Role') ?></th>
-													<th class="please-change-type enabled"><?= __('Enabled') ?></th>
-													<th class="please-change-type additional-data"><?= __('Additional Data') ?></th>
-													<th class="please-change-type last-login"><?= __('Last Login') ?></th>
-													<th class="please-change-type lockout-time"><?= __('Lockout Time') ?></th>
+													<th class="first-name">
+														<?= __('First Name') ?>&nbsp;<?= __('Last Name') ?>
+													</th>
+													<th class="country-id"><?= __('Country Id') ?></th>
+													<th class="lang-id"><?= __('Lang Id') ?></th>
+													<th class="email"><?= __('Email') ?></th>
+													<th class="role"><?= __('Role') ?></th>
 <?php if($config['index_show_visible']){ ?>
 													<th class="boolean visible"><?= __('Visible') ?></th>
 <?php } ?>
@@ -378,35 +362,30 @@ $config = array_merge($global_config, $local_config);
 												</tr>
 											</thead>
 											<tbody>
-												<?php foreach ($club->users as $users) : ?>
+												<?php foreach ($club->my_users as $users) : ?>
 
 												<tr>
 <?php if($config['index_show_id']){ ?>
 													<td class="number id" value="<?= $users->id ?>"><?= h($users->id) ?></td>
 <?php } ?>
-													<td class="please-change-type country-id" value="<?= $users->country_id ?>"><?= h($users->country_id) ?></td>
-													<td class="please-change-type lang-id" value="<?= $users->lang_id ?>"><?= h($users->lang_id) ?></td>
-													<td class="please-change-type club-id" value="<?= $users->club_id ?>"><?= h($users->club_id) ?></td>
-													<td class="please-change-type username" value="<?= $users->username ?>"><?= h($users->username) ?></td>
-													<td class="please-change-type email" value="<?= $users->email ?>"><?= h($users->email) ?></td>
-													<td class="please-change-type password" value="<?= $users->password ?>"><?= h($users->password) ?></td>
-													<td class="please-change-type first-name" value="<?= $users->first_name ?>"><?= h($users->first_name) ?></td>
-													<td class="please-change-type last-name" value="<?= $users->last_name ?>"><?= h($users->last_name) ?></td>
-													<td class="please-change-type description" value="<?= $users->description ?>"><?= h($users->description) ?></td>
-													<td class="please-change-type token" value="<?= $users->token ?>"><?= h($users->token) ?></td>
-													<td class="please-change-type token-expires" value="<?= $users->token_expires ?>"><?= h($users->token_expires) ?></td>
-													<td class="please-change-type api-token" value="<?= $users->api_token ?>"><?= h($users->api_token) ?></td>
-													<td class="please-change-type activation-date" value="<?= $users->activation_date ?>"><?= h($users->activation_date) ?></td>
-													<td class="please-change-type secret" value="<?= $users->secret ?>"><?= h($users->secret) ?></td>
-													<td class="please-change-type secret-verified" value="<?= $users->secret_verified ?>"><?= h($users->secret_verified) ?></td>
-													<td class="please-change-type tos-date" value="<?= $users->tos_date ?>"><?= h($users->tos_date) ?></td>
-													<td class="please-change-type active" value="<?= $users->active ?>"><?= h($users->active) ?></td>
-													<td class="please-change-type is-superuser" value="<?= $users->is_superuser ?>"><?= h($users->is_superuser) ?></td>
-													<td class="please-change-type role" value="<?= $users->role ?>"><?= h($users->role) ?></td>
-													<td class="please-change-type enabled" value="<?= $users->enabled ?>"><?= h($users->enabled) ?></td>
-													<td class="please-change-type additional-data" value="<?= $users->additional_data ?>"><?= h($users->additional_data) ?></td>
-													<td class="please-change-type last-login" value="<?= $users->last_login ?>"><?= h($users->last_login) ?></td>
-													<td class="please-change-type lockout-time" value="<?= $users->lockout_time ?>"><?= h($users->lockout_time) ?></td>
+													<td class="first-name">
+<?php if($users->nameorder == "first-last"){ ?>
+
+														<?= h($users->first_name) ?>&nbsp;<?= h($users->last_name) ?>
+<?php }else{ ?>
+
+														<?= h($users->last_name) ?>&nbsp;<?= h($users->first_name) ?>
+<?php } ?>
+
+
+<?php //dd($users->lang->name); ?>
+<?php //dd($club->hasValue('lang')); ?>
+
+													</td>
+													<td class="country-id" value="<?= $users->country_id ?>"><?= $users->hasValue('country') ? $this->Html->link(h($users->country->name), ['controller' => 'Countries', 'action' => 'view', $club->country->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
+													<td class="lang-id" value="<?= $users->lang_id ?>"><?= $users->hasValue('lang') ? $this->Html->link(h($users->lang->name), ['controller' => 'Langs', 'action' => 'view', $users->lang->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
+													<td class="email" value="<?= $users->email ?>"><?= h($users->email) ?></td>
+													<td class="role" value="<?= $users->role ?>"><?= h($users->role) ?></td>
 <?php if($config['index_show_visible']){ ?>
 													<td class="boolean visible" value="<?= $users->visible ?>"><?= h($users->visible) ?></td>
 <?php } ?>

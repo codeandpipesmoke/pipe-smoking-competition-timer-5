@@ -126,7 +126,7 @@ class CompetingclubsController extends AppController
 		if($search !== ''){
 			$showSearchBar	 = true;
 			$query = $this->Competingclubs->find()
-				->contain(['Countries', 'Competitions', 'Clubs'])
+				->contain(['Competitions', 'Clubs'])
 				->where([
 					//$conditions,
 					'OR' => [
@@ -136,7 +136,7 @@ class CompetingclubsController extends AppController
 					]
 				]);
 		}else{
-			$query = $this->Competingclubs->find()->contain(['Countries', 'Competitions', 'Clubs'])->where($conditions);
+			$query = $this->Competingclubs->find()->contain(['Competitions', 'Clubs'])->where($conditions);
 		}
 		// ############################# /.QUERY ###########################################
 
@@ -194,7 +194,7 @@ class CompetingclubsController extends AppController
 		//));
 
 		try {
-			$competingclub = $this->Competingclubs->get((int) $id, contain: ['Countries', 'Competitions', 'Clubs', 'Competitors']);
+			$competingclub = $this->Competingclubs->get((int) $id, contain: ['Competitions', 'Clubs', 'Competitors']);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
@@ -246,10 +246,9 @@ class CompetingclubsController extends AppController
             //$this->Flash->error(__('The competingclub could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
             $this->Flash->error(__('The save has been not. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $countries = $this->Competingclubs->Countries->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
         $competitions = $this->Competingclubs->Competitions->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
         $clubs = $this->Competingclubs->Clubs->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-        $this->set(compact('competingclub', 'countries', 'competitions', 'clubs'));
+        $this->set(compact('competingclub', 'competitions', 'clubs'));
     }
 
     /**
@@ -301,11 +300,10 @@ class CompetingclubsController extends AppController
 			//$this->Flash->error(__('The competingclub could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->error(__('The save has been not. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $countries = $this->Competingclubs->Countries->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
         $competitions = $this->Competingclubs->Competitions->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
         $clubs = $this->Competingclubs->Clubs->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
 		$name = $competingclub->name;
-        $this->set(compact('competingclub', 'countries', 'competitions', 'clubs', 'id', 'name'));
+        $this->set(compact('competingclub', 'competitions', 'clubs', 'id', 'name'));
     }
 
     /**

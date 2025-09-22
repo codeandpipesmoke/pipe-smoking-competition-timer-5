@@ -16,7 +16,7 @@ $local_config = [
 	'show_pos' 			=> false,
 	'show_visible'		=> false,
 	'show_counters'		=> true,
-	'action_db_click'	=> 'edit',	// none, edit or view
+	'action_db_click'	=> 'view',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
 $config = array_merge($global_config, $local_config);

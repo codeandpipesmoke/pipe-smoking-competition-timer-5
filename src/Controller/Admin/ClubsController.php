@@ -198,7 +198,8 @@ class ClubsController extends AppController
 		//));
 
 		try {
-			$club = $this->Clubs->get((int) $id, contain: ['Countries', 'Competingclubs', 'Chairmans']);
+			$club = $this->Clubs->get((int) $id, contain: ['Countries', 'Competingclubs', 'MyUsers' => ['Countries', 'Langs']]);
+			//dd($club);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);

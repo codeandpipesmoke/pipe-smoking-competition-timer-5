@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Sze 19. 22:45
+-- Létrehozás ideje: 2025. Sze 22. 15:34
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -76,8 +76,11 @@ CREATE TABLE `clubs` (
 --
 
 INSERT INTO `clubs` (`id`, `country_id`, `chairman_id`, `name`, `description`, `email`, `web`, `visible`, `pos`, `user_count`, `competingclub_count`, `created`, `modified`) VALUES
-(1, 94, '57eae983-e4a6-44ee-a382-b44f9fb70a07', 'Ibafai Pipaklub', '', 'ibafapipaklub@gmail.com', 'www.ibafaipipaklub.hu', 1, 1000, 0, 0, '2025-09-19 18:40:51', '2025-09-19 19:00:25'),
-(2, 94, 'eab26308-3ba1-4fe6-b91a-25d53153288e', 'Bohém Pipaklub', '', 'info@bohem.hu', 'www.bohem.hu', 1, 1000, 0, 0, '2025-09-19 18:52:21', '2025-09-19 19:00:21');
+(1, 94, '57eae983-e4a6-44ee-a382-b44f9fb70a07', 'Ibafai Pipaklub', '', 'ibafapipaklub@gmail.com', 'www.ibafaipipaklub.hu', 1, 1000, 3, 1, '2025-09-19 18:40:51', '2025-09-19 19:00:25'),
+(2, 94, '57eae983-e4a6-44ee-a382-b44f9fb70a07', 'Bohém Pipaklub', '', 'info@bohem.hu', 'www.bohem.hu', 1, 1000, 1, 0, '2025-09-19 18:52:21', '2025-09-22 07:48:56'),
+(3, 121, 'eab26308-3ba1-4fe6-b91a-25d53153288e', 'Slovak nitra Pipe Club', '', 'info@nitra.sl', 'www.nitra.sl', 1, 1000, 1, 0, '2025-09-22 07:22:21', '2025-09-22 07:22:21'),
+(4, 94, '280f5245-5604-405e-ad25-6a4d1e0f5d09', 'Teszt Klub', '', '', '', 1, 1000, 0, 2, '2025-09-22 08:20:15', '2025-09-22 09:44:34'),
+(5, 121, '280f5245-5604-405e-ad25-6a4d1e0f5d09', 'Slovák Pipe Club', '', '', '', 1, 1000, 1, 1, '2025-09-22 09:32:25', '2025-09-22 09:44:39');
 
 -- --------------------------------------------------------
 
@@ -87,21 +90,28 @@ INSERT INTO `clubs` (`id`, `country_id`, `chairman_id`, `name`, `description`, `
 
 CREATE TABLE `competingclubs` (
   `id` int(10) UNSIGNED NOT NULL,
-  `country_id` int(11) NOT NULL COMMENT 'Ország kódja (Talán redundáns)',
   `competition_id` varchar(128) NOT NULL COMMENT 'Verseny azonosító',
   `club_id` int(11) NOT NULL COMMENT 'Klub azonosító',
-  `name` varchar(250) NOT NULL COMMENT 'Név',
   `description` text DEFAULT NULL COMMENT 'Leírás',
-  `time_achieved` time NOT NULL COMMENT 'Csapat eredménye (3 legjobb összege). Program zárásakor számítódik ki (átgondolni, hogy triggerrel megoldható-e) - CACHE',
-  `score` int(11) NOT NULL DEFAULT 0 COMMENT 'Elért helyezés - CACHE',
-  `excluded` tinyint(1) UNSIGNED NOT NULL COMMENT 'Kizárva',
-  `excluded_description` text NOT NULL COMMENT 'Kizárás oka',
+  `time_achieved` time DEFAULT '00:00:00' COMMENT 'Csapat eredménye (3 legjobb összege). Program zárásakor számítódik ki (átgondolni, hogy triggerrel megoldható-e) - CACHE',
+  `score` int(11) DEFAULT 0 COMMENT 'Elért helyezés - CACHE',
+  `excluded` tinyint(1) UNSIGNED DEFAULT NULL COMMENT 'Kizárva',
+  `excluded_description` text DEFAULT NULL COMMENT 'Kizárás oka',
   `visible` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Látható',
   `pos` int(11) NOT NULL DEFAULT 1000 COMMENT 'Sorrend',
   `competitor_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Versenyzők száma CACHE',
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci COMMENT='Versenyen induló csapatok';
+
+--
+-- A tábla adatainak kiíratása `competingclubs`
+--
+
+INSERT INTO `competingclubs` (`id`, `competition_id`, `club_id`, `description`, `time_achieved`, `score`, `excluded`, `excluded_description`, `visible`, `pos`, `competitor_count`, `created`, `modified`) VALUES
+(1, '19dcdec6d1b3ea42a025d1b3ea42409ed1b3ea42a5f0d1b3ea420d8357b88521', 1, '', NULL, 0, 0, '', 1, 1000, 0, '2025-09-22 13:29:56', '2025-09-22 13:29:56'),
+(2, '19dcdec6d1b3ea42a025d1b3ea42409ed1b3ea42a5f0d1b3ea420d8357b88521', 4, '', '00:00:00', 0, NULL, '', 1, 1000, 0, '2025-09-22 13:30:48', '2025-09-22 13:30:48'),
+(4, '19dcdec6d1b3ea42a025d1b3ea42409ed1b3ea42a5f0d1b3ea420d8357b88521', 5, '', '00:00:00', 0, NULL, '', 1, 1000, 0, '2025-09-22 13:33:57', '2025-09-22 13:33:57');
 
 -- --------------------------------------------------------
 
@@ -114,6 +124,8 @@ CREATE TABLE `competitions` (
   `name` varchar(250) NOT NULL COMMENT 'Név, cím',
   `description` timestamp NULL DEFAULT NULL COMMENT 'Leírás',
   `registration_deadline` datetime NOT NULL COMMENT 'Regisztráció határideje',
+  `place` varchar(250) NOT NULL COMMENT 'A verseny helyszíne',
+  `goole_maps_url` varchar(1000) NOT NULL COMMENT 'Térkép web cím (URL)',
   `registration_closed` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Regisztráció lezárva',
   `tobacco` varchar(250) NOT NULL COMMENT 'Dohány',
   `tobacco_quantity` decimal(10,2) NOT NULL DEFAULT 3.00 COMMENT 'Dohány mennyisége',
@@ -135,8 +147,17 @@ CREATE TABLE `competitions` (
   `visible` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Látható',
   `pos` int(11) NOT NULL DEFAULT 1000 COMMENT 'Sorrend',
   `created` datetime NOT NULL,
-  `modified` smallint(6) NOT NULL
+  `modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci COMMENT='Competitions table';
+
+--
+-- A tábla adatainak kiíratása `competitions`
+--
+
+INSERT INTO `competitions` (`id`, `name`, `description`, `registration_deadline`, `place`, `goole_maps_url`, `registration_closed`, `tobacco`, `tobacco_quantity`, `pipe`, `competition_fee`, `lunch_is_included_in_the_competition_fee`, `email_has_been_sent`, `start_of_pipe_filling`, `start_of_pipe_lighting`, `the_pipe_filling_must_be_repeated`, `closed_competition`, `closing_time`, `maximum_number_of_clubs`, `maximum_number_of_competitors`, `maximum_number_of_tables`, `table_count`, `competingclub_count`, `competitor_count`, `visible`, `pos`, `created`, `modified`) VALUES
+('19dcdec6d1b3ea42a025d1b3ea42409ed1b3ea42a5f0d1b3ea420d8357b88521', 'Harmadik országos verseny', NULL, '2025-09-30 12:00:00', 'Sághy-Sat Kft', '', 1, 'Orlik', 3.00, 'GL 2025', 8000, 0, '2025-09-18 14:58:38', '00:02:00', '00:00:03', 0, 0, '14:59:28', 30, 100, 20, 0, 3, 0, 1, 1000, '2025-09-22 12:57:43', '2025-09-22 13:10:05'),
+('6127cf5f55099910261f550999104f79550999108300550999101c2c70038273', 'Második országos verseny', NULL, '2025-09-30 12:00:00', '', '', 1, 'aaa', 3.00, 'ssss', 8000, 0, NULL, '00:00:00', '00:00:00', NULL, NULL, NULL, 30, 100, 20, 0, 0, 0, 1, 1000, '2025-09-22 12:45:50', '2025-09-22 13:15:35'),
+('a5fcc980288771795b7d288771794a4d288771798851288771792168daa23886', 'aaaa', NULL, '2025-09-23 14:43:16', '', '', 0, 'sdasd', 3.00, 'asdasd', 8000, 0, NULL, '00:00:00', '00:00:00', NULL, NULL, NULL, 30, 100, 20, 0, 0, 0, 1, 1000, '2025-09-22 12:45:12', '2025-09-22 12:45:12');
 
 -- --------------------------------------------------------
 
@@ -152,7 +173,7 @@ CREATE TABLE `competitors` (
   `table_id` int(10) UNSIGNED NOT NULL COMMENT 'Asztal azonosító',
   `description` text DEFAULT NULL COMMENT 'Leírás',
   `paid` tinyint(1) UNSIGNED NOT NULL COMMENT 'Fizetett',
-  `time_achieved` time NOT NULL DEFAULT '00:00:00',
+  `time_achieved` time NOT NULL DEFAULT '00:00:00' COMMENT 'Elért eredmény',
   `score` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Elért helyezés CACHE',
   `visible` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Látható',
   `pos` int(11) NOT NULL DEFAULT 1000 COMMENT 'Sorrend',
@@ -209,7 +230,7 @@ INSERT INTO `countries` (`id`, `continent`, `name`, `iso`, `visible`, `pos`, `la
 (21, 'Europe', 'France', 'FR', 1, 100, '0000-00-00 00:00:00', 0, 0, 0),
 (22, 'Europe', 'United Kingdom', 'GB', 1, 100, '0000-00-00 00:00:00', 0, 0, 0),
 (23, 'Africa', 'Tanzania', 'TZ', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
-(24, 'Europe', 'Italy', 'IT', 1, 100, '0000-00-00 00:00:00', 0, 0, 0),
+(24, 'Europe', 'Italy', 'IT', 1, 100, '0000-00-00 00:00:00', 1, 0, 0),
 (25, 'Africa', 'South Africa', 'ZA', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
 (26, 'Asia', 'Myanmar', 'MM', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
 (27, 'Africa', 'Kenya', 'KE', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
@@ -279,7 +300,7 @@ INSERT INTO `countries` (`id`, `continent`, `name`, `iso`, `visible`, `pos`, `la
 (91, 'Europe', 'Portugal', 'PT', 1, 100, '0000-00-00 00:00:00', 0, 0, 0),
 (92, 'Asia', 'United Arab Emirates', 'AE', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
 (93, 'Oceania', 'Papua New Guinea', 'PG', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
-(94, 'Europe', 'Hungary', 'HU', 1, 100, '0000-00-00 00:00:00', 0, 2, 0),
+(94, 'Europe', 'Hungary', 'HU', 1, 10, '0000-00-00 00:00:00', 3, 3, 0),
 (95, 'North America', 'Honduras', 'HN', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
 (96, 'Europe', 'Belarus', 'BY', 1, 900, '0000-00-00 00:00:00', 0, 0, 0),
 (97, 'Asia', 'Tajikistan', 'TJ', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
@@ -306,7 +327,7 @@ INSERT INTO `countries` (`id`, `continent`, `name`, `iso`, `visible`, `pos`, `la
 (118, 'Europe', 'Norway', 'NO', 1, 100, '0000-00-00 00:00:00', 0, 0, 0),
 (119, 'Africa', 'Central African Republic', 'CF', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
 (120, 'Africa', 'Liberia', 'LR', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
-(121, 'Europe', 'Slovakia', 'SK', 1, 100, '0000-00-00 00:00:00', 0, 0, 0),
+(121, 'Europe', 'Slovakia', 'SK', 1, 100, '0000-00-00 00:00:00', 2, 2, 0),
 (122, 'Asia', 'Lebanon', 'LB', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
 (123, 'Europe', 'Ireland', 'IE', 1, 900, '0000-00-00 00:00:00', 0, 0, 0),
 (124, 'North America', 'Costa Rica', 'CR', 0, 1000, '0000-00-00 00:00:00', 0, 0, 0),
@@ -506,12 +527,12 @@ CREATE TABLE `langs` (
 --
 
 INSERT INTO `langs` (`id`, `name`, `english_name`, `lang`, `user_count`, `visible`, `pos`) VALUES
-(1, 'Magyar', 'Hungarian', 'hu', 0, 1, 1),
+(1, 'Magyar', 'Hungarian', 'hu', 3, 1, 1),
 (2, 'English', 'English', 'en', 0, 1, 500),
-(3, 'Italiano', 'Italian', 'it', 0, 1, 500),
+(3, 'Italiano', 'Italian', 'it', 1, 1, 500),
 (4, 'Deutsch', 'German', 'de', 0, 1, 500),
 (5, 'Hrvatski', 'Croatian', 'hr', 0, 0, 500),
-(6, 'Slovák', 'Slovak', 'sk', 0, 1, 500),
+(6, 'Slovák', 'Slovak', 'sk', 2, 1, 500),
 (8, 'Српски', 'Serbian', 'sr', 0, 0, 500),
 (9, 'Русский', 'Russian', 'ru', 0, 0, 500),
 (10, 'Yкраїнська', 'Ukrainian', 'ua', 0, 0, 500),
@@ -617,6 +638,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
+  `nameorder` varchar(20) NOT NULL,
   `description` text NOT NULL,
   `token` varchar(255) DEFAULT NULL,
   `token_expires` datetime DEFAULT NULL,
@@ -628,6 +650,7 @@ CREATE TABLE `users` (
   `active` tinyint(1) NOT NULL DEFAULT 0,
   `is_superuser` tinyint(1) NOT NULL DEFAULT 0,
   `role` varchar(255) DEFAULT 'user',
+  `chairman` tinyint(1) UNSIGNED NOT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT 1,
   `additional_data` text DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
@@ -644,10 +667,13 @@ CREATE TABLE `users` (
 -- A tábla adatainak kiíratása `users`
 --
 
-INSERT INTO `users` (`id`, `country_id`, `lang_id`, `club_id`, `username`, `email`, `password`, `first_name`, `last_name`, `description`, `token`, `token_expires`, `api_token`, `activation_date`, `secret`, `secret_verified`, `tos_date`, `active`, `is_superuser`, `role`, `enabled`, `additional_data`, `last_login`, `lockout_time`, `visible`, `pos`, `competitor_count`, `table_count`, `created`, `modified`) VALUES
-('57eae983-e4a6-44ee-a382-b44f9fb70a07', 94, 1, 1, NULL, 'ibafapipaklub@gmail.com', '$2y$10$sBnJ86nvBqn8GYE79hl2eenu9dmxZwTIV7Odk7d.G/Au1OUb2vJAO', 'Csaba', 'Borbély', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'chairman', 1, NULL, '2025-03-05 09:38:16', NULL, 1, 1000, 0, 0, '2025-03-03 08:44:31', '2025-03-03 08:44:31'),
-('57f90586-a0b9-4536-af40-36ee6b059332', 24, 3, 1, NULL, 'schnurtimea@gmail.com', '$2y$10$HKT.xja4ScocpEKGQeTLoOMb31JE/9caXWj2Y5fdYj7vWpxtUHbZC', 'Tímea', 'Schnur', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'tablejudge', 1, NULL, NULL, NULL, 1, 1000, 0, 0, '2025-09-19 19:28:18', '2025-09-19 19:28:18'),
-('eab26308-3ba1-4fe6-b91a-25d53153288e', 94, 1, 2, 'superadmin', 'zsfoto@gmail.com', '$2y$10$DYw9L9.DS3Hsq0suQMljXu9MnYenHXm3ai5KWE7w/ZcWsaa9csjta', 'Jeff', 'Shoemaker', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 'admin', 1, NULL, '2025-03-03 14:50:06', NULL, 1, 1000, 0, 0, '2025-02-28 12:56:56', '2025-02-28 12:56:56');
+INSERT INTO `users` (`id`, `country_id`, `lang_id`, `club_id`, `username`, `email`, `password`, `first_name`, `last_name`, `nameorder`, `description`, `token`, `token_expires`, `api_token`, `activation_date`, `secret`, `secret_verified`, `tos_date`, `active`, `is_superuser`, `role`, `chairman`, `enabled`, `additional_data`, `last_login`, `lockout_time`, `visible`, `pos`, `competitor_count`, `table_count`, `created`, `modified`) VALUES
+('280f5245-5604-405e-ad25-6a4d1e0f5d09', 121, 6, 5, NULL, 'test@sloval.hu', '$2y$10$ClDpjwwyxDtA0FxX1AXWPezH4EI/7rDOdUkYJ2mx7RGy966mFTow6', 'Johns', 'Slovák', 'first-last', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'user', 1, 1, NULL, NULL, NULL, 1, 1000, 0, 0, '2025-09-22 09:43:43', '2025-09-22 09:43:43'),
+('57eae983-e4a6-44ee-a382-b44f9fb70a07', 94, 1, 1, NULL, 'ibafapipaklub@gmail.com', '$2y$10$sBnJ86nvBqn8GYE79hl2eenu9dmxZwTIV7Odk7d.G/Au1OUb2vJAO', 'Csaba', 'Borbély', 'last-first', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'user', 1, 1, NULL, '2025-03-05 09:38:16', NULL, 1, 1000, 0, 0, '2025-03-03 08:44:31', '2025-09-22 09:13:58'),
+('57f90586-a0b9-4536-af40-36ee6b059332', 24, 3, 1, NULL, 'schnurtimea@gmail.com', '$2y$10$HKT.xja4ScocpEKGQeTLoOMb31JE/9caXWj2Y5fdYj7vWpxtUHbZC', 'Tímea', 'Schnur', 'last-first', '', '', NULL, '', NULL, '', 0, NULL, 1, 0, 'user', 0, 1, NULL, NULL, NULL, 1, 1000, 0, 0, '2025-09-19 19:28:18', '2025-09-22 09:13:54'),
+('aaba6ba3-ac43-45e0-ab5d-3d464403f597', 121, 1, 1, NULL, 'toth@otto.hu', '$2y$10$q0RJni5xaZVpBgC04eemIuoMSIPw/FZjn3f0ffRhdVH3NDK1Ej1de', 'József', 'Kovács', 'first-last', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'user', 0, 1, NULL, NULL, NULL, 1, 1000, 0, 0, '2025-09-22 09:13:01', '2025-09-22 09:17:11'),
+('eab26308-3ba1-4fe6-b91a-25d53153288e', 94, 1, 2, 'superadmin', 'zsfoto@gmail.com', '$2y$10$DYw9L9.DS3Hsq0suQMljXu9MnYenHXm3ai5KWE7w/ZcWsaa9csjta', 'Jeff', 'Shoemaker', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 'admin', 1, 1, NULL, '2025-03-03 14:50:06', NULL, 1, 1000, 0, 0, '2025-02-28 12:56:56', '2025-02-28 12:56:56'),
+('f5d03d1f-701f-45a4-bc87-02c5fff376af', 94, 6, 3, NULL, 'bela@teszt.hu', '$2y$10$uqSEWFseBq9rIeouhIhZv.VfvfiZ6y7wD2wzJUZm3DxTb1P4Br2iW', 'Teszt', 'Béla', 'first-last', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'user', 1, 1, NULL, NULL, NULL, 1, 1000, 0, 0, '2025-09-22 08:33:36', '2025-09-22 09:17:46');
 
 -- --------------------------------------------------------
 
@@ -713,8 +739,7 @@ ALTER TABLE `competingclubs`
   ADD KEY `visible` (`visible`),
   ADD KEY `pos` (`pos`),
   ADD KEY `competition_id` (`competition_id`),
-  ADD KEY `time_achieved` (`time_achieved`),
-  ADD KEY `country_id` (`country_id`);
+  ADD KEY `time_achieved` (`time_achieved`);
 
 --
 -- A tábla indexei `competitions`
@@ -828,7 +853,8 @@ ALTER TABLE `users`
   ADD KEY `pos` (`pos`),
   ADD KEY `country_id` (`country_id`),
   ADD KEY `lang_id` (`lang_id`),
-  ADD KEY `club_id` (`club_id`);
+  ADD KEY `club_id` (`club_id`),
+  ADD KEY `chairman` (`chairman`);
 
 --
 -- A tábla indexei `users_dc`
@@ -845,13 +871,13 @@ ALTER TABLE `users_dc`
 -- AUTO_INCREMENT a táblához `clubs`
 --
 ALTER TABLE `clubs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT a táblához `competingclubs`
 --
 ALTER TABLE `competingclubs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT a táblához `competitors`

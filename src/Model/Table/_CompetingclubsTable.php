@@ -15,6 +15,7 @@ use Cake\Http\Exception\NotFoundException;
 /**
  * Competingclubs Model
  *
+ * @property \App\Model\Table\CountriesTable&\Cake\ORM\Association\BelongsTo $Countries
  * @property \App\Model\Table\CompetitionsTable&\Cake\ORM\Association\BelongsTo $Competitions
  * @property \App\Model\Table\ClubsTable&\Cake\ORM\Association\BelongsTo $Clubs
  * @property \App\Model\Table\CompetitorsTable&\Cake\ORM\Association\HasMany $Competitors
@@ -59,6 +60,10 @@ class CompetingclubsTable extends Table
         ]);
 		$this->addBehavior('JeffAdmin5.Datepicker');
 
+        $this->belongsTo('Countries', [
+            'foreignKey' => 'country_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('Competitions', [
             'foreignKey' => 'competition_id',
             'joinType' => 'INNER',
@@ -81,6 +86,10 @@ class CompetingclubsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
+            ->integer('country_id')
+            ->notEmptyString('country_id');
+
+        $validator
             ->scalar('competition_id')
             ->maxLength('competition_id', 128)
             ->notEmptyString('competition_id');
@@ -90,24 +99,33 @@ class CompetingclubsTable extends Table
             ->notEmptyString('club_id');
 
         $validator
+            ->scalar('name')
+            ->maxLength('name', 250)
+            ->requirePresence('name', 'create')
+            ->notEmptyString('name');
+
+        $validator
             ->scalar('description')
             ->allowEmptyString('description');
 
         $validator
             ->time('time_achieved')
-            ->allowEmptyTime('time_achieved');
+            ->requirePresence('time_achieved', 'create')
+            ->notEmptyTime('time_achieved');
 
         $validator
             ->integer('score')
-            ->allowEmptyString('score');
+            ->notEmptyString('score');
 
         $validator
             ->boolean('excluded')
-            ->allowEmptyString('excluded');
+            ->requirePresence('excluded', 'create')
+            ->notEmptyString('excluded');
 
         $validator
             ->scalar('excluded_description')
-            ->allowEmptyString('excluded_description');
+            ->requirePresence('excluded_description', 'create')
+            ->notEmptyString('excluded_description');
 
         $validator
             ->boolean('visible')
@@ -133,12 +151,9 @@ class CompetingclubsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['competition_id'], 'Competitions'), ['errorField' => '0']);
-        $rules->add($rules->existsIn(['club_id'], 'Clubs'), ['errorField' => '1']);
-		$rules->add($rules->isUnique(['competition_id', 'club_id']), [
-			'errorField' => 'club_id',
-			'message' => __d('CakeDC/Users', 'This Club is already exists in this Competiton!')
-		]);		
+        $rules->add($rules->existsIn(['country_id'], 'Countries'), ['errorField' => '0']);
+        $rules->add($rules->existsIn(['competition_id'], 'Competitions'), ['errorField' => '1']);
+        $rules->add($rules->existsIn(['club_id'], 'Clubs'), ['errorField' => '2']);
 
         return $rules;
     }

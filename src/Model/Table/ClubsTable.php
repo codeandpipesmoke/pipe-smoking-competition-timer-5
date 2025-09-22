@@ -65,6 +65,9 @@ class ClubsTable extends Table
             'foreignKey' => 'chairman_id',
             'joinType' => 'LEFT',
         ]);
+        $this->hasMany('MyUsers', [
+            'foreignKey' => 'club_id',
+        ]);
         $this->hasMany('Competingclubs', [
             'foreignKey' => 'club_id',
         ]);

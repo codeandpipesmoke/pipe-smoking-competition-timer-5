@@ -71,7 +71,7 @@ $this->assign('title', __('Add') . ' ' . __('Competitor'));
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="competition-id"><?= __('Competition Id') ?>:</label>
 												<div class="col-md-4">
-													<?= $this->Form->control('competition_id', ['options' => $competitions, 'placeholder' => __('Competition Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+													<?= $this->Form->control('competition_id', ['options' => $competitions, 'placeholder' => __('Competition Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
 
 												</div>
 											</div>
@@ -80,7 +80,7 @@ $this->assign('title', __('Add') . ' ' . __('Competitor'));
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="user-id"><?= __('User Id') ?>:</label>
 												<div class="col-md-4">
-													<?= $this->Form->control('user_id', ['options' => $users, 'placeholder' => __('User Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+													<?= $this->Form->control('user_id', ['options' => $users, 'placeholder' => __('User Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
 
 												</div>
 											</div>
@@ -89,7 +89,7 @@ $this->assign('title', __('Add') . ' ' . __('Competitor'));
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="competingclub-id"><?= __('Competingclub Id') ?>:</label>
 												<div class="col-md-4">
-													<?= $this->Form->control('competingclub_id', ['options' => $competingclubs, 'placeholder' => __('Competingclub Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+													<?= $this->Form->control('competingclub_id', ['options' => $competingclubs, 'placeholder' => __('Competingclub Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
 
 												</div>
 											</div>

@@ -13,15 +13,13 @@ use Cake\Http\Exception\NotFoundException;
  * Competingclub Entity
  *
  * @property int $id
- * @property int $country_id
  * @property string $competition_id
  * @property int $club_id
- * @property string $name
  * @property string|null $description
- * @property \Cake\I18n\Time $time_achieved
- * @property int $score
- * @property bool $excluded
- * @property string $excluded_description
+ * @property \Cake\I18n\Time|null $time_achieved
+ * @property int|null $score
+ * @property bool|null $excluded
+ * @property string|null $excluded_description
  * @property bool $visible
  * @property int $pos
  * @property int $competitor_count
@@ -45,10 +43,8 @@ class Competingclub extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'country_id' => true,
         'competition_id' => true,
         'club_id' => true,
-        'name' => true,
         'description' => true,
         'time_achieved' => true,
         'score' => true,

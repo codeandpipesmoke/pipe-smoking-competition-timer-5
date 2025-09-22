@@ -12,9 +12,10 @@ if($session->check('Layout.Competitions.LastId')){
 
 $global_config = (array) Configure::read('Theme.' . $prefix . '.config.template.index');
 $local_config = [
-	'show_id' 			=> true,
+	'show_id' 			=> false,
 	'show_pos' 			=> false,
-	'show_counters'		=> false,
+	'show_counters'		=> true,
+	'show_visible'		=> false,
 	'action_db_click'	=> 'edit',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
@@ -59,24 +60,12 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<th class="number id"><?= $this->Paginator->sort('id') ?></th>
 <?php } ?>
-											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
-											<th class="timestamp description"><?= $this->Paginator->sort('description') ?></th><!-- H.1. -->
 											<th class="datetime registration-deadline"><?= $this->Paginator->sort('registration_deadline') ?></th><!-- H.1. -->
-											<th class="boolean registration-closed"><?= $this->Paginator->sort('registration_closed') ?></th><!-- H.1. -->
-											<th class="string tobacco"><?= $this->Paginator->sort('tobacco') ?></th><!-- H.1. -->
-											<th class="decimal tobacco-quantity"><?= $this->Paginator->sort('tobacco_quantity') ?></th><!-- H.3. -->
+											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
+											<th class="string tobacco"><?= $this->Paginator->sort('tobacco') ?><br><?= $this->Paginator->sort('tobacco_quantity') ?></th><!-- H.1. -->
 											<th class="string pipe"><?= $this->Paginator->sort('pipe') ?></th><!-- H.1. -->
 											<th class="integer competition-fee"><?= $this->Paginator->sort('competition_fee') ?></th><!-- H.2. -->
-											<th class="boolean lunch-is-included-in-the-competition-fee"><?= $this->Paginator->sort('lunch_is_included_in_the_competition_fee') ?></th><!-- H.1. -->
-											<th class="datetime email-has-been-sent"><?= $this->Paginator->sort('email_has_been_sent') ?></th><!-- H.1. -->
-											<th class="time start-of-pipe-filling"><?= $this->Paginator->sort('start_of_pipe_filling') ?></th><!-- H.1. -->
-											<th class="time start-of-pipe-lighting"><?= $this->Paginator->sort('start_of_pipe_lighting') ?></th><!-- H.1. -->
-											<th class="boolean the-pipe-filling-must-be-repeated"><?= $this->Paginator->sort('the_pipe_filling_must_be_repeated') ?></th><!-- H.1. -->
 											<th class="boolean closed-competition"><?= $this->Paginator->sort('closed_competition') ?></th><!-- H.1. -->
-											<th class="time closing-time"><?= $this->Paginator->sort('closing_time') ?></th><!-- H.1. -->
-											<th class="integer maximum-number-of-clubs"><?= $this->Paginator->sort('maximum_number_of_clubs') ?></th><!-- H.3. -->
-											<th class="integer maximum-number-of-competitors"><?= $this->Paginator->sort('maximum_number_of_competitors') ?></th><!-- H.3. -->
-											<th class="integer maximum-number-of-tables"><?= $this->Paginator->sort('maximum_number_of_tables') ?></th><!-- H.3. -->
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
 <?php } ?>
@@ -118,24 +107,23 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<td class="number id" value="<?= $competition->id ?>"><?= h($competition->id) ?><a name="<?= $competition->id ?>"></a></td>
 <?php } ?>
-											<td class="string name" value="<?= $competition->name ?>"><?= h($competition->name) ?></td>
-											<td class="timestamp description" value="<?= $competition->description ?>"><?= h($competition->description) ?></td>
-											<td class="datetime registration-deadline" value="<?= $competition->registration_deadline ?>"><?= h($competition->registration_deadline) ?></td>
-											<td class="boolean registration-closed" value="<?= $competition->registration_closed ?>"><?= h($competition->registration_closed) ?></td>
-											<td class="string tobacco" value="<?= $competition->tobacco ?>"><?= h($competition->tobacco) ?></td>
-											<td class="decimal tobacco-quantity" value="<?= $competition->tobacco_quantity ?>"><?= $this->Number->format($competition->tobacco_quantity, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
+<?php
+	$strikeOutStyle = '';
+	if($competition->registration_closed){
+		$strikeOutStyle = ' style="text-decoration: line-through;"'	;
+	}
+?>
+
+											<td class="datetime registration-deadline"<?= $strikeOutStyle ?> value="<?= $competition->registration_deadline ?>">
+												<?= h($competition->registration_deadline) ?>
+											</td>
+											<td class="string name fw-bold" value="<?= $competition->name ?>"><?= h($competition->name) ?></td>
+											<td class="string tobacco" value="<?= $competition->tobacco ?>">
+												<?= h($competition->tobacco) ?><br>(<?= $this->Number->format($competition->tobacco_quantity, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => ' gr']) ?>)
+											</td>
 											<td class="string pipe" value="<?= $competition->pipe ?>"><?= h($competition->pipe) ?></td>
-											<td class="integer competition-fee" value="<?= $competition->competition_fee ?>"><?= $competition->competition_fee === null ? '' : $this->Number->format($competition->competition_fee, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
-											<td class="boolean lunch-is-included-in-the-competition-fee" value="<?= $competition->lunch_is_included_in_the_competition_fee ?>"><?= h($competition->lunch_is_included_in_the_competition_fee) ?></td>
-											<td class="datetime email-has-been-sent" value="<?= $competition->email_has_been_sent ?>"><?= h($competition->email_has_been_sent) ?></td>
-											<td class="time start-of-pipe-filling" value="<?= $competition->start_of_pipe_filling ?>"><?= h($competition->start_of_pipe_filling) ?></td>
-											<td class="time start-of-pipe-lighting" value="<?= $competition->start_of_pipe_lighting ?>"><?= h($competition->start_of_pipe_lighting) ?></td>
-											<td class="boolean the-pipe-filling-must-be-repeated" value="<?= $competition->the_pipe_filling_must_be_repeated ?>"><?= h($competition->the_pipe_filling_must_be_repeated) ?></td>
+											<td class="integer competition-fee" value="<?= $competition->competition_fee ?>"><?= $competition->competition_fee === null ? '' : $this->Number->format($competition->competition_fee, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => ' Ft']) ?></td>
 											<td class="boolean closed-competition" value="<?= $competition->closed_competition ?>"><?= h($competition->closed_competition) ?></td>
-											<td class="time closing-time" value="<?= $competition->closing_time ?>"><?= h($competition->closing_time) ?></td>
-											<td class="integer maximum-number-of-clubs" value="<?= $competition->maximum_number_of_clubs ?>"><?= $this->Number->format($competition->maximum_number_of_clubs, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
-											<td class="integer maximum-number-of-competitors" value="<?= $competition->maximum_number_of_competitors ?>"><?= $this->Number->format($competition->maximum_number_of_competitors, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
-											<td class="integer maximum-number-of-tables" value="<?= $competition->maximum_number_of_tables ?>"><?= $this->Number->format($competition->maximum_number_of_tables, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $competition->pos ?>"><?= h($competition->pos) ?></td>
 <?php } ?>
@@ -143,7 +131,8 @@ $config = array_merge($global_config, $local_config);
 											<td class="boolean visible" value="<?= $competition->visible ?>"><?= h($competition->visible) ?></td>
 <?php } ?>
 <?php if($config['show_counters']){ ?>
-											<td class="number counter table-count" value="<?= $competition->table_count ?>"><?= h($competition->table_count) ?></td>											<td class="number counter competingclub-count" value="<?= $competition->competingclub_count ?>"><?= h($competition->competingclub_count) ?></td>											<td class="number counter competitor-count" value="<?= $competition->competitor_count ?>"><?= h($competition->competitor_count) ?></td><?php } ?>
+											<td class="number counter table-count" value="<?= $competition->table_count ?>"><?= h($competition->table_count) ?></td>											
+											<td class="number counter competingclub-count" value="<?= $competition->competingclub_count ?>"><?= h($competition->competingclub_count) ?></td>											<td class="number counter competitor-count" value="<?= $competition->competitor_count ?>"><?= h($competition->competitor_count) ?></td><?php } ?>
 <?php if($config['show_created'] || $config['show_modified']){ ?>
 											<td class="datetime">
 <?php if($config['show_created']){ ?>

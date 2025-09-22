@@ -442,8 +442,8 @@ $config = array_merge($global_config, $local_config);
 													<th class="first-name">
 														<?= __('First Name') ?>&nbsp;<?= __('Last Name') ?>
 													</th>
-													<th class="lang-id"><?= __('Lang Id') ?></th>
 													<th class="club-id"><?= __('Club Id') ?></th>
+													<th class="lang-id"><?= __('Lang Id') ?></th>
 													<th class="email"><?= __('Email') ?></th>
 													<th class="role"><?= __('Role') ?></th>
 <?php if($config['index_show_visible']){ ?>
@@ -475,7 +475,7 @@ $config = array_merge($global_config, $local_config);
 													<td class="number id" value="<?= $users->id ?>"><?= h($users->id) ?></td>
 <?php } ?>
 													<td class="name">
-<?php if($users->nameorder = 'first-last'){ ?>
+<?php if($users->nameorder == 'first-last'){ ?>
 													
 														<?= h($users->first_name) ?>&nbsp;<?= h($users->last_name) ?>
 <?php }else{ ?>
@@ -483,12 +483,32 @@ $config = array_merge($global_config, $local_config);
 														<?= h($users->last_name) ?>&nbsp;<?= h($users->first_name) ?>
 														
 <?php } ?>
+<?php //dd($users); ?>
 													</td>
-
-													<td class="lang-id" value="<?= $users->lang_id ?>"><?= h($users->lang_id) ?></td>
-													<td class="club-id" value="<?= $users->club_id ?>"><?= h($users->club_id) ?></td>
+													<td class="lang-id" value="<?= $users->lang_id ?>">
+														<?= $this->Html->link(
+															h($users->club->name), 
+															[
+																'controller' => 'Clubs', 
+																'action' => 'view', 
+																$users->club_id
+															], 
+															[
+																"escape" => false, 
+																"role" => "button",
+																"class" => "link",
+																"data-toggle" => "tooltip",
+																"data-placement" => "top",
+																"title" => __('View this item'),
+																"data-original-title" => ""
+															]
+														) ?>
+													</td>
+													<td class="lang-id" value="<?= $users->lang_id ?>">
+														<?= $this->Html->link(h($users->lang->name), ['controller' => 'Langs', 'action' => 'view', $users->lang_id], ["escape" => false, "role" => "button",  "class" => "link", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('View this item'), "data-original-title" => ""]) ?>
+													</td>
 													<td class="email" value="<?= $users->email ?>"><?= h($users->email) ?></td>
-													<td class="role" value="<?= $users->role ?>"><?= h($users->role) ?></td>
+													<td class="role" value="<?= $users->role ?>"><?= h($role[$users->role]) ?></td>
 <?php if($config['index_show_visible']){ ?>
 													<td class="boolean visible" value="<?= $users->visible ?>"><?= h($users->visible) ?></td>
 <?php } ?>

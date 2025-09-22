@@ -93,6 +93,18 @@ class CompetitionsTable extends Table
             ->notEmptyString('registration_closed');
 
         $validator
+            ->scalar('place')
+            ->maxLength('place', 250)
+            ->requirePresence('place', 'create')
+            ->notEmptyString('place');
+
+        $validator
+            ->scalar('google_maps_url')
+            ->maxLength('google_maps_url', 1000)
+            ->requirePresence('google_maps_url', 'create')
+            ->allowEmptyString('google_maps_url');
+
+        $validator
             ->scalar('tobacco')
             ->maxLength('tobacco', 250)
             ->requirePresence('tobacco', 'create')

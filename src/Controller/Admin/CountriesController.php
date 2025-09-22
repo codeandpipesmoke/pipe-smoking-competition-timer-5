@@ -193,7 +193,7 @@ class CountriesController extends AppController
 		//));
 
 		try {
-			$country = $this->Countries->get((int) $id, contain: ['Clubs', 'Competingclubs', 'MyUsers']);
+			$country = $this->Countries->get((int) $id, contain: ['Clubs', 'Competingclubs', 'MyUsers' => ['Clubs', 'Langs']]);
 			//dd($country);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);

@@ -59,6 +59,8 @@ class Competition extends Entity
         'description' => true,
         'registration_deadline' => true,
         'registration_closed' => true,
+        'place' => true,
+        'google_maps_url' => true,
         'tobacco' => true,
         'tobacco_quantity' => true,
         'pipe' => true,

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \Cake\Datasource\EntityInterface $user
+ * @var \Cake\Datasource\EntityInterface $myUser
  */
 use Cake\Core\Configure;
 
@@ -54,8 +54,8 @@ $config = array_merge($global_config, $local_config);
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><?= __('Related tables') ?></a>
 											<ul class="dropdown-menu">
-<?php if (!empty($user->social_accounts)) : ?>
-												<li><?= $this->Html->link(__('Social Accounts') . '...', ['controller' => 'Social Accounts', 'action' => 'index', 'parent', 'user', $user->id], ['class' => 'dropdown-item']) ?></li>
+<?php if (!empty($myUser->social_accounts)) : ?>
+												<li><?= $this->Html->link(__('Social Accounts') . '...', ['controller' => 'Social Accounts', 'action' => 'index', 'parent', 'user', $myUser->id], ['class' => 'dropdown-item']) ?></li>
 <?php endif ?>
 											</ul>
 										</li>
@@ -74,94 +74,109 @@ $config = array_merge($global_config, $local_config);
 											<div class="row"><!-- 3. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end">#<?= __('id') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= $user->id ?><!-- 0.a -->
+													<?= $myUser->id ?><!-- 0.a -->
 												</div>
 											</div>
 <?php } ?>
-											<div class="row"><!-- 2. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Id') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= h($user->id) ?>
-
-												</div>
-											</div>
+<?php /*
 											<div class="row"><!-- 2. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Username') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= h($user->username) ?>
+													<?= h($myUser->username) ?>
+
+												</div>
+											</div>
+*/ ?>
+
+											<div class="row"><!-- 2. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('First Name') ?>:</label>
+												<div class="col-sm-10 p-1">
+<?php if($myUser->nameorder == 'first-last'){ ?>
+													<?= h($myUser->first_name) ?>&nbsp;<?= h($myUser->last_name) ?>
+<?php }else{ ?>
+													<?= h($myUser->last_name) ?>&nbsp;<?= h($myUser->first_name) ?>
+<?php } ?>
 
 												</div>
 											</div>
 											<div class="row"><!-- 2. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Email') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= h($user->email) ?>
-
-												</div>
-											</div>
-											<div class="row"><!-- 2. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('First Name') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= h($user->first_name) ?>
-
-												</div>
-											</div>
-											<div class="row"><!-- 2. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Last Name') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= h($user->last_name) ?>
+													<?= h($myUser->email) ?>
 
 												</div>
 											</div>
 											<div class="row"><!-- 2. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Role') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= h($user->role) ?>
-
-												</div>
-											</div>
-											<div class="row"><!-- 4. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Activation Date') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= h($user->activation_date) ?>
-
-												</div>
-											</div>
-											<div class="row"><!-- 4. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Tos Date') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= h($user->tos_date) ?>
+													<?= h($myUser->role) ?>
 
 												</div>
 											</div>
 											<div class="row"><!-- 4. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Last Login') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= h($user->last_login) ?>
+													<?= h($myUser->last_login) ?>
+
+												</div>
+											</div>
+											<div class="row"><!-- 1. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Country') ?>:</label>
+												<div class="col-sm-10 p-1 link">
+													<?= $myUser->hasValue('country') ? $this->Html->link(h($myUser->country->name), ['controller' => 'Countries', 'action' => 'view', $myUser->country->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span>
+												</div>
+											</div>
+											<div class="row"><!-- 1. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Lang') ?>:</label>
+												<div class="col-sm-10 p-1 link">
+													<?= $myUser->hasValue('lang') ? $this->Html->link(h($myUser->lang->name), ['controller' => 'Langs', 'action' => 'view', $myUser->lang->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span>
+												</div>
+											</div>
+											<div class="row"><!-- 1. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Club') ?>:</label>
+												<div class="col-sm-10 p-1 link">
+													<?= $myUser->hasValue('club') ? $this->Html->link(h($myUser->club->name), ['controller' => 'Clubs', 'action' => 'view', $myUser->club->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span>
+												</div>
+											</div>
+
+
+<?php /*		
+											<div class="row"><!-- 4. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Activation Date') ?>:</label>
+												<div class="col-sm-10 p-1">
+													<?= h($myUser->activation_date) ?>
+
+												</div>
+											</div>
+											<div class="row"><!-- 4. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Tos Date') ?>:</label>
+												<div class="col-sm-10 p-1">
+													<?= h($myUser->tos_date) ?>
 
 												</div>
 											</div>
 											<div class="row"><!-- 5. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Secret Verified') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= $user->secret_verified ? '<i class="fa fa-check-square boolean-yes" aria-hidden="true"></i>' : '<i class="fa fa-square boolean-no" aria-hidden="false"></i>' ?>
+													<?= $myUser->secret_verified ? '<i class="fa fa-check-square boolean-yes" aria-hidden="true"></i>' : '<i class="fa fa-square boolean-no" aria-hidden="false"></i>' ?>
 
 												</div>
 											</div>
 											<div class="row"><!-- 5. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Active') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= $user->active ? '<i class="fa fa-check-square boolean-yes" aria-hidden="true"></i>' : '<i class="fa fa-square boolean-no" aria-hidden="false"></i>' ?>
+													<?= $myUser->active ? '<i class="fa fa-check-square boolean-yes" aria-hidden="true"></i>' : '<i class="fa fa-square boolean-no" aria-hidden="false"></i>' ?>
 
 												</div>
 											</div>
 											<div class="row"><!-- 5. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Is Superuser') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= $user->is_superuser ? '<i class="fa fa-check-square boolean-yes" aria-hidden="true"></i>' : '<i class="fa fa-square boolean-no" aria-hidden="false"></i>' ?>
+													<?= $myUser->is_superuser ? '<i class="fa fa-check-square boolean-yes" aria-hidden="true"></i>' : '<i class="fa fa-square boolean-no" aria-hidden="false"></i>' ?>
 
 												</div>
 											</div>
+*/ ?>
 
 										</div><!-- /.1.TAB -->
 										
@@ -214,7 +229,7 @@ $config = array_merge($global_config, $local_config);
 								<div class="form-tab float-end">
 									<nav>
 										<div class="nav nav-tabs mt-1" id="nav-tab" role="tablist">
-<?php if (!empty($user->social_accounts)): ?>
+<?php if (!empty($myUser->social_accounts)): ?>
 											<button class="nav-link active" id="nav-social_accounts-tab" data-bs-toggle="tab" data-bs-target="#nav-social_accounts" type="button" role="tab" aria-controls="nav-social_accounts" aria-selected="true">
 												<?= __('Social Accounts') ?>
 											</button>
@@ -229,7 +244,7 @@ $config = array_merge($global_config, $local_config);
 
 								<div class="tab-content" id="nav-tabContent">
 
-<?php if (!empty($user->social_accounts)): ?>
+<?php if (!empty($myUser->social_accounts)): ?>
 
 									<div class="tab-pane fade show active p-0" id="nav-social_accounts" role="tabpanel" aria-labelledby="nav-social_accounts-tab" tabindex="0">
 
@@ -261,7 +276,7 @@ $config = array_merge($global_config, $local_config);
 												</tr>
 											</thead>
 											<tbody>
-												<?php foreach ($user->social_accounts as $socialAccounts) : ?>
+												<?php foreach ($myUser->social_accounts as $socialAccounts) : ?>
 
 												<tr>
 <?php if($config['index_show_id']){ ?>

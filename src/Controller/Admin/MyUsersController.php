@@ -234,7 +234,10 @@ class MyUsersController extends AppController
 		}
 		
 		$this->set('title', __('View the') . ': ' . __('myUser') . ' ' . __('record'));
-        $myUser = $this->MyUsers->get($id, contain: ['SocialAccounts']);
+        $myUser = $this->MyUsers->get($id, contain: ['SocialAccounts', 'Countries', 'Langs', 'Clubs', 'Competitors']);
+		
+		//dd($myUser);
+		
 		$this->session->write('Layout.' . $this->controller . '.LastId', $id);
 		$name = $myUser->name;
         $this->set(compact('myUser', 'id', 'name'));

@@ -95,6 +95,7 @@ $config = array_merge($global_config, $local_config);
 												</div>
 											</div>
 
+<?php /*
 											<!-- 7. BOOLEAN: registration_closed: boolean  required -->
 											<div class="mb-3 form-group row checkbox">
 												<div class="col-sm-2 col-form-label required"></div>
@@ -103,6 +104,27 @@ $config = array_merge($global_config, $local_config);
 
 												</div>
 											</div>
+*/ ?>
+
+											<!-- 2. STRING: tobacco: string  required -->
+											<div class="mb-3 form-group row text required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="tobacco"><?= __('Place') ?>:</label>
+												<div class="col-md-9">
+													<?= $this->Form->control('place', ['label' => __('Place'), 'placeholder' => __('Place'), 'class' => 'form-control', 'empty' => false]); ?>
+
+												</div>
+											</div>
+
+
+											<!-- 2. STRING: tobacco: string  required -->
+											<div class="mb-3 form-group row text required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="tobacco"><?= __('Maps URL') ?>:</label>
+												<div class="col-md-9">
+													<?= $this->Form->control('google_maps_url', ['label' => __('Maps URL'), 'placeholder' => __('Maps URL'), 'class' => 'form-control', 'empty' => true]); ?>
+
+												</div>
+											</div>
+
 
 											<!-- 2. STRING: tobacco: string  required -->
 											<div class="mb-3 form-group row text required">
@@ -128,7 +150,7 @@ $config = array_merge($global_config, $local_config);
 											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="competition-fee"><?= __('Competition Fee') ?>:</label>
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
-													<?= $this->Form->control('competition_fee', ['class' => 'form-control', 'placeholder' => __('Competition Fee'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => true]); ?>
+													<?= $this->Form->control('competition_fee', ['class' => 'form-control', 'placeholder' => __('Competition Fee'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '500', 'empty' => true]); ?>
 
 												</div>
 											</div>

@@ -27,7 +27,6 @@ class CompetingclubsControllerTest extends TestCase
      */
     protected array $fixtures = [
         'app.Competingclubs',
-        'app.Countries',
         'app.Competitions',
         'app.Clubs',
         'app.Competitors',

@@ -59,12 +59,10 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<th class="number id"><?= $this->Paginator->sort('id') ?></th>
 <?php } ?>
-											<th class="string country-id"><?= $this->Paginator->sort('country_id') ?></th><!-- H.0. -->
 											<th class="string competition-id"><?= $this->Paginator->sort('competition_id') ?></th><!-- H.0. -->
 											<th class="string club-id"><?= $this->Paginator->sort('club_id') ?></th><!-- H.0. -->
-											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
 											<th class="time time-achieved"><?= $this->Paginator->sort('time_achieved') ?></th><!-- H.1. -->
-											<th class="integer score"><?= $this->Paginator->sort('score') ?></th><!-- H.3. -->
+											<th class="integer score"><?= $this->Paginator->sort('score') ?></th><!-- H.2. -->
 											<th class="boolean excluded"><?= $this->Paginator->sort('excluded') ?></th><!-- H.1. -->
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
@@ -107,12 +105,10 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<td class="number id" value="<?= $competingclub->id ?>"><?= h($competingclub->id) ?><a name="<?= $competingclub->id ?>"></a></td>
 <?php } ?>
-											<td class="string link country-id" value="<?= $competingclub->country_id ?>"><?= $competingclub->hasValue('country') ? $this->Html->link($competingclub->country->name, ['controller' => 'Countries', 'action' => 'view', $competingclub->country->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string link competition-id" value="<?= $competingclub->competition_id ?>"><?= $competingclub->hasValue('competition') ? $this->Html->link($competingclub->competition->name, ['controller' => 'Competitions', 'action' => 'view', $competingclub->competition->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string link club-id" value="<?= $competingclub->club_id ?>"><?= $competingclub->hasValue('club') ? $this->Html->link($competingclub->club->name, ['controller' => 'Clubs', 'action' => 'view', $competingclub->club->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
-											<td class="string name" value="<?= $competingclub->name ?>"><?= h($competingclub->name) ?></td>
 											<td class="time time-achieved" value="<?= $competingclub->time_achieved ?>"><?= h($competingclub->time_achieved) ?></td>
-											<td class="integer score" value="<?= $competingclub->score ?>"><?= $this->Number->format($competingclub->score, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
+											<td class="integer score" value="<?= $competingclub->score ?>"><?= $competingclub->score === null ? '' : $this->Number->format($competingclub->score, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
 											<td class="boolean excluded" value="<?= $competingclub->excluded ?>"><?= h($competingclub->excluded) ?></td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $competingclub->pos ?>"><?= h($competingclub->pos) ?></td>

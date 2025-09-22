@@ -8,16 +8,13 @@ return [
 			],
 			'sidebarMenu' => [
 				'Admin' => [
-
 					[
 						'type' 		=> 'menu',
 						'icon' 		=> 'fa fa-fw fa-bars',
-						'title'		=> __('MyUsers'),
-						'controller'=> 'MyUsers',
+						'title'		=> __('Competitions'),
+						'controller'=> 'Competitions',
 						'action' 	=> 'index',
 					],
-
-
 					[
 						'type' 		=> 'menu',
 						'icon' 		=> 'fa fa-fw fa-bars',
@@ -26,13 +23,6 @@ return [
 						'action' 	=> 'index',
 					],
 
-					[
-						'type' 		=> 'menu',
-						'icon' 		=> 'fa fa-fw fa-bars',
-						'title'		=> __('Competitions'),
-						'controller'=> 'Competitions',
-						'action' 	=> 'index',
-					],
 					[
 						'type' 		=> 'menu',
 						'icon' 		=> 'fa fa-fw fa-bars',
@@ -63,7 +53,13 @@ return [
 
 
 
-
+					[
+						'type' 		=> 'menu',
+						'icon' 		=> 'fa fa-fw fa-bars',
+						'title'		=> __('MyUsers'),
+						'controller'=> 'MyUsers',
+						'action' 	=> 'index',
+					],
 					[
 						'type' 		=> 'menu',
 						'icon' 		=> 'fa fa-fw fa-bars',

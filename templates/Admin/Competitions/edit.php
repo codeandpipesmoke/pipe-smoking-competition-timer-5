@@ -15,7 +15,6 @@ $global_config = (array) Configure::read('Theme.' . $prefix . '.config.template.
 $local_config = [
 	'show_pos' 			=> false,
 	'show_visible'		=> false,
-	'action_db_click'	=> 'edit',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
 $config = array_merge($global_config, $local_config);
@@ -128,7 +127,7 @@ $config = array_merge($global_config, $local_config);
 											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="competition-fee"><?= __('Competition Fee') ?>:</label>
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
-													<?= $this->Form->control('competition_fee', ['class' => 'form-control', 'placeholder' => __('Competition Fee'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => true]); ?>
+													<?= $this->Form->control('competition_fee', ['class' => 'form-control', 'placeholder' => __('Competition Fee'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '500', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -142,6 +141,7 @@ $config = array_merge($global_config, $local_config);
 												</div>
 											</div>
 
+<?php /*
 											<!-- 4. DATETIME: email_has_been_sent: datetime  -->
 											<div class="mb-3 row required">
 												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="email-has-been-sent"><?= __('Email Has Been Sent') ?>:</label>
@@ -223,6 +223,7 @@ $config = array_merge($global_config, $local_config);
 													</div>
 												</div>
 											</div>
+*/ ?>
 
 											<!-- 3. INTEGER: maximum_number_of_clubs: integer  required -->
 											<div class="mb-3 form-group row number required">
@@ -349,10 +350,10 @@ $config = array_merge($global_config, $local_config);
 
 	jeffAdminInitInputSpinner()
 	jeffAdminInitDateTimePicker('registration-deadline'<?= $competition->registration_deadline !== null ? ", '" . $competition->registration_deadline->format('Y-m-d H:i:s') . "'" : "" ?>)
-	jeffAdminInitDateTimePicker('email-has-been-sent'<?= $competition->email_has_been_sent !== null ? ", '" . $competition->email_has_been_sent->format('Y-m-d H:i:s') . "'" : "" ?>)
-	jeffAdminInitTimePicker('start-of-pipe-filling'<?= $competition->start_of_pipe_filling !== null ? ", '" . $competition->start_of_pipe_filling->format('H:i:s') . "'" : "" ?>)
-	jeffAdminInitTimePicker('start-of-pipe-lighting'<?= $competition->start_of_pipe_lighting !== null ? ", '" . $competition->start_of_pipe_lighting->format('H:i:s') . "'" : "" ?>)
-	jeffAdminInitTimePicker('closing-time'<?= $competition->closing_time !== null ? ", '" . $competition->closing_time->format('H:i:s') . "'" : "" ?>)
+	//jeffAdminInitDateTimePicker('email-has-been-sent'<?= $competition->email_has_been_sent !== null ? ", '" . $competition->email_has_been_sent->format('Y-m-d H:i:s') . "'" : "" ?>)
+	//jeffAdminInitTimePicker('start-of-pipe-filling'<?= $competition->start_of_pipe_filling !== null ? ", '" . $competition->start_of_pipe_filling->format('H:i:s') . "'" : "" ?>)
+	//jeffAdminInitTimePicker('start-of-pipe-lighting'<?= $competition->start_of_pipe_lighting !== null ? ", '" . $competition->start_of_pipe_lighting->format('H:i:s') . "'" : "" ?>)
+	//jeffAdminInitTimePicker('closing-time'<?= $competition->closing_time !== null ? ", '" . $competition->closing_time->format('H:i:s') . "'" : "" ?>)
 	jeffAdminInitICheck('icheckbox_flat-blue');
 
 	$(document).ready( function(){

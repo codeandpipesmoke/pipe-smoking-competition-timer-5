@@ -85,12 +85,6 @@ $config = array_merge($global_config, $local_config);
 											</div>
 <?php } ?>
 											<div class="row"><!-- 1. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Country') ?>:</label>
-												<div class="col-sm-10 p-1 link">
-													<?= $competingclub->hasValue('country') ? $this->Html->link($competingclub->country->name, ['controller' => 'Countries', 'action' => 'view', $competingclub->country->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span>
-												</div>
-											</div>
-											<div class="row"><!-- 1. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Competition') ?>:</label>
 												<div class="col-sm-10 p-1 link">
 													<?= $competingclub->hasValue('competition') ? $this->Html->link($competingclub->competition->name, ['controller' => 'Competitions', 'action' => 'view', $competingclub->competition->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span>
@@ -102,17 +96,10 @@ $config = array_merge($global_config, $local_config);
 													<?= $competingclub->hasValue('club') ? $this->Html->link($competingclub->club->name, ['controller' => 'Clubs', 'action' => 'view', $competingclub->club->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span>
 												</div>
 											</div>
-											<div class="row"><!-- 2. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Name') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= h($competingclub->name) ?>
-
-												</div>
-											</div>
 											<div class="row"><!-- 3. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Score') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= $this->Number->format($competingclub->score) ?><!-- 3.b -->
+													<?= $competingclub->score === null ? '' : $this->Number->format($competingclub->score) ?><!-- 3.a -->
 												</div>
 											</div>
 											<div class="row"><!-- 4. -->

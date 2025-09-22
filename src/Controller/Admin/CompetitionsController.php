@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\AppController;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Utility\Text;
 
 
 /**
@@ -193,7 +194,7 @@ class CompetitionsController extends AppController
 		//));
 
 		try {
-			$competition = $this->Competitions->get((int) $id, contain: ['Competingclubs', 'Competitors', 'Tables']);
+			$competition = $this->Competitions->get((string) $id, contain: ['Competingclubs', 'Competitors', 'Tables']);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
@@ -215,13 +216,13 @@ class CompetitionsController extends AppController
 		//Configure::write('Theme.admin.config.header_buttons_in_action.add', array_merge(Configure::read('Theme.admin.config.header_buttons_in_action.add'), 
 		//	['back' => true, 'add' => false, 'edit' => false, 'save' => true, 'view' => false, 'delete' => false]
 		//));
-		
 		$this->set('title', __('Add new') . ': ' . __('competition') . ' ' . __('record'));
         $competition = $this->Competitions->newEmptyEntity();
         if ($this->request->is('post')) {
 			$data = $this->request->getData();
 			//debug($data);
             $competition = $this->Competitions->patchEntity($competition, $data);
+            $competition->id = str_replace("-", (string) $this->getRandomHex(4), Text::uuid());
 			//dd($competition);
 			/*
 				if(...){
@@ -248,6 +249,11 @@ class CompetitionsController extends AppController
         $this->set(compact('competition'));
     }
 
+	function getRandomHex($num_bytes=4) {
+		return bin2hex(openssl_random_pseudo_bytes($num_bytes));
+	}
+
+
     /**
      * Edit method
      *
@@ -262,7 +268,7 @@ class CompetitionsController extends AppController
 		//));
 
 		try {
-			$competition = $this->Competitions->get((int) $id, contain: []);
+			$competition = $this->Competitions->get((string) $id, contain: []);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
@@ -312,8 +318,11 @@ class CompetitionsController extends AppController
     {
 		$this->request->allowMethod(['post', 'delete']);
 
+		dd($id);
+
 		try {
-			$competition = $this->Competitions->get((int) $id);
+			$competition = $this->Competitions->get((string) $id);
+			dd($competition);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);

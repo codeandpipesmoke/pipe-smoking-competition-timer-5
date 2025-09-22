@@ -2,7 +2,6 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Competingclub $competingclub
- * @var string[]|\Cake\Collection\CollectionInterface $countries
  * @var string[]|\Cake\Collection\CollectionInterface $competitions
  * @var string[]|\Cake\Collection\CollectionInterface $clubs
  */
@@ -70,15 +69,6 @@ $this->assign('title', __('Edit') . ' ' . __('Competingclub'));
 										
 										<div class="tab-pane fade show active" id="tabPanelMain" role="tabpanel" aria-labelledby="tabMain" tabindex="0">
 
-											<!-- 1. SELECT: country_id: integer  required -->
-											<div class="mb-3 form-group row select required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="country-id"><?= __('Country Id') ?>:</label>
-												<div class="col-md-4">
-													<?= $this->Form->control('country_id', ['options' => $countries, 'placeholder' => __('Country Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
-
-												</div>
-											</div>
-
 											<!-- 1. SELECT: competition_id: string  required -->
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="competition-id"><?= __('Competition Id') ?>:</label>
@@ -97,22 +87,13 @@ $this->assign('title', __('Edit') . ' ' . __('Competingclub'));
 												</div>
 											</div>
 
-											<!-- 2. STRING: name: string  required -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name"><?= __('Name') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('name', ['label' => __('Name'), 'placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 6. TIME: time_achieved: time  required -->
+											<!-- 6. TIME: time_achieved: time  -->
 											<div class="mb-3 row required">
-												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end required" for="time-achieved"><?= __('Time Achieved') ?>:</label>
+												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="time-achieved"><?= __('Time Achieved') ?>:</label>
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
 													<div class="form-group time">
 														<div class="input-group time-achieved" id="time-achieved" data-target-input="nearest">
-															<?= $this->Form->control('time_achieved', ['type' => 'text', 'placeholder' => __('Time Achieved'), 'class' => 'form-control', 'empty' => false, 'value' => '']); ?>
+															<?= $this->Form->control('time_achieved', ['type' => 'text', 'placeholder' => __('Time Achieved'), 'class' => 'form-control', 'empty' => true, 'value' => '']); ?>
 
 															<div class="input-group-append" data-target="#time-achieved" data-toggle="time-achieved">
 																<div class="input-group-text"><i class="fa fa-clock-o"></i></div>
@@ -122,20 +103,20 @@ $this->assign('title', __('Edit') . ' ' . __('Competingclub'));
 												</div>
 											</div>
 
-											<!-- 3. INTEGER: score: integer  required -->
+											<!-- 3. INTEGER: score: integer  -->
 											<div class="mb-3 form-group row number required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="score"><?= __('Score') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="score"><?= __('Score') ?>:</label>
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
-													<?= $this->Form->control('score', ['class' => 'form-control', 'placeholder' => __('Score'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
+													<?= $this->Form->control('score', ['class' => 'form-control', 'placeholder' => __('Score'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => true]); ?>
 
 												</div>
 											</div>
 
-											<!-- 7. BOOLEAN: excluded: boolean  required -->
+											<!-- 7. BOOLEAN: excluded: boolean  -->
 											<div class="mb-3 form-group row checkbox">
-												<div class="col-sm-2 col-form-label required"></div>
+												<div class="col-sm-2 col-form-label"></div>
 												<div class="col-sm-10">
-													<?= $this->Form->control('excluded', ['empty' => false]); ?>
+													<?= $this->Form->control('excluded', ['empty' => true]); ?>
 
 												</div>
 											</div>
@@ -173,11 +154,11 @@ $this->assign('title', __('Edit') . ' ' . __('Competingclub'));
 										</div><!-- /.TabPanel: tabPanelDescription -->
 
 										<!-- TabPanel: tabPanelExcludedDescription -->
-										<!-- 10. TEXT: excluded_description: text  required -->
+										<!-- 10. TEXT: excluded_description: text  -->
 										<div class="tab-pane fade" id="tabPanelExcludedDescription" role="tabpanel" aria-labelledby="tabExcludedDescription" tabindex="0">
 											<div class="row mb-3">
 												<div class="col-sm-12">
-													<?= $this->Form->control('excluded_description', ['id' => 'excluded-description', 'label' => false, 'class' => 'summernote', 'empty' => false]); ?>
+													<?= $this->Form->control('excluded_description', ['id' => 'excluded-description', 'label' => false, 'class' => 'summernote', 'empty' => true]); ?>
 
 												</div>
 											</div>
